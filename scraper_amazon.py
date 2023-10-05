@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from scraper import Scraper
 from db import Database
+from crawlbase import requests_page
 
 # read .env file
 load_dotenv ()
@@ -47,15 +48,9 @@ class ScraperAmazon (Scraper):
             product (str): product to search
         """
         
-        # Load cookies
-        link = "http://www.amazon.com/"
-        self.set_page (link)
-        cookies = self.db.get_cookies_random (self.store)
-        self.set_cookies (cookies)
-        
         # Load search page
         link = f"https://www.amazon.com/s?k={product}&s=review-rank"
-        self.set_page (link)
+        self.soup = requests_page (link, html_name="sample amazon")
 
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in amazon
@@ -93,7 +88,7 @@ class ScraperAmazon (Scraper):
             str: reviews number as text
         """
         
-        reviews = self.get_attrib (selector, "aria-label")
+        reviews = self.soup.select_one (selector).attrs ["aria-label"]
         return reviews
     
     def get_product_link (self, selector:str) -> str:
@@ -107,7 +102,7 @@ class ScraperAmazon (Scraper):
         """
         
         prefix = "https://www.amazon.com"
-        link = self.get_attrib (selector, "href")
+        link = self.soup.select_one (selector).attrs["href"]
         if prefix not in link:
             link = prefix + link
         return link
@@ -122,7 +117,7 @@ class ScraperAmazon (Scraper):
             float: product rate as float
         """
         
-        rate_num = self.get_attrib (selector, "aria-label")
+        rate_num = self.soup.select_one (selector).attrs["aria-label"]
         
         if rate_num:
             rate_num = float(rate_num.split (" ")[0])

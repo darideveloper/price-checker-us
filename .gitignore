@@ -13,3 +13,4 @@ db.*
 *.pyc
 proxy.ods
 chrome_data
+html

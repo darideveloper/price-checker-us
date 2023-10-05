@@ -1,11 +1,7 @@
 import os
-import random
-from time import sleep
 from dotenv import load_dotenv
-from scraping.web_scraping import WebScraping
 from abc import ABC, abstractmethod
 from db import Database
-from proxy import Proxy
 
 # read .env file
 load_dotenv ()
@@ -15,10 +11,8 @@ USE_DEBUG = os.getenv ("USE_DEBUG") == "True"
 # paths
 CURRENT_FOLDER = os.path.dirname(__file__)
     
-class Scraper (WebScraping, ABC):
+class Scraper (ABC):
     
-    proxy = Proxy ()
-    proxy_data = proxy.get_proxy_webshare ()
         
     def __init__ (self, keyword:str, db:Database):
         """ Start scraper
@@ -39,25 +33,7 @@ class Scraper (WebScraping, ABC):
         self.keyword = keyword    
         self.db = db
         self.stores = db.get_stores ()   
-        
-        if self.stores[self.store]["use_proxies"]:
-            
-            # Chrome data folder
-            chrome_data_folder = ""
-            if self.store == "amazon":
-                chrome_data_folder = "E:\\automation\\Alfonso Arturo\\ecommerce-scraper\\chrome_data\\user-data-1"
-            elif self.store == "aliexpress":
-                chrome_data_folder = "C:\\Users\\herna\\AppData\\Local\\Google\\Chrome\\User Data"
-        
-            # Open chrome
-            super().__init__ (
-                proxy_server= Scraper.proxy_data["proxy_address"],
-                proxy_port=Scraper.proxy_data["port"],
-                chrome_folder=chrome_data_folder,
-            )        
-            
-        else:
-            super().__init__ ()
+        self.soup = None
         
         # Delete products in debug mode
         if USE_DEBUG:
@@ -106,7 +82,7 @@ class Scraper (WebScraping, ABC):
             str: reviews number as text
         """
         
-        reviews = self.get_text (selector)
+        reviews = self.soup.select_one (selector).text
         return reviews
     
     def clean_text (self, text:str, chars:list) -> str:
@@ -135,7 +111,7 @@ class Scraper (WebScraping, ABC):
             str: product link in store
         """
         
-        link = self.get_attrib (selector, "href")
+        link = self.soup.select_one (selector).attrs["href"]
         if not link.startswith ("https:"):
             link = "https:" + link
         
@@ -151,7 +127,7 @@ class Scraper (WebScraping, ABC):
             float: product rate as float
         """
         
-        rate_num = self.get_text (selector)
+        rate_num = self.soup.select_one (selector).text
         
         if rate_num:
             rate_num = float(rate_num.split (" ")[0])
@@ -171,7 +147,7 @@ class Scraper (WebScraping, ABC):
         """
         
         if selector:
-            best_seller = self.get_text (selector)
+            best_seller = self.soup.select (selector)
             if best_seller:
                 return True
             
@@ -206,14 +182,9 @@ class Scraper (WebScraping, ABC):
 
         # Open chrome and load results page
         self.__load_page__ (product)
-        self.zoom (5)
-        self.go_bottom ()
-        self.refresh_selenium ()
         
-        self.save_page ("temp.html")
-
         # get the results in the page
-        results_num = len(self.get_elems (self.selectors['product']))
+        results_num = len(self.soup.select (self.selectors['product']))
 
         # Validate if there are results
         if results_num > 0:
@@ -256,26 +227,30 @@ class Scraper (WebScraping, ABC):
                     break
                 
                 # Skip products without price
-                price = self.get_text (selector_price)
-                if not price:
+                price = self.soup.select (selector_price)
+                if price:
+                    price = price[0].text
+                else:
                     continue
                 
                 # Skip sponsored products
-                sponsored = self.get_text (selector_sponsored)
-                sponsored = self.__get_is_sponsored__ (sponsored)
+                sponsored = self.soup.select (selector_sponsored)
                 if sponsored:
-                    continue
-                            
+                    sponsored = self.__get_is_sponsored__ (sponsored[0].text)
+                    if sponsored:
+                        continue
+                                
                 # Extract text from self.selectors
-                image = self.get_attrib (selector_image, "src")    
-                title = self.get_text (selector_title)
+                image = self.soup.select_one (selector_image)["src"]    
+                title = self.soup.select_one (selector_title).text
                     
+                sales = 0
                 if selector_sales:
-                    sales = self.get_text (selector_sales)
-                    sales = sales.split (" ")[0]
-                else:
-                    sales = 0
-                
+                    sales = self.soup.select (selector_sales)
+                    if sales:
+                        sales = sales[0].text
+                        sales = sales.split (" ")[0]
+            
                 # Custom extract data
                 reviews = self.get_reviews (selector_reviews)
                 link = self.get_product_link (selector_link)
@@ -342,6 +317,5 @@ class Scraper (WebScraping, ABC):
         else:
             print (f"({self.store} - {request_id}) No results found")
         
-        self.close_tab ()
         quit ()
     
