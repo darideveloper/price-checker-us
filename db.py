@@ -107,8 +107,6 @@ class Database (MySQL):
             products_data (list): list of dict with products data
         """
         
-        print (f"Saving {len(products_data)} products in database")
-        
         for product in products_data:
             
             # Get product data
