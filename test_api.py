@@ -14,22 +14,34 @@ TEST_API_KEY = os.getenv ("TEST_API_KEY")
 
 def request_api ():
     
+    # Wait to api loads
     sleep (5)
+    
+    # Get words from json file
+    current_folder = os.path.dirname (__file__)
+    json_path = os.path.join (current_folder, "test_api_keywords.json")
+    with open (json_path) as json_file:
+        keywords = json.load (json_file)
 
-    # Generate pai url
-    url = f"{TEST_HOST}:{TEST_PORT}/keyword/"
+    # Request each keyword
+    for keyword in keywords:
 
-    # Send keyword to api
-    payload = json.dumps({
-        "keyword": "protein",
-        "api-key": TEST_API_KEY
-    })
-    headers = {
-        'Content-Type': 'application/json'
-    }
+        # Generate pai url
+        url = f"{TEST_HOST}:{TEST_PORT}/keyword/"
 
-    # Get response from api
-    requests.request("POST", url, headers=headers, data=payload)
+        # Send keyword to api
+        payload = json.dumps({
+            "keyword": keyword,
+            "api-key": TEST_API_KEY
+        })
+        headers = {
+            'Content-Type': 'application/json'
+        }
+
+        # Get response from api
+        requests.request("POST", url, headers=headers, data=payload)
+        
+        sleep (30)
 
 if __name__ == "__main__":
 
