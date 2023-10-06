@@ -3,6 +3,10 @@ from database.mysql import MySQL
 
 class Database (MySQL):
     
+    status = {}
+    api_keys = {}
+    stores = {}
+    
     def __init__ (self, server:str, database:str, username:str, password:str):
         """ Connect with mysql db
 
@@ -15,9 +19,14 @@ class Database (MySQL):
         
         super().__init__(server, database, username, password)
         
-        self.status = self.__get_status__ ()
-        self.api_keys = self.__get_api_keys__ ()
-        self.stores = self.get_stores ()
+        if not Database.status:
+            Database.status = self.__get_status__ ()
+        
+        if not Database.api_keys:
+            Database.api_keys = self.__get_api_keys__ ()
+            
+        if not Database.stores:
+            Database.stores = self.__get_stroes__ ()
     
     def __get_status__ (self) -> dict:
         """ Retuen status from database as dictionary
@@ -60,7 +69,7 @@ class Database (MySQL):
             
         return status
     
-    def get_stores (self) -> dict:
+    def __get_stroes__ (self) -> dict:
         """ Query current stores in database 
         
         Returns:
@@ -197,10 +206,10 @@ class Database (MySQL):
         print ("Creating new request in database")
         
         # Get status for new requests
-        status_todo_id = self.status["to do"]
+        status_todo_id = Database.status["to do"]
         
         # Get api key id
-        api_key_id = self.api_keys[api_key] 
+        api_key_id = Database.api_keys[api_key] 
         
         # get and fomat current datetime
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -236,7 +245,7 @@ class Database (MySQL):
         
         print (f"Request {request_id} status updated to {status_name}")
         
-        status_num = self.status[status_name]
+        status_num = Database.status[status_name]
         
         # get current datetime
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -272,7 +281,7 @@ class Database (MySQL):
             return ""
         
         status_num = status_results[0]["status"]
-        for status_name, status_id in self.status.items ():
+        for status_name, status_id in Database.status.items ():
             if status_id == status_num:
                 return status_name
             
@@ -301,7 +310,7 @@ class Database (MySQL):
         
         # Sort products by store
         products_store = {}
-        for store_name, store_data in self.stores.items():
+        for store_name, store_data in Database.stores.items():
             store_id = store_data["id"]
             
             # Filter products of the current store

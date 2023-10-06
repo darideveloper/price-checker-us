@@ -31,7 +31,7 @@ class Scraper (ABC):
         # Scraper settings
         self.keyword = keyword    
         self.db = db
-        self.stores = db.get_stores ()   
+        self.stores = Database.stores  
         self.soup = None
     
     @abstractmethod
