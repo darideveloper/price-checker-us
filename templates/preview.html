@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products preview</title>
+</head>
+<body>
+  <h1>Products preview</h1>
+  {% for category, products in products_categories.items() %}
+  <h2>--- {{category}} ---</h2>
+  <ul>
+    {% for product in products %}
+    <li>
+      <h3>{{product.title}}</h3>
+      <img src="{{product.image}}" width="50">
+      <p>id: <b>{{product.id}}</b></p>
+      <p>rate_num: <b>{{product.rate_num}}</b></p>
+      <p>reviews: <b>{{product.reviews}}</b></p>
+      <p>price: <b>{{product.price}}</b></p>
+      <p>best_seller: <b>{{product.best_seller}}</b></p>
+      <p>sales: <b>{{product.sales}}</b></p>
+      <p>link: <a>{{product.link}}</a></p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</body>
+</html>

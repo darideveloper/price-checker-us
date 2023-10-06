@@ -6,7 +6,6 @@ from db import Database
 # read .env file
 load_dotenv ()
 MAX_PRODUCTS = int(os.getenv ("MAX_PRODUCTS"))
-USE_DEBUG = os.getenv ("USE_DEBUG") == "True"
 
 # paths
 CURRENT_FOLDER = os.path.dirname(__file__)
@@ -34,10 +33,6 @@ class Scraper (ABC):
         self.db = db
         self.stores = db.get_stores ()   
         self.soup = None
-        
-        # Delete products in debug mode
-        if USE_DEBUG:
-            self.db.delete_products ()
     
     @abstractmethod
     def __load_page__ (self, product:str):

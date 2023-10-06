@@ -93,7 +93,6 @@ class Database (MySQL):
         for row in results:
             data[row["name"]] = {
                 "id": row["id"],
-                "use_proxies": row["use_proxies"]
             }
         
         return data

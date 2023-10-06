@@ -3,7 +3,7 @@ from time import sleep
 from functools import wraps
 from threading import Thread
 from db import Database
-from flask import Flask, request
+from flask import Flask, request, render_template
 from dotenv import load_dotenv
 from scraper import Scraper
 from scraper_amazon import ScraperAmazon
@@ -18,7 +18,6 @@ DB_HOST = os.getenv ("DB_HOST")
 DB_USER = os.getenv ("DB_USER")
 DB_PASSWORD = os.getenv ("DB_PASSWORD")
 DB_NAME = os.getenv ("DB_NAME")
-USE_DEBUG = os.getenv ("USE_DEBUG") == "True"
 USE_THREADING = os.getenv ("USE_THREADING") == "True"
 
 # Connect with database
@@ -207,6 +206,29 @@ def results ():
             "products": products
         }
     })
-
+    
+@app.get ('/preview/')
+def preview ():    
+    """ Render basic preview products page """
+    
+    # Get url variables
+    api_token = request.args.get ("api-token", "")
+    request_id = request.args.get ("request-id", "")
+    
+    valid_token = db.validate_token (api_token)
+    valid_request_id = db.get_request_status (request_id)
+    
+    if not valid_token or not valid_request_id:
+        return ({
+            "status": "error",
+            "message": "invalid api token or request id",
+            "data": []
+        }, 401)
+    
+    # Get products from db
+    products_categories = db.get_products (request_id)
+    
+    return render_template ("preview.html", products_categories=products_categories)
+    
 if __name__ == "__main__":
     app.run(debug=True)
