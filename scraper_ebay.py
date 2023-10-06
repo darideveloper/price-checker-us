@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from scraper import Scraper
 from db import Database
+from crawlbase import requests_page
 
 # read .env file
 load_dotenv ()
@@ -49,7 +50,7 @@ class ScraperEbay (Scraper):
         
         product_clean = product.replace (" ", "+")  
         link = f"https://www.ebay.com/sch/i.html?_nkw={product_clean}&LH_BIN=1&rt=nc&LH_ItemCondition=1000&LH_BIN=1&_fcid=1"
-        self.set_page (link)
+        self.soup = requests_page (link, html_name="sample amazon")
 
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in ebay

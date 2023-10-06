@@ -4,7 +4,6 @@ from threading import Thread
 from db import Database
 from dotenv import load_dotenv
 from scraper import Scraper
-from scraper_aliexpress import ScraperAliexpress
 from scraper_amazon import ScraperAmazon
 from scraper_ebay import ScraperEbay
 
@@ -42,7 +41,7 @@ def start_scrapers (keyword:str, request_id:int):
         request_id (int): request id
     """
     
-    classes = [ScraperAmazon]
+    classes = [ScraperAmazon, ScraperEbay]
     
     # Update request status to working
     db.update_request_status (request_id, "working")

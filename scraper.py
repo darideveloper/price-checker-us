@@ -82,7 +82,11 @@ class Scraper (ABC):
             str: reviews number as text
         """
         
-        reviews = self.soup.select_one (selector).text
+        reviews = self.soup.select (selector)
+        if reviews:
+            reviews = reviews[0].text
+        else:
+            reviews = ""
         return reviews
     
     def clean_text (self, text:str, chars:list) -> str:
@@ -127,9 +131,9 @@ class Scraper (ABC):
             float: product rate as float
         """
         
-        rate_num = self.soup.select_one (selector).text
-        
+        rate_num = self.soup.select (selector)        
         if rate_num:
+            rate_num = rate_num[0].text
             rate_num = float(rate_num.split (" ")[0])
         else:
             rate_num = 0.0
