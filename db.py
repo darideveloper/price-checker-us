@@ -283,53 +283,6 @@ class Database (MySQL):
             
         return ""
     
-    def get_cookies_random (self, store_name:str, clean_cookies=True) -> list:
-        """ Get cookies from a random user in db
-
-        Args:
-            store_name (str): store name like amazon, ebay, etc
-            clean_cookies (bool, optional): clean cookies to keep only name and value. Defaults to True.
-
-        Returns:
-            list: list of dict with cookies (key and value)
-        """
-        
-        print (f"Getting cookies from {store_name} store")
-        
-        # Get cookies from all users in the store
-        id_store = self.stores[store_name]["id"]
-        id_status = self.status["cookie on"]
-        
-        query = f"""
-            SELECT cookies
-            FROM cookies
-            WHERE 
-                id_store = {id_store}
-                AND
-                status = {id_status}
-        """
-        cookies_users = self.run_sql (query)
-        
-        if not cookies_users:
-            return []
-        
-        # Select random user
-        random_cookies_json = random.choice (cookies_users)["cookies"]
-        random_cookies = json.loads (random_cookies_json)
-        
-        # Keep only cookie name and cookie value
-        if clean_cookies:
-            cookies_cleaned = []
-            for cookie in cookies_cleaned:
-                cookies_cleaned.append ({
-                    "name": cookie["name"],
-                    "value": cookie["value"]
-                })
-        else:
-            cookies_cleaned = random_cookies
-        
-        return cookies_cleaned
-    
     def get_products (self, id_request:int) -> list:
         """ Get products from a request and all stores
 
