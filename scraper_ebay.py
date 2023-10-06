@@ -7,7 +7,6 @@ from crawlbase import requests_page
 # read .env file
 load_dotenv ()
 MAX_PRODUCTS = int(os.getenv ("MAX_PRODUCTS"))
-CHROME_PATH = os.getenv ("CHROME_PATH")
 
 class ScraperEbay (Scraper):
     
@@ -50,7 +49,7 @@ class ScraperEbay (Scraper):
         
         product_clean = product.replace (" ", "+")  
         link = f"https://www.ebay.com/sch/i.html?_nkw={product_clean}&LH_BIN=1&rt=nc&LH_ItemCondition=1000&LH_BIN=1&_fcid=1"
-        self.soup = requests_page (link, html_name="sample amazon")
+        self.soup = requests_page (link, html_name="sample ebay")
 
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in ebay

@@ -7,7 +7,6 @@ from crawlbase import requests_page
 # read .env file
 load_dotenv ()
 MAX_PRODUCTS = int(os.getenv ("MAX_PRODUCTS"))
-CHROME_PATH = os.getenv ("CHROME_PATH")
 
 class ScraperAmazon (Scraper):
     

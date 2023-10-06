@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from scraper import Scraper
 from scraper_amazon import ScraperAmazon
 from scraper_ebay import ScraperEbay
+from scraper_walmart import ScraperWalmart
 
 # Load env variables
 load_dotenv ()
@@ -41,7 +42,7 @@ def start_scrapers (keyword:str, request_id:int):
         request_id (int): request id
     """
     
-    classes = [ScraperAmazon, ScraperEbay]
+    classes = [ScraperAmazon, ScraperEbay, ScraperWalmart]
     
     # Update request status to working
     db.update_request_status (request_id, "working")
