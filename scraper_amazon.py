@@ -49,7 +49,7 @@ class ScraperAmazon (Scraper):
         
         # Load search page
         link = f"https://www.amazon.com/s?k={product}&s=review-rank"
-        self.soup = requests_page (link, self.db, html_name="sample amazon")
+        self.soup = requests_page (link, self.db)
 
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in amazon
@@ -115,7 +115,7 @@ class ScraperAmazon (Scraper):
         Returns:
             float: product rate as float
         """
-        
+                
         rate_num = self.soup.select_one (selector).attrs["aria-label"]
         
         if rate_num:

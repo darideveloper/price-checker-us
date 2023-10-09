@@ -39,7 +39,8 @@ def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     try:
         scraper.get_results (request_id)
     except Exception as error:
-        db.save_log (f"keyword: {keyword}, request_id: {request_id}, error: {str (error)}", log_origin, id_request=request_id)
+        error_message = f"store: {scraper.store}, keyword: {keyword}, request_id: {request_id}, error: {str (error)}"
+        db.save_log (error_message, log_origin, id_request=request_id, log_type="error")
         quit ()
          
     # random_wait_time = random.randint (30, 60)
@@ -127,7 +128,7 @@ def wrapper_validate_request_id(function):
         # Validate required data
         if not request_id:
             
-            db.save_log ("Request-id is required", log_origin, request_id=request_id)
+            db.save_log ("Request-id is required", log_origin, id_request=request_id)
             
             return ({
                 "status": "error",
@@ -140,7 +141,7 @@ def wrapper_validate_request_id(function):
         
         if not request_status:
             
-            db.save_log ("Invalid request-id", log_origin, request_id=request_id)
+            db.save_log ("Invalid request-id", log_origin, id_request=request_id)
             
             return ({
                 "status": "error",
@@ -203,7 +204,7 @@ def status ():
     # Get request status
     request_status = db.get_request_status (request_id)
     
-    db.save_log ("Request status", log_origin, request_id=request_id)
+    db.save_log ("Request status", log_origin, id_request=request_id)
     
     return ({
         "status": "success",
@@ -225,7 +226,7 @@ def results ():
     # Get products from db
     products = db.get_products (request_id)
     
-    db.save_log ("Products found", log_origin, request_id=request_id)
+    db.save_log ("Products found", log_origin, id_request=request_id)
     
     return ({
         "status": "success",
@@ -248,7 +249,7 @@ def preview ():
     
     if not valid_token or not valid_request_id:
         
-        db.save_log ("Invalid api token or request id", log_origin, api_token=api_token, request_id=request_id)
+        db.save_log ("Invalid api token or request id", log_origin, api_token=api_token, id_request=request_id)
         
         return ({
             "status": "error",
@@ -259,7 +260,7 @@ def preview ():
     # Get products from db
     products_categories = db.get_products (request_id)
     
-    db.save_log ("Products rendered", log_origin, request_id=request_id)
+    db.save_log ("Products rendered", log_origin, id_request=request_id)
     
     return render_template ("preview.html", products_categories=products_categories)
     

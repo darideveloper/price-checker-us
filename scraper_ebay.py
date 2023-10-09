@@ -49,7 +49,7 @@ class ScraperEbay (Scraper):
         
         product_clean = product.replace (" ", "+")  
         link = f"https://www.ebay.com/sch/i.html?_nkw={product_clean}&LH_BIN=1&rt=nc&LH_ItemCondition=1000&LH_BIN=1&_fcid=1"
-        self.soup = requests_page (link, self.db, html_name="sample ebay")
+        self.soup = requests_page (link, self.db)
 
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in ebay
