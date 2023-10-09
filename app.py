@@ -35,8 +35,13 @@ def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     """
     
     scraper = scraper_class (keyword, db)
-    scraper.get_results (request_id)
     
+    try:
+        scraper.get_results (request_id)
+    except Exception as error:
+        db.save_log (f"keyword: {keyword}, request_id: {request_id}, error: {str (error)}", log_origin, id_request=request_id)
+        quit ()
+         
     # random_wait_time = random.randint (30, 60)
     # sleep (random_wait_time)
 
