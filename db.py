@@ -6,6 +6,8 @@ class Database (MySQL):
     status = {}
     api_keys = {}
     stores = {}
+    log_types = {}
+    log_origins = {}
     
     def __init__ (self, server:str, database:str, username:str, password:str):
         """ Connect with mysql db
@@ -26,7 +28,15 @@ class Database (MySQL):
             Database.api_keys = self.__get_api_keys__ ()
             
         if not Database.stores:
-            Database.stores = self.__get_stroes__ ()
+            Database.stores = self.__get_stores__ ()
+    
+        if not Database.log_types:
+            Database.log_types = self.__get_log_types__ ()
+            
+        if not Database.log_origins:
+            Database.log_origins = self.__get_log_origins__ ()
+            
+        self.log_origin = "database"
     
     def __get_status__ (self) -> dict:
         """ Retuen status from database as dictionary
@@ -69,7 +79,7 @@ class Database (MySQL):
             
         return status
     
-    def __get_stroes__ (self) -> dict:
+    def __get_stores__ (self) -> dict:
         """ Query current stores in database 
         
         Returns:
@@ -78,22 +88,17 @@ class Database (MySQL):
             {
                 "amazon": {
                     "id": 1,
-                    "use_proxies": 1
                 },
                 "aliexpress": {
                     "id": 2,
-                    "use_proxies": 1
                 },
                 "ebay": {
                     "id": 3,
-                    "use_proxies": 0
                 },
                 ...
             }
         """
-        
-        print ("Getting stores from database")
-        
+                
         # Query all stores 
         query = "select * from stores"
         results = self.run_sql(query)
@@ -103,6 +108,50 @@ class Database (MySQL):
             data[row["name"]] = {
                 "id": row["id"],
             }
+        
+        return data
+    
+    def __get_log_types__ (self) -> dict:
+        """ Query current log types in database
+
+        Returns:
+            dict: log types (name and id)
+            
+            {
+                "info": 1,
+                "error": 2,
+            }
+        """
+                
+        # Query all stores 
+        query = "select * from log_types"
+        results = self.run_sql(query)
+        
+        data = {}
+        for row in results:
+            data[row["name"]] = row["id"]
+        
+        return data
+    
+    def __get_log_origins__ (self) -> dict:
+        """ Query current log origins in database
+
+        Returns:
+            dict: log types (name and id)
+            {
+                "database": 1,
+                "api": 2,
+                "scraper": 3
+            }
+        """
+                
+        # Query all stores 
+        query = "select * from log_origins"
+        results = self.run_sql(query)
+        
+        data = {}
+        for row in results:
+            data[row["name"]] = row["id"]
         
         return data
     
@@ -160,7 +209,7 @@ class Database (MySQL):
     def delete_products (self):
         """ Delete all rows from products table """
         
-        print ("Deleting all products from database")
+        self.save_log ("Deleting all products from database", self.log_origin)
         
         query = "delete from products"
         self.run_sql(query)
@@ -173,7 +222,7 @@ class Database (MySQL):
         """
         
         token_cencured = token[:5] + "..."
-        print (f"Validating token {token_cencured}")
+        self.save_log (f"Validating token {token_cencured}", self.log_origin)
         
         token = self.get_clean_text (token)
         
@@ -203,7 +252,7 @@ class Database (MySQL):
             int: id of new request
         """
         
-        print ("Creating new request in database")
+        self.save_log ("Creating new request in database", self.log_origin)
         
         # Get status for new requests
         status_todo_id = Database.status["to do"]
@@ -243,7 +292,7 @@ class Database (MySQL):
             status_name (str): status name
         """
         
-        print (f"Request {request_id} status updated to {status_name}")
+        self.save_log (f"Updating request {request_id} status to {status_name}", self.log_origin)
         
         status_num = Database.status[status_name]
         
@@ -318,5 +367,37 @@ class Database (MySQL):
                 lambda product: product["id_store"] == store_id, products
             ))
         
-        
         return products_store
+    
+    def save_log (self, message:str, origin:str, store:str="", id_request:int=0, api_key:str="", log_type:str="info"):
+        """ Save log in database
+
+        Args:
+            message (str): logs details
+            store (str): webn scraping log store
+            id_request (int): id request from api
+            api_key (str): api key from api
+            log_type (str): type of log (info or error)
+        """
+        
+        # Get and validate ids
+        id_store = Database.stores[store]["id"] if store else "NULL"
+        id_api_key = Database.api_keys[api_key] if api_key else "NULL"
+        id_log_type = Database.log_types[log_type] if log_type else "NULL"
+        id_log_origin = Database.log_origins[origin] if origin else "NULL"
+        
+        # Validate id request
+        if not id_request:
+            id_request = "NULL"
+                
+        query = f"""
+        INSERT INTO `logs` 
+            (id_log_type, id_log_origin,id_store, id_request, id_api_key, message) 
+        VALUES 
+            ({id_log_type}, {id_log_origin}, {id_store}, {id_request}, {id_api_key}, '{message}')
+        """
+        
+        self.run_sql (query)
+        
+        print (f"{log_type}: {message} (store: {store}, request: {id_request}, api_key: {api_key})")
+        

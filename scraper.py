@@ -33,6 +33,7 @@ class Scraper (ABC):
         self.db = db
         self.stores = Database.stores  
         self.soup = None
+        self.log_origin = "scraper"
     
     @abstractmethod
     def __load_page__ (self, product:str):
@@ -177,7 +178,7 @@ class Scraper (ABC):
         
         product = self.keyword.lower ()
         
-        print (f"({self.store} - {request_id}) Searching products...")
+        self.db.save_log ("Searching products...", self.log_origin, self.store, request_id)
 
         # Open chrome and load results page
         self.__load_page__ (product)
@@ -191,7 +192,7 @@ class Scraper (ABC):
             current_index = self.start_product
             extracted_products = 0
 
-            print (f"({self.store} - {request_id}) Extracting data...")
+            self.db.save_log (f" Extracting data...", self.log_origin, self.store, request_id)
 
             products_data = []
             while True:
@@ -222,7 +223,7 @@ class Scraper (ABC):
                 
                 # Validate if there are not more products in the page
                 if current_index - self.start_product > results_num:
-                    print (f"({self.store} - {request_id}) No more products")
+                    self.db.save_log (f" No more products", self.log_origin, self.store, request_id)
                     break
                 
                 # Skip products without price
@@ -312,9 +313,9 @@ class Scraper (ABC):
             # Save products in db
             self.db.save_products (products_data)
             
-            print (f"({self.store} - {request_id}) {extracted_products} products saved")
+            self.db.save_log (f"{extracted_products} products saved", self.log_origin, self.store, request_id)
         else:
-            print (f"({self.store} - {request_id}) No results found")
+            self.db.save_log (f"No results found", self.log_origin, self.store, request_id)
         
         quit ()
     

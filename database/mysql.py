@@ -35,13 +35,7 @@ class MySQL ():
         cursor = connection.cursor()
 
         # Try to run sql
-        try:
-            cursor.execute (sql)
-        except Exception as err:
-
-            print (err, sql)
-
-            return None
+        cursor.execute (sql)
 
         # try to get returned part
         try:
