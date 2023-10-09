@@ -23,6 +23,8 @@ USE_THREADING = os.getenv ("USE_THREADING") == "True"
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
+log_origin = "api"
+
 def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     """ Start an specific scraper and extract data
 
@@ -85,6 +87,9 @@ def wrapper_validate_api_key(function):
         
         # Validate required data
         if not api_key:
+            
+            db.save_log ("Api-key is required", log_origin, api_key=api_key[0:5])
+            
             return ({
                 "status": "error",
                 "message": "Api-key is required",
@@ -94,6 +99,9 @@ def wrapper_validate_api_key(function):
         # Validate if token exist in db
         api_key_valid = db.validate_token (api_key)
         if not api_key_valid:
+            
+            db.save_log ("Invalid api-key", log_origin, api_key=api_key)
+            
             return ({
                 "status": "error",
                 "message": "Invalid api-key",
@@ -113,6 +121,9 @@ def wrapper_validate_request_id(function):
         
         # Validate required data
         if not request_id:
+            
+            db.save_log ("Request-id is required", log_origin, request_id=request_id)
+            
             return ({
                 "status": "error",
                 "message": "Request-id is required",
@@ -123,6 +134,9 @@ def wrapper_validate_request_id(function):
         request_status = db.get_request_status (request_id)
         
         if not request_status:
+            
+            db.save_log ("Invalid request-id", log_origin, request_id=request_id)
+            
             return ({
                 "status": "error",
                 "message": "Invalid request-id",
@@ -145,6 +159,9 @@ def keyword ():
     
     # Validate required data
     if not keyword:
+        
+        db.save_log ("Keyword is required", log_origin, api_key=api_key)
+        
         return ({
             "status": "error",
             "message": "Keyword is required",
@@ -157,6 +174,8 @@ def keyword ():
     # initialize web scraper in background
     thread_scrapers = Thread (target=start_scrapers, args=(keyword, request_id))
     thread_scrapers.start ()
+    
+    db.save_log ("Scraper started in background", log_origin, api_key=api_key, id_request=request_id)
     
     return {
         "status": "success",
@@ -179,6 +198,8 @@ def status ():
     # Get request status
     request_status = db.get_request_status (request_id)
     
+    db.save_log ("Request status", log_origin, request_id=request_id)
+    
     return ({
         "status": "success",
         "message": "Request status",
@@ -198,6 +219,8 @@ def results ():
 
     # Get products from db
     products = db.get_products (request_id)
+    
+    db.save_log ("Products found", log_origin, request_id=request_id)
     
     return ({
         "status": "success",
@@ -219,6 +242,9 @@ def preview ():
     valid_request_id = db.get_request_status (request_id)
     
     if not valid_token or not valid_request_id:
+        
+        db.save_log ("Invalid api token or request id", log_origin, api_token=api_token, request_id=request_id)
+        
         return ({
             "status": "error",
             "message": "invalid api token or request id",
@@ -227,6 +253,8 @@ def preview ():
     
     # Get products from db
     products_categories = db.get_products (request_id)
+    
+    db.save_log ("Products rendered", log_origin, request_id=request_id)
     
     return render_template ("preview.html", products_categories=products_categories)
     

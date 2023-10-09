@@ -399,5 +399,21 @@ class Database (MySQL):
         
         self.run_sql (query)
         
-        print (f"{log_type}: {message} (store: {store}, request: {id_request}, api_key: {api_key})")
+        extra_data = False
+        print_message = f"{log_type}: {message} ("
+        if store and store != "NULL":
+            print_message += f"store: {store}, "
+            extra_data = True
+        if id_request and id_request != "NULL":
+            print_message += f"request: {id_request}, "
+            extra_data = True
+        if api_key and api_key != "NULL":
+            print_message += f"api_key: {api_key[:5]+'...'}, "
+            extra_data = True
+        
+        print_message = print_message[:-2]
+        if extra_data:
+            print_message += ")"
+        
+        print (print_message)
         

@@ -10,6 +10,7 @@ CREATE TABLE `log_origins` (
 
 CREATE TABLE `Logs` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `timestamp` timestamp,
   `id_log_type` integer,
   `id_log_origin` integer,
   `id_store` integer,

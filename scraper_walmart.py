@@ -47,7 +47,7 @@ class ScraperWalmart (Scraper):
         # Load search page
         product_clean = product.replace (" ", "+")
         link = f"https://www.walmart.com/search?country=US&q={product_clean}&sort=best_seller"
-        self.soup = requests_page (link, html_name="sample walmart")
+        self.soup = requests_page (link, self.db, html_name="sample walmart")
         
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in walmart
