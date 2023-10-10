@@ -39,7 +39,7 @@ def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     try:
         scraper.get_results (request_id)
     except Exception as error:
-        error_message = f"store: {scraper.store}, keyword: {keyword}, request_id: {request_id}, error: {str (error)}"
+        error_message = f"store: {scraper.store}, keyword: {keyword}, error: {str (error)}"
         db.save_log (error_message, log_origin, id_request=request_id, log_type="error")
         quit ()
          

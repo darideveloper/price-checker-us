@@ -1,5 +1,14 @@
+import os
+from time import sleep
 from datetime import datetime
 from database.mysql import MySQL
+from email_manager.sender import EmailManager
+from dotenv import load_dotenv
+
+load_dotenv ()
+EMAIL_USER = os.getenv ("EMAIL_USER")
+EMAIL_PASSWORD = os.getenv ("EMAIL_PASSWORD")
+TO_EMAILS = os.getenv ("TO_EMAILS").split (",")
 
 class Database (MySQL):
     
@@ -19,8 +28,10 @@ class Database (MySQL):
             password (str): database password
         """
         
+        # Connext to database
         super().__init__(server, database, username, password)
         
+        # Loading initial data
         if not Database.status:
             Database.status = self.__get_status__ ()
         
@@ -35,8 +46,12 @@ class Database (MySQL):
             
         if not Database.log_origins:
             Database.log_origins = self.__get_log_origins__ ()
-            
+        
+        # Log status
         self.log_origin = "database"
+        
+        # Connect to email
+        self.email_manager = EmailManager (EMAIL_USER, EMAIL_PASSWORD)
     
     def __get_status__ (self) -> dict:
         """ Retuen status from database as dictionary
@@ -389,7 +404,8 @@ class Database (MySQL):
         # Validate id request
         if not id_request:
             id_request = "NULL"
-                
+        
+        # Save log in database
         query = f"""
         INSERT INTO `logs` 
             (id_log_type, id_log_origin,id_store, id_request, id_api_key, message) 
@@ -399,6 +415,7 @@ class Database (MySQL):
         
         self.run_sql (query)
         
+        # Print logs 
         extra_data = False
         print_message = f"{log_type}: {message} ("
         if store and store != "NULL":
@@ -417,3 +434,16 @@ class Database (MySQL):
         
         print (print_message)
         
+        # Send error email
+        if log_type == "error":
+            
+            # Wait for email to be sent
+            while True:
+                
+                if self.email_manager.sending_email:
+                    sleep (1)
+                else:
+                    break
+            
+            self.email_manager.send_email (TO_EMAILS, "Error in web scraping", print_message)
+            
