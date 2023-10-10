@@ -192,7 +192,7 @@ def keyword ():
         }, status_code)
     
     # save request in db
-    request_id = db.create_new_request (api_key)
+    request_id = db.create_new_request (api_key, keyword)
     
     # initialize web scraper in background
     thread_scrapers = Thread (target=start_scrapers, args=(keyword, request_id))

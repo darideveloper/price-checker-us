@@ -257,11 +257,12 @@ class Database (MySQL):
         else:
             return False
                 
-    def create_new_request (self, api_key:str) -> int:
+    def create_new_request (self, api_key:str, keyword:str) -> int:
         """  Save a new request in database with status "to do" 
         
         Args:
             api_key (str): api access token
+            keyword (str): keyword to search
             
         Returns:
             int: id of new request
@@ -280,8 +281,8 @@ class Database (MySQL):
         
         # Save new request
         query = f"""
-            INSERT INTO requests (status, todo_datetime, api_key) 
-            VALUES ({status_todo_id}, '{current_datetime}', {api_key_id})
+            INSERT INTO requests (status, todo_datetime, api_key, keyword) 
+            VALUES ({status_todo_id}, '{current_datetime}', {api_key_id}, '{keyword}')
         """
         self.run_sql (query)
         
