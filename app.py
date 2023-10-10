@@ -19,6 +19,7 @@ DB_USER = os.getenv ("DB_USER")
 DB_PASSWORD = os.getenv ("DB_PASSWORD")
 DB_NAME = os.getenv ("DB_NAME")
 USE_THREADING = os.getenv ("USE_THREADING") == "True"
+PORT = int(os.environ.get('PORT', 5000))
 
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
@@ -275,4 +276,4 @@ def preview ():
     return render_template ("preview.html", products_categories=products_categories)
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=PORT)
