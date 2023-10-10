@@ -158,6 +158,17 @@ def wrapper_validate_request_id(function):
     
     return wrap
 
+@app.get ('/')
+def index ():
+    """ Home page """
+    
+    return {
+        "status": "success",
+        "message": "service running",
+        "data": []
+    }
+
+
 @app.post ('/keyword/')
 @wrapper_validate_api_key
 def keyword ():
