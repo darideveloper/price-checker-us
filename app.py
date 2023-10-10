@@ -94,25 +94,27 @@ def wrapper_validate_api_key(function):
         # Validate required data
         if not api_key:
             
-            db.save_log ("Api-key is required", log_origin, api_key=api_key[0:5])
+            status_code = 400
+            db.save_log (f"({status_code}) Api-key is required", log_origin)
             
             return ({
                 "status": "error",
                 "message": "Api-key is required",
                 "data": {}
-            }, 400)
+            }, status_code)
         
         # Validate if token exist in db
         api_key_valid = db.validate_token (api_key)
         if not api_key_valid:
             
-            db.save_log ("Invalid api-key", log_origin, api_key=api_key)
+            status_code = 401
+            db.save_log (f"({status_code}) Invalid api-key {api_key}", log_origin)
             
             return ({
                 "status": "error",
                 "message": "Invalid api-key",
                 "data": {}
-            }, 401)
+            }, status_code)
             
         return function(*args, **kwargs)
     
@@ -128,26 +130,28 @@ def wrapper_validate_request_id(function):
         # Validate required data
         if not request_id:
             
-            db.save_log ("Request-id is required", log_origin, id_request=request_id)
+            status_code = 400
+            db.save_log (f"({status_code}) Request-id is required", log_origin)
             
             return ({
                 "status": "error",
                 "message": "Request-id is required",
                 "data": {}
-            }, 400)
+            }, status_code)
         
         # Get request status
         request_status = db.get_request_status (request_id)
         
         if not request_status:
             
-            db.save_log ("Invalid request-id", log_origin, id_request=request_id)
+            status_code = 404
+            db.save_log (f"({status_code}) Invalid request-id {request_status}", log_origin)
             
             return ({
                 "status": "error",
                 "message": "Invalid request-id",
                 "data": {}
-            }, 404)
+            }, status_code)
             
         return function(*args, **kwargs)
     
@@ -166,13 +170,14 @@ def keyword ():
     # Validate required data
     if not keyword:
         
-        db.save_log ("Keyword is required", log_origin, api_key=api_key)
+        status_code = 400
+        db.save_log (f"({status_code}) Keyword is required", log_origin, api_key=api_key)
         
         return ({
             "status": "error",
             "message": "Keyword is required",
             "data": {}
-        }, 400)
+        }, status_code)
     
     # save request in db
     request_id = db.create_new_request (api_key)
@@ -181,7 +186,8 @@ def keyword ():
     thread_scrapers = Thread (target=start_scrapers, args=(keyword, request_id))
     thread_scrapers.start ()
     
-    db.save_log ("Scraper started in background", log_origin, api_key=api_key, id_request=request_id)
+    status_code = 200
+    db.save_log (f"({status_code}) Scraper started in background", log_origin, api_key=api_key, id_request=request_id)
     
     return {
         "status": "success",
@@ -204,7 +210,8 @@ def status ():
     # Get request status
     request_status = db.get_request_status (request_id)
     
-    db.save_log ("Request status", log_origin, id_request=request_id)
+    status_code = 200
+    db.save_log (f"({status_code}) Request status", log_origin, id_request=request_id)
     
     return ({
         "status": "success",
@@ -226,7 +233,8 @@ def results ():
     # Get products from db
     products = db.get_products (request_id)
     
-    db.save_log ("Products found", log_origin, id_request=request_id)
+    status_code = 200
+    db.save_log (f"({status_code}) Products found", log_origin, id_request=request_id)
     
     return ({
         "status": "success",
@@ -249,18 +257,20 @@ def preview ():
     
     if not valid_token or not valid_request_id:
         
-        db.save_log ("Invalid api token or request id", log_origin, api_token=api_token, id_request=request_id)
+        status_code = 401
+        db.save_log (f"({status_code}) Invalid api token or request id", log_origin, api_token=api_token, id_request=request_id)
         
         return ({
             "status": "error",
             "message": "invalid api token or request id",
             "data": []
-        }, 401)
+        }, status_code)
     
     # Get products from db
     products_categories = db.get_products (request_id)
     
-    db.save_log ("Products rendered", log_origin, id_request=request_id)
+    status_code = 200
+    db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
     
     return render_template ("preview.html", products_categories=products_categories)
     
