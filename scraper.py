@@ -176,8 +176,6 @@ class Scraper (ABC):
             ]
         """
         
-        raise Exception ("Sample error")
-
         product = self.keyword.lower ()
         
         self.db.save_log ("Searching products...", self.log_origin, self.store, request_id)
