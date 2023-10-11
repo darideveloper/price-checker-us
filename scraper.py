@@ -34,6 +34,9 @@ class Scraper (ABC):
         self.stores = Database.stores  
         self.soup = None
         self.log_origin = "scraper"
+        
+        # Get referral link
+        self.referral_link = self.stores[self.store]["referral_link"]
     
     @abstractmethod
     def __load_page__ (self, product:str):
@@ -291,6 +294,10 @@ class Scraper (ABC):
                 
                 # Incress counter of extracted products
                 extracted_products += 1
+                
+                # Add referral link
+                if self.referral_link:
+                    link += f"&{self.referral_link}"
                 
                 # Save data
                 products_data.append ({

@@ -103,12 +103,15 @@ class Database (MySQL):
             {
                 "amazon": {
                     "id": 1,
+                    "referral_link": "key={value}",
                 },
                 "aliexpress": {
                     "id": 2,
+                    "referral_link": "key={value}",
                 },
                 "ebay": {
                     "id": 3,
+                    "referral_link": "key={value}",
                 },
                 ...
             }
@@ -122,6 +125,7 @@ class Database (MySQL):
         for row in results:
             data[row["name"]] = {
                 "id": row["id"],
+                "referral_link": row["referral_link"]
             }
         
         return data

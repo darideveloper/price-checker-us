@@ -163,6 +163,7 @@ INSERT INTO `status` (`id`, `name`) VALUES
 CREATE TABLE `stores` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
+  `referral_link` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

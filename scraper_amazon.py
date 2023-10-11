@@ -46,7 +46,7 @@ class ScraperAmazon (Scraper):
         Args:
             product (str): product to search
         """
-        
+
         # Load search page
         link = f"https://www.amazon.com/s?k={product}&s=review-rank"
         self.soup = requests_page (link, self.db)
