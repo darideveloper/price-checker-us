@@ -19,6 +19,8 @@ USE_THREADING = os.getenv ("USE_THREADING") == "True"
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
+log_origin = "scraper"
+
 def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     """ Start an specific scraper and extract data
 
@@ -33,6 +35,8 @@ def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     try:
         scraper.get_results (request_id)
     except Exception as error:
+        error_message = f"store: {scraper.store}, keyword: {keyword}, error: {str (error)}"
+        db.save_log (error_message, log_origin, id_request=request_id, log_type="error")
         quit ()
          
     # random_wait_time = random.randint (30, 60)
@@ -77,5 +81,5 @@ def start_scrapers (keyword:str, request_id:int):
     db.update_request_status (request_id, "done")
 
 while True:
-    start_scrapers ("protein", 38)
+    start_scrapers ("protein", 142)
     sleep (20)

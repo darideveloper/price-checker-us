@@ -175,6 +175,8 @@ class Scraper (ABC):
                 ...
             ]
         """
+        
+        raise Exception ("Sample error")
 
         product = self.keyword.lower ()
         
