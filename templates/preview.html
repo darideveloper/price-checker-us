@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products preview</title>
+  <title>Price Checker US | Products preview</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/style.css') }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rospanoto+Condensed:wght@400;700&family=Yeseva+One&display=swap"
+    rel="stylesheet">
+
 </head>
-<body>
+
+<spanody>
+
+  <img src="{{ url_for('static', filename='/logo.jpg') }}" alt="Price Checker US Logo" class="logo">
+
   <h1>Products preview</h1>
   {% for category, products in products_categories.items() %}
   <h2>--- {{category}} ---</h2>
-  <ul>
+  <section class="products">
     {% for product in products %}
-    <li>
-      <h3>{{product.title}}</h3>
-      <img src="{{product.image}}" width="50">
-      <p>id: <b>{{product.id}}</b></p>
-      <p>rate_num: <b>{{product.rate_num}}</b></p>
-      <p>reviews: <b>{{product.reviews}}</b></p>
-      <p>price: <b>{{product.price}}</b></p>
-      <p>best_seller: <b>{{product.best_seller}}</b></p>
-      <p>sales: <b>{{product.sales}}</b></p>
-      <p>link: <a href="{{product.link}}">{{product.link}}</a></p>
-    </li>
+    <article class="product">
+      <a href="{{product.link}}" class="">
+        <div class="img-wrapper">
+          <img src="{{product.image}}" title="{{product.title}}">
+        </div>
+        <div class="texts">
+          <p>Rate Num: <span>{{product.rate_num}}</span></p>
+          <p>Reviews: <span>{{product.reviews}}</span></p>
+          <p>Price: <span>{{product.price}}</span></p>
+          <p>Best Seller: <span>{{product.best_seller}}</span></p>
+          <p>Sales: <span>{{product.sales}}</span></p>
+          <p>Store: <span>{{category}}</span> </p>
+        </div>
+      </a>
+    </article>
     {% endfor %}
-  </ul>
+  </section>
   {% endfor %}
-</body>
+</spanody>
+
 </html>

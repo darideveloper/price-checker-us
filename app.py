@@ -261,16 +261,14 @@ def preview ():
     """ Render basic preview products page """
     
     # Get url variables
-    api_token = request.args.get ("api-token", "")
     request_id = request.args.get ("request-id", "")
     
-    valid_token = db.validate_token (api_token)
     valid_request_id = db.get_request_status (request_id)
     
-    if not valid_token or not valid_request_id:
+    if not valid_request_id:
         
         status_code = 401
-        db.save_log (f"({status_code}) Invalid api token or request id", log_origin, api_token=api_token, id_request=request_id)
+        db.save_log (f"({status_code}) Invalid api token or request id", log_origin, id_request=request_id)
         
         return ({
             "status": "error",
