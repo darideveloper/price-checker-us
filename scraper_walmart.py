@@ -47,7 +47,7 @@ class ScraperWalmart (Scraper):
         # Load search page
         product_clean = product.replace (" ", "+")
         link = f"https://www.walmart.com/search?country=US&q={product_clean}&sort=best_seller"
-        self.soup = requests_page (link, self.db)
+        self.soup = requests_page (link, self.db, html_name="walmart")
         
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in walmart
@@ -73,7 +73,8 @@ class ScraperWalmart (Scraper):
         
         # current price $39.99
         price_parts = text.split (" ")
-        price = price_parts[-1].replace ("$", "").replace (",", "")
+        price = price_parts[-1]
+        price = self.clean_text (price, ["$", "US ", ",", "'", '"'])
         
         if price.replace (".", "").isdigit ():
             return price

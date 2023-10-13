@@ -40,6 +40,11 @@ def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     try:
         scraper.get_results (request_id)
     except Exception as error:
+        
+        # Clean error message
+        error = str (error).replace ("'", "").replace ("\"", "")
+        
+        # Save error in db
         error_message = f"store: {scraper.store}, keyword: {keyword}, error: {str (error)}"
         db.save_log (error_message, log_origin, id_request=request_id, log_type="error")
         quit ()
