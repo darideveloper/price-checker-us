@@ -1,13 +1,15 @@
-$color_a: #363062
-$color_b: #4D4C7D
-$color_c: #F99417
-$color_d: #FFFFFF
+$color_a: #F1F6F9
+$color_b: #394867
+$color_c: #212A3E
+$color_d: #9BA4B5
+$color_e: #ffffff
 
 body
     font-family: 'Roboto Condensed', sans-serif
     max-width: 90%
     margin: 0 auto
     background-color: $color_a
+    color: $color_c
 
 .debug
     border: 1px solid red
@@ -16,50 +18,141 @@ body
     font-family: 'Yeseva One', serif
 
 a
-    color: $color_a
+    color: $color_b
     text-decoration: none
 
-.products
-    display: grid
-    grid-template-columns: repeat(4, 1fr)
-    gap: 2rem
+header
+    max-width: 1400px
+    margin: 0 auto
 
-    .product
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
-        border-radius: 1rem
-        background-color: $color_d
-        width: 100%
-        height: 100%
+    .logo-wrapper
 
-        &:hover
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8)
-            transform: translateY(-10px)
-            transition-duration: 0.2s
+        display: flex
+        align-items: center
+        justify-content: center
+        margin-top: 10px
 
-        .img-wrapper
+        .logo
+            width: 100px
+            margin-right: 20px
+
+main
+    max-width: 1400px
+    margin: 0 auto
+
+    .category-wrapper
+        .title
+            text-transform: capitalize
             width: 100%
-            height: 50%
-            display: flex
-            align-items: center
-            justify-content: center
+            text-align: center
+            font-size: 1.5rem
+            margin-top: 85px
+            margin-bottom: 30px
 
-            img
-                width: 70%
-                max-height: 100%
+        .products
+            display: grid
+            grid-template-columns: repeat(4, 1fr)
+            gap: 2rem
 
-        a
-            padding: 2rem
-            display: flex
-            flex-direction: column
-            align-items: center
-            justify-content: space-between
-            height: calc(100% - 4rem)
-            width: calc(100% - 4rem)
+            .product
+                box-shadow: 0 0 5px rgba($color_c, 0.8)
+                border-radius: 1rem
+                background-color: $color_e
+                width: 100%
+                height: 100%
+                position: relative
+                transition-duration: 0.3s
 
-            p
-                margin: 0
-                padding: 0
-                font-size: 1.1rem
+                &:hover
+                    box-shadow: 0 0 12px rgba($color_c, 1)
+                    transform: translateY(-5px)
 
-                span
-                    font-weight: bold
+                .img-wrapper
+                    width: 100%
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    margin-bottom: 2rem
+
+                    img
+                        width: 70%
+
+                a
+                    display: flex
+                    flex-direction: column
+                    align-items: center
+                    justify-content: space-between
+                    height: calc(100% - 2rem)
+                    width: calc(100% - 2rem)
+                    margin: 0 auto
+                    padding: 1rem
+
+                    .texts
+                        width: 100%
+
+                        p
+                            margin: 0.1rem 0
+                            padding: 0
+                            font-size: 1.1rem
+                            color: $color_b
+                            text-align: center
+
+                            &.price
+                                font-size: 1.8rem
+                                margin-bottom: 0.4rem
+                                color: $color_c
+                                display: flex
+                                align-content: center
+                                justify-content: center
+
+                                span.small
+                                    font-size: 1rem
+                                    margin-top: 5px
+
+                            span
+                                font-weight: bold
+                                text-transform: capitalize
+
+                        .data
+                            display: grid
+                            grid-template-columns: repeat(2, 1fr)
+
+                .best-seller-icon
+                    position: absolute
+                    right: 0
+                    top: 0
+                    transform: rotate(45deg)
+                    width: 80px
+
+        .disclaimer
+            font-size: 1.1rem
+            width: 100%
+            text-align: center
+            margin: 25px 0
+
+@media screen and (max-width: 1200px)
+    body
+        max-width: 96%
+
+@media screen and (max-width: 1150px)
+
+    main
+        .category-wrapper
+            .products
+                grid-template-columns: repeat(3, 1fr)
+
+@media screen and (max-width: 850px)
+
+    main
+        .category-wrapper
+            .products
+                grid-template-columns: repeat(2, 1fr)
+
+@media screen and (max-width: 530px)
+
+    main
+        .category-wrapper
+            .products
+                grid-template-columns: repeat(1, 1fr)
+                margin-right: 30px
+                margin-left: 30px

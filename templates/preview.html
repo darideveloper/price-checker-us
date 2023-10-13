@@ -14,33 +14,62 @@
 
 </head>
 
-<spanody>
+<body>
 
-  <img src="{{ url_for('static', filename='/logo.jpg') }}" alt="Price Checker US Logo" class="logo">
+  <header class="">
+    <div class="logo-wrapper">
+      <img src="{{ url_for('static', filename='/logo.webp') }}" alt="Price Checker US Logo" class="logo">
+      <h1>Real-time Price Checker</h1>
+    </div>
+    <h2 class="subtitle">Products preview</h2>
+  </header>
 
-  <h1>Products preview</h1>
-  {% for category, products in products_categories.items() %}
-  <h2>--- {{category}} ---</h2>
-  <section class="products">
-    {% for product in products %}
-    <article class="product">
-      <a href="{{product.link}}" class="">
-        <div class="img-wrapper">
-          <img src="{{product.image}}" title="{{product.title}}">
-        </div>
-        <div class="texts">
-          <p>Rate Num: <span>{{product.rate_num}}</span></p>
-          <p>Reviews: <span>{{product.reviews}}</span></p>
-          <p>Price: <span>{{product.price}}</span></p>
-          <p>Best Seller: <span>{{product.best_seller}}</span></p>
-          <p>Sales: <span>{{product.sales}}</span></p>
-          <p>Store: <span>{{category}}</span> </p>
-        </div>
-      </a>
-    </article>
+  <main class="">
+    {% for category, products in products_categories.items() %}
+    <div class="category-wrapper">
+      <h3 class="title">{{category}}</h3>
+      <section class="products">
+        {% for product in products %}
+        <article class="product">
+          <a href="{{product.link}}" class="" target="_blank">
+            <div class="img-wrapper">
+              <img src="{{product.image}}" title="{{product.title}}">
+            </div>
+
+            {% if product.best_seller == 1 %}
+            <img class="best-seller-icon" src="{{ url_for('static', filename='/best-seller.webp') }}"
+              alt="best seller icon">
+            {% endif %}
+
+            <div class="texts">
+              <p class="price">
+                <span class="small">$</span>
+                <span>{{product.price}}</span>
+                <span class="small">USD</span>
+              </p>
+
+              <div class="data">
+                <p>Rate: <span>{{product.rate_num}}</span></p>
+                <p>Revs: <span>{{product.reviews}}</span></p>
+
+                <p>Sales: <span>{{product.sales}}</span></p>
+                <p><span>{{category}}</span> </p>
+              </div>
+            </div>
+          </a>
+        </article>
+        {% endfor %}
+      </section>
+
+      <div class="disclaimer">
+        Disclaimer: This comparison directs you to the official e-commerce sites that officially sell the product.
+        <br>
+        We may receive commissions, included in the price, for purchases you make through these links.
+      </div>
+    </div>
     {% endfor %}
-  </section>
-  {% endfor %}
-</spanody>
+
+  </main>
+</body>
 
 </html>
