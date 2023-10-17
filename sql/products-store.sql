@@ -106,7 +106,7 @@ INSERT INTO `log_types` (`id`, `name`) VALUES
 
 CREATE TABLE `products` (
   `id` bigint(20) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `image` text DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `rate_num` float DEFAULT NULL,
   `reviews` int(11) DEFAULT NULL,
