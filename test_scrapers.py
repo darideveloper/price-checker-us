@@ -55,7 +55,7 @@ def start_scrapers (keyword:str, request_id:int):
         request_id (int): request id
     """
     
-    classes = [ScraperWalmart]
+    classes = [ScraperAmazon, ScraperEbay, ScraperWalmart]
     
     # Update request status to working
     db.update_request_status (request_id, "working")

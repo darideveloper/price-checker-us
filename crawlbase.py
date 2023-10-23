@@ -1,4 +1,5 @@
 import os
+from time import sleep
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -20,18 +21,31 @@ def requests_page (link:str, db:Database, html_name:str="") -> BeautifulSoup:
     """
     
     # Scape link
-    link = link.replace ("&", "%26").replace (":", "%3A").replace ("/", "%2F").replace ("?", "%3F").replace ("=", "%3D").replace ("+", "%2B").replace ("#", "%23").replace (" ", "%20")
+    link_clean = link.replace ("&", "%26").replace (":", "%3A").replace ("/", "%2F").replace ("?", "%3F").replace ("=", "%3D").replace ("+", "%2B").replace ("#", "%23").replace (" ", "%20")
 
     # Get data from api
-    url = f"https://api.crawlbase.com/?token={CROWLBASE_TOKEN}&country=US&url={link}&render=true&device=desktop&wait=10000"
-    res = requests.request("GET", url)
+    url = f"https://api.crawlbase.com/?token={CROWLBASE_TOKEN}&country=US&url={link_clean}&render=true&device=desktop&wait=10000"
     
-    if res.status_code == 200:
-        db.save_log (f"Page rendered {link}", "crawlbase")
-    else:
+    
+    # Try 3 times to request page
+    for _ in range (3):
+        
+        res = requests.request("GET", url)
+        
+        # Validate response
+        if res.status_code == 200:
+            # Save log
+            db.save_log (f"Page rendered {link}", "crawlbase")
+            break
+        else:
+            # Try again
+            sleep (5)
+    
+    # Validate final response
+    if res.status_code != 200:
         db.save_log (f"Page not rendered {link} ({res.status_code})", "crawlbase", log_type="error")
         
-    # Raise error if the status code is not 200
+    # Raise error if response is not 200
     res.raise_for_status ()
 
     # Create html file
