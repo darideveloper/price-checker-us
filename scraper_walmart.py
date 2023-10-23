@@ -23,7 +23,7 @@ class ScraperWalmart (Scraper):
             'image': 'img',
             'title': 'a > span',
             'rate_num': 'div.mt2 .w_iUH7',
-            'reviews': 'div.mt2 span[aria-hidden]',
+            'reviews': 'div.mt2 span.sans-serif[aria-hidden]',
             'sponsored': '', 
             'best_seller': '.tag-leading-badge',
             'price': '[data-automation-id="product-price"] .w_iUH7', 
@@ -47,7 +47,11 @@ class ScraperWalmart (Scraper):
         # Load search page
         product_clean = product.replace (" ", "+")
         link = f"https://www.walmart.com/search?country=US&q={product_clean}&sort=best_seller"
-        self.soup = requests_page (link, self.db) #html_name="walmart")
+        
+        if self.save_html:
+            self.soup = requests_page (link, self.db, html_name=self.store)
+        else:
+            self.soup = requests_page (link, self.db)
         
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in walmart

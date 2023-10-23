@@ -35,6 +35,11 @@ def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     try:
         scraper.get_results (request_id)
     except Exception as error:
+        
+        # Clean error message
+        error = str (error).replace ("'", "").replace ("\"", "")
+        
+        # Save error in db
         error_message = f"store: {scraper.store}, keyword: {keyword}, error: {str (error)}"
         db.save_log (error_message, log_origin, id_request=request_id, log_type="error")
         quit ()
@@ -50,7 +55,7 @@ def start_scrapers (keyword:str, request_id:int):
         request_id (int): request id
     """
     
-    classes = [ScraperAmazon, ScraperEbay, ScraperWalmart]
+    classes = [ScraperWalmart]
     
     # Update request status to working
     db.update_request_status (request_id, "working")
@@ -81,5 +86,5 @@ def start_scrapers (keyword:str, request_id:int):
     db.update_request_status (request_id, "done")
 
 while True:
-    start_scrapers ("protein", 142)
+    start_scrapers ("plant based protein", 142)
     sleep (20)

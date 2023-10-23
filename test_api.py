@@ -24,7 +24,7 @@ def request_api ():
         keywords = json.load (json_file)
 
     # Request each keyword
-    for keyword in keywords:
+    for keyword in keywords[0:1]:
 
         # Generate pai url
         url = f"{TEST_HOST}:{TEST_PORT}/keyword/"

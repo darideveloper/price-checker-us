@@ -6,6 +6,7 @@ from db import Database
 # read .env file
 load_dotenv ()
 MAX_PRODUCTS = int(os.getenv ("MAX_PRODUCTS"))
+SAVE_HTML = os.getenv ("SAVE_HTML", False) == "True"
 
 # paths
 CURRENT_FOLDER = os.path.dirname(__file__)
@@ -34,6 +35,7 @@ class Scraper (ABC):
         self.stores = Database.stores  
         self.soup = None
         self.log_origin = "scraper"
+        self.save_html = SAVE_HTML
         
         # Get referral link
         self.referral_link = self.stores[self.store]["referral_link"]
@@ -276,7 +278,7 @@ class Scraper (ABC):
                     reviews = int(reviews)
                 else:
                     reviews = 0
-                    
+            
                 if sales:
                     sales = self.clean_text (sales, ["(", ")", "+", ",", " ", "sold", "."])
                     
