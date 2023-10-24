@@ -34,9 +34,16 @@ header .logo-wrapper .logo {
   margin-right: 20px;
 }
 
+.big-text {
+  font-size: 2rem;
+}
+
 main {
   max-width: 1400px;
   margin: 0 auto;
+}
+main.privacy {
+  max-width: 1000px;
 }
 main .category-wrapper .title {
   text-transform: capitalize;

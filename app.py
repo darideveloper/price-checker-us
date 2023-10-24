@@ -173,6 +173,11 @@ def index ():
         "data": []
     }
 
+@app.get ('/privacy/')
+def Privacy ():
+    """ Privacy policy page """
+    
+    return render_template ("privacy-policy.html")
 
 @app.post ('/keyword/')
 @wrapper_validate_api_key
