@@ -134,7 +134,10 @@ class ScraperAmazon (Scraper):
         rate_num_elem = self.soup.select_one(selector)
         
         if rate_num_elem:
-            rate_num = float(rate_num_elem.attrs["aria-label"].split(" ")[0])
+            try:
+                rate_num = float(rate_num_elem.attrs["aria-label"].split(" ")[0])
+            except:
+                rate_num = 0.0
         else:
             rate_num = 0.0
 
