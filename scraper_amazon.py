@@ -27,7 +27,7 @@ class ScraperAmazon (Scraper):
             'reviews': '.a-spacing-top-micro span[aria-label]:nth-child(2) span',
             'sponsored': '[aria-label~="Sponsored"]',
             'best_seller': '.a-row.a-badge-region',
-            'price': 'a.a-size-base span[aria-hidden]:nth-child(2)',
+            'price': '.a-price:nth-child(1) .a-offscreen',
             'sales': '.a-row.a-size-base > span.a-color-secondary:only-child',
             'link': 'a',
             "search_bar": '',
