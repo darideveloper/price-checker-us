@@ -167,11 +167,7 @@ def wrapper_validate_request_id(function):
 def index ():
     """ Home page """
     
-    return {
-        "status": "success",
-        "message": "service running",
-        "data": []
-    }
+    return render_template ("index.html")
 
 @app.get ('/privacy/')
 def Privacy ():

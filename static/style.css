@@ -34,6 +34,10 @@ header .logo-wrapper .logo {
   margin-right: 20px;
 }
 
+.center {
+  text-align: center;
+}
+
 .big-text {
   font-size: 2rem;
 }
@@ -134,14 +138,69 @@ main .category-wrapper .disclaimer {
   text-align: center;
   margin: 25px 0;
 }
+main form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main form input {
+  font-size: 1.4rem;
+  padding: 0.5rem 2rem;
+  border: 1.2px solid #212A3E;
+}
+main form input:focus {
+  outline: none;
+}
+main form input[type=search] {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right-width: 0;
+}
+main form input[type=submit] {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #212A3E;
+  color: #F1F6F9;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(33, 42, 62, 0.8);
+  transition-duration: 0.2s;
+}
+main form input[type=submit]:hover {
+  box-shadow: 0 0 6px #212a3e;
+  background-color: #394867;
+}
+main .content {
+  min-height: 58vh;
+}
 
 footer {
   width: 100%;
   text-align: center;
   margin: 5px 0;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 footer a {
   font-weight: bold;
+  transition-duration: 0.2s;
+}
+footer a:hover {
+  color: rgba(57, 72, 103, 0.7);
+}
+footer p {
+  margin: 0;
+}
+footer .links {
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.8rem auto;
+}
+footer > * {
+  margin: 0.8rem 0;
 }
 
 @media screen and (max-width: 1200px) {
