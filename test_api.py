@@ -24,24 +24,27 @@ def request_api ():
         keywords = json.load (json_file)
 
     # Request each keyword
-    for keyword in keywords[0:1]:
+    while True:
+        for keyword in keywords[0:1]:
 
-        # Generate pai url
-        url = f"{TEST_HOST}:{TEST_PORT}/keyword/"
+            # Generate pai url
+            url = f"{TEST_HOST}:{TEST_PORT}/keyword/"
 
-        # Send keyword to api
-        payload = json.dumps({
-            "keyword": keyword,
-            "api-key": TEST_API_KEY
-        })
-        headers = {
-            'Content-Type': 'application/json'
-        }
+            # Send keyword to api
+            payload = json.dumps({
+                "keyword": keyword,
+                "api-key": TEST_API_KEY
+            })
+            headers = {
+                'Content-Type': 'application/json'
+            }
 
-        # Get response from api
-        requests.request("POST", url, headers=headers, data=payload)
-        
-        sleep (30)
+            # Get response from api
+            requests.request("POST", url, headers=headers, data=payload)
+            
+            sleep (30)
+            
+        sleep (10)
 
 if __name__ == "__main__":
 

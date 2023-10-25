@@ -50,9 +50,18 @@ class ScraperAmazon (Scraper):
         # Load search page
         link = f"https://www.amazon.com/s?k={product}&s=review-rank"
         if self.save_html:
-            self.soup = requests_page (link, self.db, html_name=self.store)
+            self.soup, self.results_num = requests_page (
+                link, 
+                self.db, 
+                selector_product=self.selectors["product"],
+                html_name=self.store, 
+            )
         else:
-            self.soup = requests_page (link, self.db)
+            self.soup, self.results_num= requests_page (
+                link, 
+                self.db,
+                selector_product=self.selectors["product"]
+            )
 
     def __get_is_sponsored__ (self, text:str) -> str:
         """ Get if the product is sponsored in amazon
