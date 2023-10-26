@@ -2,6 +2,8 @@
 const form = document.querySelector("#search-form")
 const inputSearch = document.querySelector("#input-search")
 const loading = document.querySelector(".loading")
+const iframe = document.querySelector("iframe")
+const footer = document.querySelector("footer")
 
 // Api data
 var headers = new Headers()
@@ -62,26 +64,42 @@ async function apiWaitDoneStatus() {
     "api-key": apiKey
   })
 
-  try {
+  while (true) {
 
-    // Get data from api
-    const response = await fetch("./status/", {
-      method: 'POST',
-      headers: headers,
-      body: raw,
-      redirect: 'follow'
-    })
+    try {
   
-    // Get json from api
-    const result = await response.json()
+      // Get data from api
+      const response = await fetch("./status/", {
+        method: 'POST',
+        headers: headers,
+        body: raw,
+        redirect: 'follow'
+      })
+    
+      // Get json from api
+      const result = await response.json()
+    
+      // Get status
+      const status = result.data["status"]
+      console.log ({ status })
   
-    // Get status
-    const status = result.data["status"]
+      if (status == "done") {
+        break
+      }
+  
+    } catch (error) {
+      alertError(error)
+    }
 
-  } catch (error) {
-    alertError(error)
+    // Wait 5 seconds
+    await new Promise(r => setTimeout(r, 5000))
   }
 
+
+}
+
+function apiGetPreviewPage () {
+  return `./preview/?request-id=${requestId}`
 }
 
 async function handleSubmitForm(event) {
@@ -114,10 +132,39 @@ async function handleSubmitForm(event) {
   })
 
   // Send keyword to API
-  await apiSendkeyword(keyword)
-  console.log ("keyword sent")
-  await apiWaitDoneStatus()
-  console.log ("status checked")
+  // await apiSendkeyword(keyword)
+  // await apiWaitDoneStatus()
+  // previewPage = apiGetPreviewPage()
+  // console.log ({previewPage})
+
+
+  // Wait 5 seconds
+  await new Promise(r => setTimeout(r, 2000))
+  const previewPage = "./preview/?request-id=235"
+
+  // Invisible spinner
+  loading.classList.add("transparent")
+
+  setTimeout (() => {
+
+    // Hide spinner
+    loading.classList.add("hidden")
+
+    // Move footer
+    footer.classList.remove("absolute")
+
+    // Show iframe
+    iframe.classList.remove("hidden")
+
+  }, 1000)
+
+  setTimeout(() => {
+    // Visible iframe
+    iframe.classList.remove("transparent")
+  }, 1200)
+
+
 }
+
 
 form.addEventListener("submit", (event) => { handleSubmitForm(event) })
