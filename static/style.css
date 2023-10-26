@@ -50,6 +50,23 @@ header .logo-wrapper .logo {
   font-size: 2rem;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F6F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #394867;
+  margin-top: -5px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #212A3E;
+}
+
 main {
   max-width: 1400px;
   margin: 0 auto;
