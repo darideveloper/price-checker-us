@@ -167,7 +167,14 @@ def wrapper_validate_request_id(function):
 def index ():
     """ Home page """
     
-    return render_template ("index.html")
+    # Get api key for web
+    api_key_web = ""
+    for api_key, data in db.api_keys.items():
+        if data["name"] == "web":
+            api_key_web = api_key
+            break
+    
+    return render_template ("index.html", api_key=api_key_web)
 
 @app.get ('/privacy/')
 def Privacy ():
@@ -215,7 +222,7 @@ def keyword ():
         }
     }
 
-@app.get ('/status/')
+@app.post ('/status/')
 @wrapper_validate_api_key
 @wrapper_validate_request_id
 def status ():
@@ -239,7 +246,7 @@ def status ():
         }
     })
         
-@app.get ('/results/')
+@app.post ('/results/')
 @wrapper_validate_api_key
 @wrapper_validate_request_id
 def results ():

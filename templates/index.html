@@ -31,14 +31,14 @@
       <img src="{{ url_for('static', filename='/logo.webp') }}" alt="Price Checker US Logo" class="logo">
       <h1>Real-time Price Checker</h1>
     </div>
-    <h2 class="subtitle center">Search a product</h2>
+    <h2 class="subtitle center"> Start comparative!</h2>
   </header>
 
   <main class="">
 
 
-    <form action="">
-      <input type="search" name="keyword" id="keyword" placeholder="Iphone 15 Pro Max" />
+    <form id="search-form">
+      <input id="input-search" type="search" name="keyword" id="keyword" placeholder="Iphone 15 Pro Max" required/>
       <input type="submit" value="search">
     </form>
 
@@ -48,8 +48,10 @@
       We only present the in-stock, and non-sponsored first 10 products by store.
     </p>
 
-    <div class="content debug">
-      <div class="loading"></div>
+    <div class="content">
+      <div class="loading transparent">
+        <img src="{{ url_for('static', filename='/spinner.gif') }}" alt="loading spinner">
+      </div>
 
     </div>
 
@@ -82,6 +84,15 @@
     </div>
     </p>
   </footer>
+
+  <script>
+    const apiKey = '{{api_key}}'
+  </script>
+
+  <!-- Alerts -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="{{ url_for('static', filename='/index.js') }}"></script>
 </body>
 
 </html>

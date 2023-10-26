@@ -80,8 +80,14 @@ class Database (MySQL):
         Returns:
             dict: status
             {
-                "api-key-1": 1,
-                "api-key-2": 2,
+                "api-key-1": {
+                    "name": "service-a",
+                    "id": 1
+                }
+                "api-key-2": {
+                    "name": "service-a",
+                    "id": 1
+                }
             }
         """
         
@@ -90,7 +96,13 @@ class Database (MySQL):
         
         status = {}
         for row in data:
-            status[row["api_key"]] = row["id"]
+            
+            # Validate if api key is active
+            if row["is_active"]:
+                status[row["api_key"]] = {
+                    "name": row["name"],
+                    "id": row["id"]
+                } 
             
         return status
     
@@ -278,7 +290,7 @@ class Database (MySQL):
         status_todo_id = Database.status["to do"]
         
         # Get api key id
-        api_key_id = Database.api_keys[api_key] 
+        api_key_id = Database.api_keys[api_key]["id"]
         
         # get and fomat current datetime
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -402,7 +414,7 @@ class Database (MySQL):
         
         # Get and validate ids
         id_store = Database.stores[store]["id"] if store else "NULL"
-        id_api_key = Database.api_keys[api_key] if api_key else "NULL"
+        id_api_key = Database.api_keys[api_key]["id"] if api_key else "NULL"
         id_log_type = Database.log_types[log_type] if log_type else "NULL"
         id_log_origin = Database.log_origins[origin] if origin else "NULL"
         
