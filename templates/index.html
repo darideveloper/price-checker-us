@@ -31,15 +31,17 @@
       <img src="{{ url_for('static', filename='/logo.webp') }}" alt="Price Checker US Logo" class="logo">
       <h1>Real-time Price Checker</h1>
     </div>
-    <h2 class="subtitle center"> Start comparative!</h2>
   </header>
-
+  
   <main class="">
 
+    <label for="input-search">
+      <h2 class="subtitle center">Type your item search term:</h2>
+    </label>
 
     <form id="search-form">
       <input id="input-search" type="search" name="keyword" id="keyword" placeholder="Iphone 15 Pro Max" required/>
-      <input type="submit" value="search">
+      <input type="submit" value="Go!">
     </form>
 
     <p class="center">
