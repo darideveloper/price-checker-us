@@ -179,33 +179,33 @@ async function handleSubmitForm(event) {
 
   // Send keyword to API
   await apiSendkeyword(keyword)
-  await apiWaitDoneStatus()
-  previewPage = apiGetPreviewPage()
+  // await apiWaitDoneStatus()
+  // previewPage = apiGetPreviewPage()
 
-  // Invisible spinner
-  loading.classList.add("transparent")
+  // // Invisible spinner
+  // loading.classList.add("transparent")
 
-  setTimeout (() => {
+  // setTimeout (() => {
 
-    // Hide spinner
-    loading.classList.add("hidden")
+  //   // Hide spinner
+  //   loading.classList.add("hidden")
 
-    // Move footer
-    footer.classList.remove("absolute")
+  //   // Move footer
+  //   footer.classList.remove("absolute")
 
-    // Show iframe with preview page
-    iframe.setAttribute ("src", previewPage)
-    iframe.classList.remove("hidden")
+  //   // Show iframe with preview page
+  //   iframe.setAttribute ("src", previewPage)
+  //   iframe.classList.remove("hidden")
 
-  }, 1000)
+  // }, 1000)
 
-  setTimeout(() => {
-    // Visible iframe
-    iframe.classList.remove("transparent")
-    isLoading = false
-  }, 1200)
+  // setTimeout(() => {
+  //   // Visible iframe
+  //   iframe.classList.remove("transparent")
+  //   isLoading = false
+  // }, 1200)
 
-  firstSearch = false
+  // firstSearch = false
 
 }
 
