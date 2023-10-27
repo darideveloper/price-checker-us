@@ -12,6 +12,7 @@ headers.append("Content-Type", "application/json")
 // Control variables
 let isLoading = false
 let requestId = 0
+let firstSearch = true
 
 function alertError(error) {
   // Debug error
@@ -99,13 +100,41 @@ async function apiWaitDoneStatus() {
 }
 
 function apiGetPreviewPage () {
-  return `./preview/?request-id=${requestId}`
+
+  const previewPage = `./preview/?request-id=${requestId}`
+
+  console.log ({previewPage})
+
+  return previewPage
 }
 
 async function handleSubmitForm(event) {
 
   // Don't submit form
   event.preventDefault()
+
+// Restart iframe and loading
+  if (!firstSearch) {
+    
+    setTimeout(() => {
+      // Invisible iframe
+      iframe.classList.add("transparent")
+      isLoading = false
+    }, 500)
+
+    setTimeout (() => {
+
+      // Show iframe with preview page
+      iframe.classList.add("hidden")
+
+      // Hide spinner
+      loading.classList.remove("hidden")
+  
+      // Move footer
+      footer.classList.add("absolute")
+  
+    }, 1000)
+  }
 
   // Only form if is not loading
   if (isLoading) {
@@ -132,15 +161,9 @@ async function handleSubmitForm(event) {
   })
 
   // Send keyword to API
-  // await apiSendkeyword(keyword)
-  // await apiWaitDoneStatus()
-  // previewPage = apiGetPreviewPage()
-  // console.log ({previewPage})
-
-
-  // Wait 5 seconds
-  await new Promise(r => setTimeout(r, 2000))
-  const previewPage = "./preview/?request-id=235"
+  await apiSendkeyword(keyword)
+  await apiWaitDoneStatus()
+  previewPage = apiGetPreviewPage()
 
   // Invisible spinner
   loading.classList.add("transparent")
@@ -153,7 +176,8 @@ async function handleSubmitForm(event) {
     // Move footer
     footer.classList.remove("absolute")
 
-    // Show iframe
+    // Show iframe with preview page
+    iframe.setAttribute ("src", previewPage)
     iframe.classList.remove("hidden")
 
   }, 1000)
@@ -161,8 +185,10 @@ async function handleSubmitForm(event) {
   setTimeout(() => {
     // Visible iframe
     iframe.classList.remove("transparent")
+    isLoading = false
   }, 1200)
 
+  firstSearch = false
 
 }
 
