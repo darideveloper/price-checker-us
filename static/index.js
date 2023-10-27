@@ -14,6 +14,10 @@ let isLoading = false
 let requestId = 0
 let firstSearch = true
 
+/**
+ * Show an error with SweetAlert2
+ * @param {str} error message
+ */
 function alertError(error) {
   // Debug error
   console.log({ error })
@@ -25,6 +29,10 @@ function alertError(error) {
   })
 }
 
+/**
+ * Send keyword to web scraping api
+ * @param {str} keyword kwyword to scrape in stores
+ */
 async function apiSendkeyword(keyword) {
 
   // Query data
@@ -57,6 +65,9 @@ async function apiSendkeyword(keyword) {
 
 }
 
+/**
+ * Wait until the scraping status is "done"
+ */
 async function apiWaitDoneStatus() {
 
   // Query data
@@ -99,15 +110,21 @@ async function apiWaitDoneStatus() {
 
 }
 
+/**
+ * Get preview page url
+ * @returns {str} preview page url
+ */
 function apiGetPreviewPage () {
 
   const previewPage = `./preview/?request-id=${requestId}`
-
   console.log ({previewPage})
-
   return previewPage
 }
 
+/**
+ * Workflow to scraper a keyword when submit form
+ * @param {event} event form submit event
+ */
 async function handleSubmitForm(event) {
 
   // Don't submit form
@@ -192,5 +209,5 @@ async function handleSubmitForm(event) {
 
 }
 
-
+// Add event listener to form
 form.addEventListener("submit", (event) => { handleSubmitForm(event) })
