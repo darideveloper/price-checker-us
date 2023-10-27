@@ -80,6 +80,11 @@ async function apiWaitDoneStatus() {
 
     try {
   
+      // Raise error if not request id
+      if (requestId == 0) {
+        throw "No request id"
+      }
+
       // Get data from api
       const response = await fetch("./status/", {
         method: 'POST',
