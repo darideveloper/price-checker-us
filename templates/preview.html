@@ -5,9 +5,7 @@
 {% block mainclass %}preview{% endblock %}
 
 {% block main %}
-{% for category, products in products_categories.items() %}
 <div class="category-wrapper">
-  <h3 class="title">{{category}}</h3>
   <section class="products">
     {% for product in products %}
     <article class="product">
@@ -33,7 +31,7 @@
             <p>Revs: <span>{{product.reviews}}</span></p>
 
             <p>Sales: <span>{{product.sales}}</span></p>
-            <p><span>{{category}}</span> </p>
+            <p><span>{{product.store}}</span> </p>
           </div>
         </div>
       </a>
@@ -47,5 +45,4 @@
     We may receive commissions, included in the price, for purchases you make through these links.
   </div>
 </div>
-{% endfor %}
 {% endblock %}

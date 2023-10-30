@@ -177,13 +177,13 @@ def index ():
     return render_template ("index.html", api_key=api_key_web)
 
 @app.get ('/legals/')
-def Legals ():
+def legals ():
     """ Legals page """
     
     return render_template ("legals.html")
 
 @app.get ('/legal-framework/')
-def LegalFramewok ():
+def legal_framewok ():
     """ Legal framework page """
     
     return render_template ("legal-framework.html")
@@ -298,10 +298,20 @@ def preview ():
     # Get products from db
     products_categories = db.get_products (request_id)
     
+    # Add store to each product
+    products_data = []
+    for store, products in products_categories.items():
+        # Add store to each product
+        products_formatted = list(map(lambda product: {**product, "store": store}, products))
+        products_data += products_formatted
+    
+    # Sort products by price
+    product_sort = sorted (products_data, key=lambda product: product["price"])
+    
     status_code = 200
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
     
-    return render_template ("preview.html", products_categories=products_categories)
+    return render_template ("preview.html", products=product_sort)
     
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
