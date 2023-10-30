@@ -14,10 +14,18 @@
           <img src="{{product.image}}" title="{{product.title}}">
         </div>
 
+        <!-- Best seller icon -->
         {% if product.best_seller == 1 %}
         <img class="best-seller-icon" src="{{ url_for('static', filename='/best-seller.webp') }}"
           alt="best seller icon">
         {% endif %}
+
+        <!-- Product index -->
+        <p class="index-wrapper">
+          <span class="title index">
+            {{ products.index (product) + 1}}
+          </span>
+        </p>
 
         <div class="texts">
           <p class="price">
