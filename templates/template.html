@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Price Checker US {% block subpage %}{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/style.css') }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rospanoto+Condensed:wght@400;700&family=Yeseva+One&display=swap"
+    rel="stylesheet">
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+  {% block extrahead %}
+  {% endblock %}
+
+</head>
+
+<body>
+
+  {% block header %}
+  <header class="">
+    <div class="logo-wrapper">
+      <img src="{{ url_for('static', filename='/logo.webp') }}" alt="Price Checker US Logo" class="logo">
+      <h1>Real-time Price Checker</h1>
+    </div>
+  </header>
+  {% endblock %}
+  
+  <main class={% block mainclass %}""{% endblock %}>
+    {% block main %}
+    {% endblock %}
+  </main>
+
+  {% block footer %}
+  <footer class={% block footerclass %}""{% endblock %}>
+    <p>
+      Comments and suggestions:
+    </p>
+
+    <div class="email">
+      <a href="mail:comments@price-checker.us">
+        comments@price-checker.us
+      </a>
+    </div>
+
+    <div class="links">
+      <a href="./legals" target="_blank">
+        Legals
+      </a>
+      <a href="./legal-framework" target="_blank">
+        Legal framework
+      </a>
+      <p>
+        © 2023 price-checker.us
+      </p>
+    </div>
+    </p>
+  </footer>
+  {% endblock %}
+
+  {% block script %}
+  {% endblock %}
+</body>
+
+</html>

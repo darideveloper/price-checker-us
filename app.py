@@ -176,11 +176,17 @@ def index ():
     
     return render_template ("index.html", api_key=api_key_web)
 
-@app.get ('/privacy/')
-def Privacy ():
-    """ Privacy policy page """
+@app.get ('/legals/')
+def Legals ():
+    """ Legals page """
     
-    return render_template ("privacy-policy.html")
+    return render_template ("legals.html")
+
+@app.get ('/legal-framework/')
+def LegalFramewok ():
+    """ Legal framework page """
+    
+    return render_template ("legal-framework.html")
 
 @app.post ('/keyword/')
 @wrapper_validate_api_key

@@ -1,103 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "template.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Price Checker US | Products preview</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/style.css') }}">
+{% block extrahead %}
+<style>
+  body {
+    background-image: url("{{ url_for('static',filename='/bg.png') }}");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+</style>
+{% endblock %}
+{% block mainclass %}index{% endblock %}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rospanoto+Condensed:wght@400;700&family=Yeseva+One&display=swap"
-    rel="stylesheet">
+{% block main %}
 
-  <style>
-    body {
-      background-image: url("{{ url_for('static',filename='/bg.png') }}");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-  </style>
+<label for="input-search">
+  <h2 class="subtitle center">Type your item search term:</h2>
+</label>
 
-</head>
+<form id="search-form">
+  <input id="input-search" type="search" name="keyword" id="keyword" placeholder="Iphone 15 Pro Max" required/>
+  <input type="submit" value="Go!">
+</form>
 
-<body>
+<p class="center">
+  From a single search term, compare real-time item prices among top e-commerce sites in the USA!
+  <br>
+  We only present the in-stock, and non-sponsored first 10 products by store.
+</p>
 
-  <header class="">
-    <div class="logo-wrapper">
-      <img src="{{ url_for('static', filename='/logo.webp') }}" alt="Price Checker US Logo" class="logo">
-      <h1>Real-time Price Checker</h1>
-    </div>
-  </header>
-  
-  <main class="">
+<div class="content">
 
-    <label for="input-search">
-      <h2 class="subtitle center">Type your item search term:</h2>
-    </label>
+  <div class="loading transparent">
+    <img src="{{ url_for('static', filename='/spinner.gif') }}" alt="loading spinner">
+  </div>
 
-    <form id="search-form">
-      <input id="input-search" type="search" name="keyword" id="keyword" placeholder="Iphone 15 Pro Max" required/>
-      <input type="submit" value="Go!">
-    </form>
+  <iframe class="transparent hidden" src="" frameborder="0"></iframe>
 
-    <p class="center">
-      From a single search term, compare real-time item prices among top e-commerce sites in the USA!
-      <br>
-      We only present the in-stock, and non-sponsored first 10 products by store.
-    </p>
+</div>
+{% endblock %}
 
-    <div class="content">
+{% block script %}
+<script>
+  const apiKey = '{{api_key}}'
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url_for('static', filename='/index.js') }}"></script>
+{% endblock %}
 
-      <div class="loading transparent">
-        <img src="{{ url_for('static', filename='/spinner.gif') }}" alt="loading spinner">
-      </div>
-
-      <iframe class="transparent hidden" src="" frameborder="0"></iframe>
-
-    </div>
-
-  </main>
-
-  <footer class="absolute">
-    <p>
-      Comments and suggestions:
-    </p>
-
-    <div class="email">
-      <a href="mail:pricechecker.no.replay@gmail.com">
-        pricechecker.no.replay@gmail.com
-      </a>
-    </div>
-
-    <div class="links">
-      <a href="./terms" target="_blank">
-        Terms of Service
-      </a>
-      <a href="./privacy" target="_blank">
-        Privacy
-      </a>
-      <a href="./cookies" target="_blank">
-        Cookies
-      </a>
-      <p>
-        © 2023 price-checker.us
-      </p>
-    </div>
-    </p>
-  </footer>
-
-  <script>
-    const apiKey = '{{api_key}}'
-  </script>
-
-  <!-- Alerts -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <script src="{{ url_for('static', filename='/index.js') }}"></script>
-</body>
-
-</html>
+{% block footerclass %}"absolute"{% endblock %}

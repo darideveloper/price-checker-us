@@ -1,85 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "template.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Price Checker US | Products preview</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/style.css') }}">
+{% block subpage %}| Preview{% endblock %}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rospanoto+Condensed:wght@400;700&family=Yeseva+One&display=swap"
-    rel="stylesheet">
+{% block mainclass %}preview{% endblock %}
 
-</head>
+{% block main %}
+{% for category, products in products_categories.items() %}
+<div class="category-wrapper">
+  <h3 class="title">{{category}}</h3>
+  <section class="products">
+    {% for product in products %}
+    <article class="product">
+      <a href="{{product.link}}" class="" target="_blank">
+        <div class="img-wrapper">
+          <img src="{{product.image}}" title="{{product.title}}">
+        </div>
 
-<body>
+        {% if product.best_seller == 1 %}
+        <img class="best-seller-icon" src="{{ url_for('static', filename='/best-seller.webp') }}"
+          alt="best seller icon">
+        {% endif %}
 
-  <header class="">
-    <div class="logo-wrapper">
-      <img src="{{ url_for('static', filename='/logo.webp') }}" alt="Price Checker US Logo" class="logo">
-      <h1>Real-time Price Checker</h1>
-    </div>
-    <h2 class="subtitle">Products preview</h2>
-  </header>
+        <div class="texts">
+          <p class="price">
+            <span class="small">$</span>
+            <span>{{product.price}}</span>
+            <span class="small">USD</span>
+          </p>
 
-  <main class="">
-    {% for category, products in products_categories.items() %}
-    <div class="category-wrapper">
-      <h3 class="title">{{category}}</h3>
-      <section class="products">
-        {% for product in products %}
-        <article class="product">
-          <a href="{{product.link}}" class="" target="_blank">
-            <div class="img-wrapper">
-              <img src="{{product.image}}" title="{{product.title}}">
-            </div>
+          <div class="data">
+            <p>Rate: <span>{{product.rate_num}}</span></p>
+            <p>Revs: <span>{{product.reviews}}</span></p>
 
-            {% if product.best_seller == 1 %}
-            <img class="best-seller-icon" src="{{ url_for('static', filename='/best-seller.webp') }}"
-              alt="best seller icon">
-            {% endif %}
-
-            <div class="texts">
-              <p class="price">
-                <span class="small">$</span>
-                <span>{{product.price}}</span>
-                <span class="small">USD</span>
-              </p>
-
-              <div class="data">
-                <p>Rate: <span>{{product.rate_num}}</span></p>
-                <p>Revs: <span>{{product.reviews}}</span></p>
-
-                <p>Sales: <span>{{product.sales}}</span></p>
-                <p><span>{{category}}</span> </p>
-              </div>
-            </div>
-          </a>
-        </article>
-        {% endfor %}
-      </section>
-
-      <div class="disclaimer">
-        Disclaimer: This comparison directs you to the official e-commerce sites that officially sell the product.
-        <br>
-        We may receive commissions, included in the price, for purchases you make through these links.
-      </div>
-    </div>
-    {% endfor %}
-
-  </main>
-
-  <footer>
-    <address>
-      Comments and suggestions:
-
-      <a href="mail:pricechecker.no.replay@gmail.com">
-        pricechecker.no.replay@gmail.com
+            <p>Sales: <span>{{product.sales}}</span></p>
+            <p><span>{{category}}</span> </p>
+          </div>
+        </div>
       </a>
-    </address>
-  </footer>
-</body>
+    </article>
+    {% endfor %}
+  </section>
 
-</html>
+  <div class="disclaimer">
+    Disclaimer: This comparison directs you to the official e-commerce sites that officially sell the product.
+    <br>
+    We may receive commissions, included in the price, for purchases you make through these links.
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
