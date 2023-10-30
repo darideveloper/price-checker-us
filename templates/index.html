@@ -33,7 +33,7 @@
 <div class="content">
 
   <div class="loading transparent">
-    <img src="{{ url_for('static', filename='/spinner.gif') }}" alt="loading spinner">
+    <img src="{{ url_for('static', filename='/imgs/spinner.gif') }}" alt="loading spinner">
   </div>
 
   <iframe class="transparent hidden" src="" frameborder="0"></iframe>
@@ -46,7 +46,7 @@
   const apiKey = '{{api_key}}'
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ url_for('static', filename='/index.js') }}"></script>
+<script src="{{ url_for('static', filename='/code/index.js') }}"></script>
 {% endblock %}
 
 {% block footerclass %}"absolute"{% endblock %}

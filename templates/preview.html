@@ -6,6 +6,11 @@
 
 {% block main %}
 <div class="category-wrapper">
+
+  <button class="refresh top" disabled title="Uncheck items and click here to remove them from the comparison">
+    Refresh
+  </button>
+
   <section class="products">
     {% for product in products %}
     <article class="product">
@@ -16,7 +21,7 @@
 
         <!-- Best seller icon -->
         {% if product.best_seller == 1 %}
-        <img class="best-seller-icon" src="{{ url_for('static', filename='/best-seller.webp') }}"
+        <img class="best-seller-icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}"
           alt="best seller icon">
         {% endif %}
 
@@ -26,6 +31,9 @@
             {{ products.index (product) + 1}}
           </span>
         </p>
+
+        <!-- Show checkbox -->
+        <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox" type="checkbox" name="{{products.index (product)}}" id="product-{{products.index (product)}}" checked>
 
         <div class="texts">
           <p class="price">
@@ -47,10 +55,18 @@
     {% endfor %}
   </section>
 
+  <button class="refresh top" disabled title="Uncheck items and click here to remove them from the comparison">
+    Refresh
+  </button>
+
   <div class="disclaimer">
     Disclaimer: This comparison directs you to the official e-commerce sites that officially sell the product.
     <br>
     We may receive commissions, included in the price, for purchases you make through these links.
   </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='/code/preview.js') }}"></script>
 {% endblock %}
