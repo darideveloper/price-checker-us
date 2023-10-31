@@ -24,8 +24,10 @@
   {% block header %}
   <header class="">
     <div class="logo-wrapper">
-      <img src="{{ url_for('static', filename='/imgs/logo.webp') }}" alt="Price Checker US Logo" class="logo">
-      <h1>Real-time Price Checker</h1>
+      <a href="/">
+        <img src="{{ url_for('static', filename='/imgs/logo.webp') }}" alt="Price Checker US Logo" class="logo">
+      </a>
+      <h1 title="Compare real-time item prices across top e-commerce sites in the USA with just one search term!" >Real-Time, Price Checker</h1>
     </div>
   </header>
   {% endblock %}

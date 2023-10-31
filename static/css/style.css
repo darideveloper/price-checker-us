@@ -217,6 +217,11 @@ main form {
   align-items: center;
   justify-content: center;
 }
+main form + p {
+  width: 490px;
+  margin: 30px auto;
+  text-align: justify;
+}
 main form input {
   font-size: 1.4rem;
   padding: 0.5rem 2rem;

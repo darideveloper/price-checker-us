@@ -3,7 +3,7 @@
 {% block extrahead %}
 <style>
   body {
-    background-image: url("{{ url_for('static',filename='/bg.png') }}");
+    background-image: url("{{ url_for('static',filename='/imgs/bg.png') }}");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,14 +20,14 @@
 </label>
 
 <form id="search-form">
-  <input id="input-search" type="search" name="keyword" id="keyword" placeholder="Iphone 15 Pro Max" required/>
-  <input type="submit" value="Go!">
+  <input id="input-search" type="search" name="keyword" id="keyword" placeholder="Iphone 15 Pro Max" required title="Compare real-time item prices; type the search term!" />
+  <input type="submit" value="Go!" title='Click to start comparative'>
 </form>
 
-<p class="center">
-  From a single search term, compare real-time item prices among top e-commerce sites in the USA!
-  <br>
-  We only present the in-stock, and non-sponsored first 10 products by store.
+<p>
+  Note: Prices and data on our site are directly sourced from e-commerce sites in real time.
+  Using the links to purchase supports us through referral fees, already included, (no extra fees),
+  in item prices!
 </p>
 
 <div class="content">
