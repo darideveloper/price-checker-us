@@ -233,7 +233,7 @@ def keyword ():
 @wrapper_validate_request_id
 def status ():
     """ Get request status """
-    
+
     # Get json data
     json_data = request.get_json ()
     request_id = json_data.get ("request-id", "")

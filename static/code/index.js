@@ -67,6 +67,7 @@ async function apiSendkeyword(keyword) {
 
 /**
  * Wait until the scraping status is "done"
+ * @returns {bool} true if status is "done"
  */
 async function apiWaitDoneStatus() {
 
@@ -76,7 +77,9 @@ async function apiWaitDoneStatus() {
     "api-key": apiKey
   })
 
-  while (true) {
+
+  let isDone = false
+  for (let i = 0; i < 36; i++) {
 
     try {
   
@@ -101,6 +104,7 @@ async function apiWaitDoneStatus() {
       console.log ({ status })
   
       if (status == "done") {
+        isDone = true
         break
       }
   
@@ -112,7 +116,19 @@ async function apiWaitDoneStatus() {
     await new Promise(r => setTimeout(r, 5000))
   }
 
-
+  if (isDone) {
+    return true
+  } else {
+    alertError("The request is taking too long")
+    setTimeout(() => {
+      const okButton = document.querySelector("button.swal2-confirm")
+      okButton.addEventListener("click", () => {
+        // Refresh page
+        location.reload()
+      })
+    }, 100)
+    return false
+  }
 }
 
 /**
@@ -184,7 +200,12 @@ async function handleSubmitForm(event) {
 
   // Send keyword to API
   await apiSendkeyword(keyword)
-  await apiWaitDoneStatus()
+  const idDone = await apiWaitDoneStatus()
+
+  if (!idDone) {
+    return null
+  }
+
   previewPage = apiGetPreviewPage()
 
   // Invisible spinner
