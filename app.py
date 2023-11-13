@@ -3,7 +3,7 @@ from time import sleep
 from functools import wraps
 from threading import Thread
 from db import Database
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, redirect, url_for
 from dotenv import load_dotenv
 from scraper import Scraper
 from scraper_amazon import ScraperAmazon
@@ -20,6 +20,7 @@ DB_PASSWORD = os.getenv ("DB_PASSWORD")
 DB_NAME = os.getenv ("DB_NAME")
 USE_THREADING = os.getenv ("USE_THREADING") == "True"
 PORT = int(os.environ.get('PORT', 5000))
+app.secret_key = os.environ.get('SECRET_KEY')
 
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
@@ -312,6 +313,17 @@ def preview ():
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
     
     return render_template ("preview.html", products=product_sort)
+    
+@app.get ('/referral/<hash>/')
+def referral (hash):
+    """ Save referral hash as session """
+    
+    # Save cookie
+    session["hash"] = hash
+    
+    # Redirect to home
+    return redirect (url_for ("index"))
+    
     
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
