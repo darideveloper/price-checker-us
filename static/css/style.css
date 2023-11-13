@@ -335,6 +335,9 @@ button.swal2-confirm.swal2-styled {
   main form {
     flex-direction: column;
   }
+  main form + p {
+    width: 90%;
+  }
   main form input {
     margin-bottom: 10px;
     border-radius: 10px;
