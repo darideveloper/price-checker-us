@@ -341,10 +341,11 @@ def preview ():
                 referral_link_system = referral_link_user
         
         # Save referral link
+        conector = "&" if "?" in link else "?"
         if current_referral == "user":
-            link = f"{link}&{referral_link_user}"
+            link = f"{link}{conector}{referral_link_user}"
         else:
-            link = f"{link}&{referral_link_system}"
+            link = f"{link}{conector}{referral_link_system}"
         
         product["link"] = link
         
@@ -357,12 +358,12 @@ def preview ():
             links_num_system = 0
 
     # Sort products by price
-    # product_sort = sorted (products_data, key=lambda product: product["price"])
+    product_sort = sorted (products_data, key=lambda product: product["price"])
     
     status_code = 200
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
     
-    return render_template ("preview.html", products=products_data)
+    return render_template ("preview.html", products=product_sort)
     
 @app.get ('/referral/<hash>/')
 def referral (hash):
