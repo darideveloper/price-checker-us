@@ -5,7 +5,7 @@
 {% block mainclass %}preview{% endblock %}
 
 {% block main %}
-<div class="category-wrapper">
+<div class="preview">
 
   <button class="refresh top" disabled title="Uncheck items and click here to remove them from the comparison">
     Refresh
@@ -64,7 +64,24 @@
     <br>
     We may receive commissions, included in the price, for purchases you make through these links.
   </div>
+
+  <div class="counter">
+    <p class="counter-text">
+      <span class="counter-number">{{products|length}}</span>
+      <span>products</span>
+    </p>
+    <p class="counter-text">
+      <span class="counter-number">{{links_total_user}}</span>
+      <span><a href="{{referral_host}}" target="_blank" title="Share this tool and become a 50/50% partner">Partner</a> referral links</span>
+    </p>
+    <p class="counter-text">
+      <span class="counter-number">{{links_total_system}}</span>
+      <span>System referral links</span>
+    </p>
+  </div>
 </div>
+
+
 {% endblock %}
 
 {% block script %}

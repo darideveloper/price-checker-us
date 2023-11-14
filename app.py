@@ -24,6 +24,7 @@ PORT = int(os.environ.get('PORT', 5000))
 app.secret_key = os.environ.get('SECRET_KEY')
 ROTATTION_LINKS_SYSTEM = int(os.getenv ("ROTATTION_LINKS_SYSTEM"))
 ROTATION_LINKS_USER = int(os.getenv ("ROTATION_LINKS_USER"))
+REFERRAL_HOST = os.getenv ("REFERRAL_HOST")
 
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
@@ -322,6 +323,8 @@ def preview ():
     current_referral = "user"
     links_num_user = 0
     links_num_system = 0
+    links_total_user = 0
+    links_total_system = 0 
     for product in products_data:
         
         # Get product data
@@ -333,10 +336,12 @@ def preview ():
         referral_link_system = Database.stores[store]["referral_link"]
         if current_referral == "user":
             links_num_user += 1
+            links_total_user += 1
             if not referral_link_user and referral_link_system:
                 referral_link_user = referral_link_system
         else:
             links_num_system += 1
+            links_total_system += 1
             if not referral_link_system and referral_link_user:
                 referral_link_system = referral_link_user
         
@@ -363,7 +368,13 @@ def preview ():
     status_code = 200
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
     
-    return render_template ("preview.html", products=product_sort)
+    return render_template (
+        "preview.html", 
+        products=product_sort,
+        links_total_user=links_total_user,
+        links_total_system=links_total_system,
+        referral_host=REFERRAL_HOST
+    )
     
 @app.get ('/referral/<hash>/')
 def referral (hash):

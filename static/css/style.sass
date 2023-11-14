@@ -96,7 +96,7 @@ main
     &.legal
         max-width: 1000px
 
-    .category-wrapper
+    .preview
 
         .products
             display: grid
@@ -208,6 +208,24 @@ main
             text-align: center
             margin: 25px 0
 
+        .counter
+            display: flex
+            align-items: center
+            justify-content: space-between
+            width: 100%
+            max-width: 540px
+            margin: 20px auto
+
+            .counter-number
+                font-weight: bold
+                font-size: 1.2rem
+
+            a
+                font-weight: bold
+
+                &:hover 
+                    opacity: 0.8
+
     form
         display: flex
         align-items: center
@@ -311,25 +329,32 @@ button.swal2-confirm.swal2-styled
 @media screen and (max-width: 1150px)
 
     main
-        .category-wrapper
+        .preview
             .products
                 grid-template-columns: repeat(3, 1fr)
 
 @media screen and (max-width: 850px)
 
     main
-        .category-wrapper
+        .preview
             .products
                 grid-template-columns: repeat(2, 1fr)
 
 @media screen and (max-width: 550px)
 
     main
-        .category-wrapper
+        .preview
             .products
                 grid-template-columns: repeat(1, 1fr)
                 margin-right: 30px
                 margin-left: 30px
+
+            .counter
+                flex-direction: column
+                margin-bottom: 40px
+
+                .counter-text
+                    margin: 0.3rem
 
         form
             flex-direction: column

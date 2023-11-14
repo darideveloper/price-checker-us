@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv ()
 
-REFERRAL_API = os.getenv ("REFERRAL_API")
+REFERRAL_HOST = os.getenv ("REFERRAL_HOST")
 REFERRAL_API_KEY = os.getenv ("REFERRAL_API_KEY")
 
 class Referral ():
@@ -36,7 +36,7 @@ class Referral ():
             "hash": hash
         }
         
-        res = requests.get (f"{REFERRAL_API}", headers=headers, params=params)
+        res = requests.get (f"{REFERRAL_HOST}/referral", headers=headers, params=params)
         json_data = res.json ()
         if res.status_code == 200:
             return json_data["data"]

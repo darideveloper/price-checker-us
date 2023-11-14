@@ -102,13 +102,13 @@ main {
 main.legal {
   max-width: 1000px;
 }
-main .category-wrapper .products {
+main .preview .products {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   margin: 0;
 }
-main .category-wrapper .products .product {
+main .preview .products .product {
   box-shadow: 0 0 5px rgba(33, 42, 62, 0.8);
   border-radius: 1rem;
   background-color: #ffffff;
@@ -117,21 +117,21 @@ main .category-wrapper .products .product {
   position: relative;
   transition-duration: 0.3s;
 }
-main .category-wrapper .products .product:hover {
+main .preview .products .product:hover {
   box-shadow: 0 0 12px #212a3e;
   transform: translateY(-5px);
 }
-main .category-wrapper .products .product .img-wrapper {
+main .preview .products .product .img-wrapper {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
 }
-main .category-wrapper .products .product .img-wrapper img {
+main .preview .products .product .img-wrapper img {
   width: 70%;
 }
-main .category-wrapper .products .product a {
+main .preview .products .product a {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -141,17 +141,17 @@ main .category-wrapper .products .product a {
   margin: 0 auto;
   padding: 1rem;
 }
-main .category-wrapper .products .product a .texts {
+main .preview .products .product a .texts {
   width: 100%;
 }
-main .category-wrapper .products .product a .texts p {
+main .preview .products .product a .texts p {
   margin: 0.1rem 0;
   padding: 0;
   font-size: 1.1rem;
   color: #394867;
   text-align: center;
 }
-main .category-wrapper .products .product a .texts p.price {
+main .preview .products .product a .texts p.price {
   font-size: 1.8rem;
   margin-bottom: 0.4rem;
   color: #212A3E;
@@ -159,26 +159,26 @@ main .category-wrapper .products .product a .texts p.price {
   align-content: center;
   justify-content: center;
 }
-main .category-wrapper .products .product a .texts p.price span.small {
+main .preview .products .product a .texts p.price span.small {
   font-size: 1rem;
   margin-top: 5px;
 }
-main .category-wrapper .products .product a .texts p span {
+main .preview .products .product a .texts p span {
   font-weight: bold;
   text-transform: capitalize;
 }
-main .category-wrapper .products .product a .texts .data {
+main .preview .products .product a .texts .data {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
-main .category-wrapper .products .product .best-seller-icon {
+main .preview .products .product .best-seller-icon {
   position: absolute;
   right: 0;
   top: 50%;
   transform: rotate(45deg);
   width: 80px;
 }
-main .category-wrapper .products .product .index-wrapper {
+main .preview .products .product .index-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,12 +191,12 @@ main .category-wrapper .products .product .index-wrapper {
   left: -10px;
   margin: 0;
 }
-main .category-wrapper .products .product .index-wrapper .index {
+main .preview .products .product .index-wrapper .index {
   display: inline-block;
   font-size: 2.2rem;
   color: #F1F6F9;
 }
-main .category-wrapper .products .product .checkbox {
+main .preview .products .product .checkbox {
   accent-color: #394867;
   width: 40px;
   height: 40px;
@@ -206,11 +206,29 @@ main .category-wrapper .products .product .checkbox {
   border-radius: 100%;
   cursor: pointer;
 }
-main .category-wrapper .disclaimer {
+main .preview .disclaimer {
   font-size: 1.1rem;
   width: 100%;
   text-align: center;
   margin: 25px 0;
+}
+main .preview .counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 540px;
+  margin: 20px auto;
+}
+main .preview .counter .counter-number {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+main .preview .counter a {
+  font-weight: bold;
+}
+main .preview .counter a:hover {
+  opacity: 0.8;
 }
 main form {
   display: flex;
@@ -317,20 +335,27 @@ button.swal2-confirm.swal2-styled {
   }
 }
 @media screen and (max-width: 1150px) {
-  main .category-wrapper .products {
+  main .preview .products {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media screen and (max-width: 850px) {
-  main .category-wrapper .products {
+  main .preview .products {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media screen and (max-width: 550px) {
-  main .category-wrapper .products {
+  main .preview .products {
     grid-template-columns: repeat(1, 1fr);
     margin-right: 30px;
     margin-left: 30px;
+  }
+  main .preview .counter {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+  main .preview .counter .counter-text {
+    margin: 0.3rem;
   }
   main form {
     flex-direction: column;
