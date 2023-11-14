@@ -292,10 +292,6 @@ class Scraper (ABC):
             # Incress counter of extracted products
             extracted_products += 1
             
-            # Add referral link
-            if self.referral_link:
-                link += f"&{self.referral_link}"
-            
             # Save data
             products_data.append ({
                 "image": image, 

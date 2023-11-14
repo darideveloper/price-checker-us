@@ -18,6 +18,7 @@ class Database (MySQL):
     log_types = {}
     log_origins = {}
     
+    
     def __init__ (self, server:str, database:str, username:str, password:str):
         """ Connect with mysql db
 
@@ -191,6 +192,7 @@ class Database (MySQL):
 
         Args:
             products_data (list): list of dict with products data
+            hash (str): referral code from cookie (if exist)
         """
         
         for product in products_data:
@@ -206,7 +208,7 @@ class Database (MySQL):
             link = product["link"]
             id_store = product["id_store"]
             id_request = product["id_request"]
-            
+                        
             # Generate sql query
             query = f"""
                 INSERT INTO products (
@@ -376,7 +378,6 @@ class Database (MySQL):
 
         Returns:
             list: list of dict with products data
-            
         """
         
         # Get products from db

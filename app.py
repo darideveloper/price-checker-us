@@ -9,6 +9,7 @@ from scraper import Scraper
 from scraper_amazon import ScraperAmazon
 from scraper_ebay import ScraperEbay
 from scraper_walmart import ScraperWalmart
+from referral import Referral
 
 app = Flask(__name__)
 
@@ -21,11 +22,16 @@ DB_NAME = os.getenv ("DB_NAME")
 USE_THREADING = os.getenv ("USE_THREADING") == "True"
 PORT = int(os.environ.get('PORT', 5000))
 app.secret_key = os.environ.get('SECRET_KEY')
+ROTATTION_LINKS_SYSTEM = int(os.getenv ("ROTATTION_LINKS_SYSTEM"))
+ROTATION_LINKS_USER = int(os.getenv ("ROTATION_LINKS_USER"))
 
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
 log_origin = "api"
+
+# Connect to referral api
+referral_api = Referral ()
 
 def start_scraper (scraper_class:Scraper, keyword:str, request_id:int):
     """ Start an specific scraper and extract data
@@ -280,6 +286,12 @@ def results ():
 def preview ():    
     """ Render basic preview products page """
     
+    # Get referral session
+    referral_hash = session.get ("hash", "")
+    referral_links = {}
+    if referral_hash:
+        referral_links = referral_api.get_by_hash (referral_hash)
+    
     # Get url variables
     request_id = request.args.get ("request-id", "")
     
@@ -306,13 +318,51 @@ def preview ():
         products_formatted = list(map(lambda product: {**product, "store": store}, products))
         products_data += products_formatted
     
+    # Add referral code
+    current_referral = "user"
+    links_num_user = 0
+    links_num_system = 0
+    for product in products_data:
+        
+        # Get product data
+        link = product["link"]
+        store = product["store"]
+        
+        # Get referral links and increase counter
+        referral_link_user = referral_links.get(store, "")
+        referral_link_system = Database.stores[store]["referral_link"]
+        if current_referral == "user":
+            links_num_user += 1
+            if not referral_link_user and referral_link_system:
+                referral_link_user = referral_link_system
+        else:
+            links_num_system += 1
+            if not referral_link_system and referral_link_user:
+                referral_link_system = referral_link_user
+        
+        # Save referral link
+        if current_referral == "user":
+            link = f"{link}&{referral_link_user}"
+        else:
+            link = f"{link}&{referral_link_system}"
+        
+        product["link"] = link
+        
+        # Change referral current user
+        if links_num_user == ROTATION_LINKS_USER:
+            current_referral = "system"
+            links_num_user = 0
+        elif links_num_system == ROTATTION_LINKS_SYSTEM:
+            current_referral = "user"
+            links_num_system = 0
+
     # Sort products by price
-    product_sort = sorted (products_data, key=lambda product: product["price"])
+    # product_sort = sorted (products_data, key=lambda product: product["price"])
     
     status_code = 200
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
     
-    return render_template ("preview.html", products=product_sort)
+    return render_template ("preview.html", products=products_data)
     
 @app.get ('/referral/<hash>/')
 def referral (hash):
