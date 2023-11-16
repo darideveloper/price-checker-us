@@ -336,14 +336,21 @@ def preview ():
         referral_link_system = Database.stores[store]["referral_link"]
         if current_referral == "user":
             links_num_user += 1
-            links_total_user += 1
-            if not referral_link_user and referral_link_system:
+            
+            if referral_link_user:
+                links_total_user += 1
+            elif referral_link_system:
                 referral_link_user = referral_link_system
+                links_total_system += 1
+                
         else:
             links_num_system += 1
-            links_total_system += 1
-            if not referral_link_system and referral_link_user:
+            
+            if referral_link_system:
+                links_total_system += 1
+            elif referral_link_user:
                 referral_link_system = referral_link_user
+                links_total_user += 1
         
         # Save referral link
         conector = "&" if "?" in link else "?"
