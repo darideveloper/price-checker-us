@@ -78,6 +78,9 @@ button {
   cursor: pointer;
   transition-duration: 0.2s;
 }
+button.swal2-styled {
+  box-shadow: none;
+}
 button[disabled] {
   opacity: 0.6;
   cursor: default;
@@ -325,6 +328,34 @@ footer .links {
 }
 footer > * {
   margin: 0.8rem 0;
+}
+footer .referral {
+  max-width: 90%;
+  margin: 0 auto;
+}
+footer .shares p {
+  font-size: 1rem;
+  margin: 10px;
+}
+footer .shares .share {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  transition-duration: 0.1s;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 4px;
+}
+footer .shares .share:hover {
+  opacity: 0.5;
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+footer .shares .share svg {
+  width: 30px;
+  height: 30px;
+  fill: #212A3E;
 }
 
 button.swal2-confirm.swal2-styled {

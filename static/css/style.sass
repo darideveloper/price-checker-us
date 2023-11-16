@@ -73,6 +73,9 @@ button
     cursor: pointer
     transition-duration: 0.2s
 
+    &.swal2-styled
+        box-shadow: none
+
     &[disabled]
         opacity: 0.6
         cursor: default
@@ -321,6 +324,37 @@ footer
     > *
         margin: 0.8rem 0
 
+    .referral
+        max-width: 90%
+        margin: 0 auto
+
+    .shares
+
+        p
+            font-size: 1rem
+            margin: 10px
+
+        .share
+            width: 30px
+            height: 30px
+            display: inline-block
+            transition-duration: 0.1s
+            background: none
+            border-radius: 0
+            padding: 0
+            margin: 4px
+
+            &:hover
+                opacity: 0.5
+                transform: translateY(-2px)
+                box-shadow: none
+
+            svg
+                width: 30px
+                height: 30px
+                fill: $color_c
+
+        
 button.swal2-confirm.swal2-styled
     background-color: $color_b
 
@@ -395,3 +429,5 @@ button.swal2-confirm.swal2-styled
         form
             input[type="search"]
                 width: 95%
+
+
