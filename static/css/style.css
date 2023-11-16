@@ -317,7 +317,7 @@ footer p {
   margin: 0;
 }
 footer .links {
-  width: 340px;
+  width: 550px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -344,6 +344,15 @@ button.swal2-confirm.swal2-styled {
 @media screen and (max-width: 850px) {
   main .preview .products {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 650px) {
+  footer .links {
+    flex-direction: column;
+    width: 100%;
+  }
+  footer .links a {
+    padding: 5px;
   }
 }
 @media screen and (max-width: 550px) {
@@ -380,13 +389,6 @@ button.swal2-confirm.swal2-styled {
   }
   main form input[type=submit] {
     border-radius: 10px;
-  }
-  footer .links {
-    flex-direction: column;
-    width: 100%;
-  }
-  footer .links a {
-    padding: 5px;
   }
 }
 @media screen and (max-width: 350px) {
