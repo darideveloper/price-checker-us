@@ -3,13 +3,21 @@ from time import sleep
 from functools import wraps
 from threading import Thread
 from db import Database
-from flask import Flask, request, render_template, session, redirect, url_for
 from dotenv import load_dotenv
 from scraper import Scraper
 from scraper_amazon import ScraperAmazon
 from scraper_ebay import ScraperEbay
 from scraper_walmart import ScraperWalmart
 from referral import Referral
+from flask import (
+    Flask, 
+    request, 
+    render_template, 
+    session, 
+    redirect, 
+    url_for, 
+    send_file
+)
 
 app = Flask(__name__)
 
@@ -392,7 +400,21 @@ def referral (hash):
     
     # Redirect to home
     return redirect (url_for ("index"))
+
+@app.get ('/sitemap.xml')
+def sitemap ():
+    """ Return sitemap """
+
+    # Redirect to home
+    return send_file ("static/sitemap.xml")
     
-    
+@app.get ('/robots.txt')
+def robots ():
+    """ Return robots """
+
+    # Redirect to home
+    return send_file ("static/robots.txt")
+        
+
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
