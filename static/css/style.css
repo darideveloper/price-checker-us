@@ -331,7 +331,10 @@ footer > * {
 }
 footer .referral {
   max-width: 90%;
-  margin: 0 auto;
+  margin: 5px auto;
+}
+footer .referral a {
+  text-decoration: underline;
 }
 footer .shares p {
   font-size: 1rem;
