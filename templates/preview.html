@@ -11,7 +11,7 @@
 
 {% block main %}
 <div class="preview">
-  
+
   <!-- <div style="width:100%; height:100px; border: 1px solid red;">    
     <ins class="epn-placement" data-config-id="fff5358d682a725ceeb577f4"></ins>
   </div> -->
@@ -25,6 +25,20 @@
   <section class="products">
     {% for product in products %}
     <article class="product">
+
+      {% if product.path %}
+      <a href="{{product.link}}" class="ad">
+
+        <!-- Product index -->
+        <p class="index-wrapper">
+          <span class="title index">
+            {{ products.index (product) + 1}}
+          </span>
+        </p>
+
+        <img src="{{ url_for('static', filename='/imgs/ads/' + product.path) }}" alt="ad">
+      </a>
+      {% else %}
       <a href="{{product.link}}" class="" target="_blank">
         <div class="img-wrapper">
           <img src="{{product.image}}" title="{{product.title}}">
@@ -44,7 +58,8 @@
         </p>
 
         <!-- Show checkbox -->
-        <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox" type="checkbox" name="{{products.index (product)}}" id="product-{{products.index (product)}}" checked>
+        <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
+          type="checkbox" name="{{products.index (product)}}" id="product-{{products.index (product)}}" checked>
 
         <div class="texts">
           <p class="price">
@@ -62,6 +77,8 @@
           </div>
         </div>
       </a>
+      {% endif %}
+
     </article>
     {% endfor %}
   </section>
@@ -71,7 +88,8 @@
   </button>
 
   <div class="disclaimer">
-    Note: Prices and data on our site are directly sourced from e-commerce sites in real time. Using the links to purchase supports us through referral fees, already included, (no extra fees), in item prices!
+    Note: Prices and data on our site are directly sourced from e-commerce sites in real time. Using the links to
+    purchase supports us through referral fees, already included, (no extra fees), in item prices!
   </div>
 
   <div class="counter">
@@ -81,7 +99,8 @@
     </p>
     <p class="counter-text">
       <span class="counter-number">{{links_total_user}}</span>
-      <span><a href="{{referral_host}}" target="_blank" title="Share this tool and become a 50/50% partner">Partner</a> referral links</span>
+      <span><a href="{{referral_host}}" target="_blank" title="Share this tool and become a 50/50% partner">Partner</a>
+        referral links</span>
     </p>
     <p class="counter-text">
       <span class="counter-number">{{links_total_system}}</span>

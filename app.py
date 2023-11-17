@@ -9,6 +9,7 @@ from scraper_amazon import ScraperAmazon
 from scraper_ebay import ScraperEbay
 from scraper_walmart import ScraperWalmart
 from referral import Referral
+from ads.card_ads import AdsCards
 from flask import (
     Flask, 
     request, 
@@ -33,6 +34,7 @@ app.secret_key = os.environ.get('SECRET_KEY')
 ROTATTION_LINKS_SYSTEM = int(os.getenv ("ROTATTION_LINKS_SYSTEM"))
 ROTATION_LINKS_USER = int(os.getenv ("ROTATION_LINKS_USER"))
 REFERRAL_HOST = os.getenv ("REFERRAL_HOST")
+ADS_RELATION = int(os.getenv ("ADS_RELATION"))
 
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
@@ -381,12 +383,30 @@ def preview ():
     # Sort products by price
     product_sort = sorted (products_data, key=lambda product: product["price"])
     
+    # Add product ads
+    ads_cards = AdsCards ()
+    products_ads = []
+    for product in product_sort:
+        
+        product_index = product_sort.index (product)
+        
+        # Save add
+        if product_index % ADS_RELATION == 0: 
+            add_data = ads_cards.get_random_add ()
+            add_data["id"] = f"{product_index} add"
+            products_ads.append (add_data)
+            
+        # Save product 
+        products_ads.append (product)        
+    
     status_code = 200
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
     
+    print (products_ads)
+    
     return render_template (
         "preview.html", 
-        products=product_sort,
+        products=products_ads,
         links_total_user=links_total_user,
         links_total_system=links_total_system,
         referral_host=REFERRAL_HOST,
