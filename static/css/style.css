@@ -105,6 +105,9 @@ main {
 main.legal {
   max-width: 1000px;
 }
+main .preview h2 {
+  text-align: center;
+}
 main .preview .products {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

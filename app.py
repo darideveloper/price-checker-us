@@ -278,11 +278,12 @@ def results ():
     request_id = json_data.get ("request-id", "")
 
     # Get products from db
-    products = db.get_products (request_id)
+    products, keyword = db.get_products (request_id)
     
     status_code = 200
     db.save_log (f"({status_code}) Products found", log_origin, id_request=request_id)
     
+    # TODO: Add keyword to response
     return ({
         "status": "success",
         "message": "Products found",
@@ -318,7 +319,7 @@ def preview ():
         }, status_code)
     
     # Get products from db
-    products_categories = db.get_products (request_id)
+    products_categories, keyword = db.get_products (request_id)
     
     # Add store to each product
     products_data = []
@@ -388,7 +389,8 @@ def preview ():
         products=product_sort,
         links_total_user=links_total_user,
         links_total_system=links_total_system,
-        referral_host=REFERRAL_HOST
+        referral_host=REFERRAL_HOST,
+        keyword=keyword
     )
     
 @app.get ('/referral/<hash>/')

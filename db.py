@@ -399,8 +399,18 @@ class Database (MySQL):
             products_store[store_name] = list(filter(
                 lambda product: product["id_store"] == store_id, products
             ))
+            
+        # Get keyword from db
+        query = f"""
+            Select keyword
+            FROM requests
+            WHERE 
+                id = {id_request}
+        """
+        request_data = self.run_sql (query)
+        keyword = request_data[0]["keyword"]
         
-        return products_store
+        return products_store, keyword
     
     def save_log (self, message:str, origin:str, store:str="", id_request:int=0, api_key:str="", log_type:str="info"):
         """ Save log in database
