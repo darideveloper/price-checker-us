@@ -167,9 +167,7 @@ async function handleSubmitForm(event) {
 
       // Hide spinner
       loading.classList.remove("hidden")
-  
-      // Move footer
-      footer.classList.add("absolute")
+
   
     }, 1000)
   }
@@ -215,9 +213,6 @@ async function handleSubmitForm(event) {
 
     // Hide spinner
     loading.classList.add("hidden")
-
-    // Move footer
-    footer.classList.remove("absolute")
 
     // Show iframe with preview page
     iframe.setAttribute ("src", previewPage)
