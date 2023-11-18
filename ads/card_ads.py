@@ -6,7 +6,6 @@ class AdsCards ():
     def __init__ (self):
         """ Contructor of class """
         
-
         self.ads = {
             "nordvpn.jpeg":  "https://go.nordvpn.net/aff_c?offer_id=15&aff_id=96425&url_id=902",
             "ebay.jpeg": "https://www.ebay.com/e/_electronics/ebay-refurbished-apple-watches?mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5339011126&toolid=20014&customid=&mkevt=1",

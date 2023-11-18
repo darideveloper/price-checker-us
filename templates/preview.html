@@ -40,9 +40,7 @@
       </a>
       {% else %}
       <a href="{{product.link}}" class="" target="_blank">
-        <div class="img-wrapper">
-          <img src="{{product.image}}" title="{{product.title}}">
-        </div>
+        <div class="product-image" data-image="{{product.image}}"></div>
 
         <!-- Best seller icon -->
         {% if product.best_seller == 1 %}

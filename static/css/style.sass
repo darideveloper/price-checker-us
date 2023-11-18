@@ -123,7 +123,7 @@ main
                     display: flex
                     align-items: center
                     justify-content: center
-                    
+
                     img
                         width: 100%
 
@@ -131,7 +131,11 @@ main
                     box-shadow: 0 0 12px rgba($color_c, 1)
                     transform: translateY(-5px)
 
-                .img-wrapper
+                .product-image
+                    background-position: center
+                    background-repeat: no-repeat
+                    background-size: contain
+                    height: 300px
                     width: 100%
                     display: flex
                     align-items: center
@@ -239,7 +243,7 @@ main
             a
                 font-weight: bold
 
-                &:hover 
+                &:hover
                     opacity: 0.8
 
     form
@@ -368,7 +372,6 @@ footer
                 height: 30px
                 fill: $color_c
 
-        
 button.swal2-confirm.swal2-styled
     background-color: $color_b
 
@@ -446,5 +449,3 @@ button.swal2-confirm.swal2-styled
         form
             input[type="search"]
                 width: 95%
-
-

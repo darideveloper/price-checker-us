@@ -135,14 +135,18 @@ main .preview .products .product:hover {
   box-shadow: 0 0 12px #212a3e;
   transform: translateY(-5px);
 }
-main .preview .products .product .img-wrapper {
+main .preview .products .product .product-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 300px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
 }
-main .preview .products .product .img-wrapper img {
+main .preview .products .product .product-image img {
   width: 70%;
 }
 main .preview .products .product a {
