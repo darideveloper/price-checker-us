@@ -1,9 +1,9 @@
 import os
 from time import sleep
 from threading import Thread
-from db import Database
+from database.db import Database
 from dotenv import load_dotenv
-from scraper import Scraper
+from scraper.scraper import Scraper
 from scraper_amazon import ScraperAmazon
 from scraper_ebay import ScraperEbay
 from scraper_walmart import ScraperWalmart

@@ -2,13 +2,13 @@ import os
 from time import sleep
 from functools import wraps
 from threading import Thread
-from db import Database
+from database.db import Database
 from dotenv import load_dotenv
-from scraper import Scraper
-from scraper_amazon import ScraperAmazon
-from scraper_ebay import ScraperEbay
-from scraper_walmart import ScraperWalmart
-from referral import Referral
+from scraper.scraper import Scraper
+from scraper.amazon import ScraperAmazon
+from scraper.ebay import ScraperEbay
+from scraper.walmart import ScraperWalmart
+from apis.referral import Referral
 from ads.card_ads import AdsCards
 from flask import (
     Flask, 

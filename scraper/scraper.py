@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from abc import ABC, abstractmethod
-from db import Database
+from database.db import Database
 
 # read .env file
 load_dotenv ()

@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
-from scraper import Scraper
-from db import Database
-from crawlbase import requests_page
+from scraper.scraper import Scraper
+from database.db import Database
+from apis.crawlbase import requests_page
 
 # read .env file
 load_dotenv ()

@@ -3,11 +3,12 @@ from time import sleep
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from db import Database
+from database.db import Database
 
 load_dotenv ()
 CROWLBASE_TOKEN = os.getenv ("CROWLBASE_TOKEN")
 CURRENT_FOLDER = os.path.dirname(__file__)
+SAVE_HTML = os.getenv ("SAVE_HTML") == "True"
 
 def requests_page (link:str, db:Database, selector_product:str, html_name:str="") -> BeautifulSoup:
     """ Query page data from crawlbase api, and returns html response 
@@ -68,7 +69,7 @@ def requests_page (link:str, db:Database, selector_product:str, html_name:str=""
         raise Exception (f"Page not rendered {link} ({error})")
 
     # Create html file
-    if html_name:
+    if html_name and SAVE_HTML:
         file_path = os.path.join (CURRENT_FOLDER, "html", f"{html_name}.html")
         with open (file_path, "w", encoding='UTF-8') as file:
             file.write (res.text)
