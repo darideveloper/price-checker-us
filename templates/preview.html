@@ -24,21 +24,35 @@
 
   <section class="products">
     {% for product in products %}
-    <article class="product">
 
-      {% if product.path %}
-      <a href="{{product.link}}" class="ad">
+    {% if product.path %}
 
-        <!-- Product index -->
+    <article class="product ad">
+
+
+      <a href="{{product.link}}">
+
+        <!-- Ad index -->
         <p class="index-wrapper">
           <span class="title index">
-            {{ products.index (product) + 1}}
+            Ad
           </span>
         </p>
 
-        <img src="{{ url_for('static', filename='/imgs/ads/' + product.path) }}" alt="ad">
+        <!-- media -->
+        {% if product.type == "image" %}
+          <img src="{{ url_for('static', filename='/ads/' + product.path) }}" alt="ad">
+        {% else %}
+          <video src="{{ url_for('static', filename='/ads/' + product.path) }}" autoplay loop muted></video>
+        {% endif %}
+
       </a>
-      {% else %}
+    </article>
+
+    {% else %}
+
+    <article class="product">
+
       <a href="{{product.link}}" class="" target="_blank">
         <div class="product-image" data-image="{{product.image}}"></div>
 

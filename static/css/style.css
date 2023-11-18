@@ -123,12 +123,22 @@ main .preview .products .product {
   position: relative;
   transition-duration: 0.3s;
 }
-main .preview .products .product .ad {
+main .preview .products .product.ad {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-main .preview .products .product .ad img {
+main .preview .products .product.ad a {
+  padding: 0;
+  overflow: hidden;
+}
+main .preview .products .product.ad a img, main .preview .products .product.ad a video {
+  width: 100%;
+}
+main .preview .products .product.ad .index-wrapper .index {
+  font-size: 1.6rem;
+}
+main .preview .products .product.ad img {
   width: 100%;
 }
 main .preview .products .product:hover {
