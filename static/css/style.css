@@ -107,6 +107,7 @@ main.legal {
 }
 main .preview h2 {
   text-align: center;
+  margin-bottom: 50px;
 }
 main .preview .products {
   display: grid;
@@ -259,6 +260,67 @@ main .preview .counter a {
 }
 main .preview .counter a:hover {
   opacity: 0.8;
+}
+main .preview .table {
+  margin-top: 50px;
+  width: 600px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+main .preview .table table {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+  text-align: right;
+}
+main .preview .table table td {
+  padding: 0 15px;
+}
+main .preview .table table td .product-id {
+  font-weight: bold;
+}
+main .preview .table table td a {
+  color: #212A3E;
+}
+main .preview .table table td .icon {
+  width: 15px;
+}
+main .preview .table table tr.best-seller {
+  color: #F1F6F9;
+  background-color: #212A3E;
+  font-weight: bold;
+}
+main .preview .table table tr.best-seller td a {
+  color: #F1F6F9;
+}
+main .preview .table table th {
+  padding-bottom: 35px;
+}
+main .preview .table table th span {
+  transform: rotate(-70deg);
+  display: block;
+  text-align: center;
+}
+main .preview .table .footer .tags {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+main .preview .table .footer .tags span {
+  padding: 4px 15px;
+  border: 1px solid #212A3E;
+}
+main .preview .table .footer .tags span.best-seller {
+  color: #F1F6F9;
+  background-color: #212A3E;
+}
+main .preview .table .footer .tags span.best-seller .icon {
+  width: 15px;
+  margin-right: 5px;
+}
+main .preview .table .footer .price-gap {
+  text-align: right;
+  font-weight: bold;
 }
 main form {
   display: flex;
@@ -448,6 +510,11 @@ button.swal2-confirm.swal2-styled {
   }
   footer {
     position: initial !important;
+  }
+}
+@media screen and (max-width: 470px) {
+  main .preview .table tr *:nth-child(3), main .preview .table tr *:nth-child(5) {
+    display: none;
   }
 }
 @media screen and (max-width: 350px) {

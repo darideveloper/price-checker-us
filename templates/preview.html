@@ -18,6 +18,58 @@
 
   <h2>Results of "{{keyword|title}}"</h2>
 
+  <section class="table">
+    <table>
+      <thead>
+        <tr>
+          <th><span>Item</span></th>
+          <th><span>Rate</span></th>
+          <th><span>Revs</span></th>
+          <th><span>Sales</span></th>
+          <th><span>Store</span></th>
+          <th><span>Price</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        {% if not product.path %}
+        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}">
+          <td>{{ products.index (product) + 1}}</td>
+          <td>{{product.rate_num}}</td>
+          <td>{{product.reviews}}</td>
+          <td>{{product.sales}}</td>
+          <td>
+            {% if product.best_seller == 1 %}
+            <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
+            {% endif %}
+            {{product.store[0:3]}}
+          </td>
+          <td><a href="{{product.link}}" target="_blank">$ {{product.price}}</a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <p class="price-gap">
+        Maximum Price Gap: $
+        <span class="price">199.99</span>
+      </p>
+      <p class="tags">
+        <span class="best-seller">
+          <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
+          Best Seller
+        </span>
+        <span class="regular-product">Regular Product</span>
+      </p>
+
+    </div>
+
+
+  </section>
+
   <button class="refresh top" disabled title="Uncheck items and click here to remove them from the comparison">
     Refresh
   </button>
@@ -41,9 +93,9 @@
 
         <!-- media -->
         {% if product.type == "image" %}
-          <img src="{{ url_for('static', filename='/ads/' + product.path) }}" alt="ad">
+        <img src="{{ url_for('static', filename='/ads/' + product.path) }}" alt="ad">
         {% else %}
-          <video src="{{ url_for('static', filename='/ads/' + product.path) }}" autoplay loop muted></video>
+        <video src="{{ url_for('static', filename='/ads/' + product.path) }}" autoplay loop muted></video>
         {% endif %}
 
       </a>
@@ -51,7 +103,7 @@
 
     {% else %}
 
-    <article class="product">
+    <article class="product" id="product-{{products.index (product) + 1}}">
 
       <a href="{{product.link}}" class="" target="_blank">
         <div class="product-image" data-image="{{product.image}}"></div>

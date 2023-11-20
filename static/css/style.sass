@@ -103,6 +103,7 @@ main
 
         h2
             text-align: center
+            margin-bottom: 50px
 
         .products
             display: grid
@@ -131,7 +132,6 @@ main
 
                         img, video
                             width: 100%
-
 
                     .index-wrapper
 
@@ -259,6 +259,72 @@ main
 
                 &:hover
                     opacity: 0.8
+
+        .table
+            margin-top: 50px
+            width: 600px
+            max-width: 90%
+            margin: 0 auto
+
+            table
+                width: 100%
+                border: none
+                border-collapse: collapse
+                text-align: right
+
+                td
+                    padding: 0 15px
+
+                    .product-id
+                        font-weight: bold
+
+                    a
+                        color: $color_c
+
+                    .icon
+                        width: 15px
+                        
+                tr.best-seller
+                    color: $color_a
+                    background-color: $color_c
+                    font-weight: bold
+
+                    td 
+                        a
+                            color: $color_a
+
+
+
+                th
+                    padding-bottom: 35px
+
+                    span
+                        transform: rotate(-70deg)
+                        display: block
+                        text-align: center
+
+
+            .footer
+                .tags
+                    display: flex
+                    align-items: center
+                    justify-content: space-evenly
+
+                    span
+                        padding: 4px 15px
+                        border: 1px solid $color_c
+                        
+                        &.best-seller
+                            color: $color_a
+                            background-color: $color_c
+                            
+                            .icon
+                                width: 15px
+                                margin-right: 5px
+
+                .price-gap
+                    text-align: right
+                    font-weight: bold
 
     form
         display: flex
@@ -453,6 +519,16 @@ button.swal2-confirm.swal2-styled
 
     footer
         position: initial !important
+
+@media screen and (max-width: 470px)
+
+    main
+        .preview
+            .table
+                tr
+                    *:nth-child(3), *:nth-child(5)
+                        display: none
+    
 
 @media screen and (max-width: 350px)
 
