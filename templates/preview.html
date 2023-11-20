@@ -34,7 +34,7 @@
       <tbody>
         {% for product in products %}
         {% if not product.path %}
-        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}">
+        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}" data-link="{{product.link}}">
           <td class="modal-row">
             <div class="product-modal">
               <img src="{{product.image}}" alt="product image">
@@ -54,7 +54,7 @@
             {% endif %}
             {{product.store[0:3]}}
           </td>
-          <td><a class="price" href="{{product.link}}" target="_blank">$ {{product.price}}</a></td>
+          <td>$ {{product.price}}</a></td>
         </tr>
         {% endif %}
         {% endfor %}

@@ -1,6 +1,7 @@
 const checkboxes = document.querySelectorAll('input[type=checkbox]')
 const refreshButtons = document.querySelectorAll('button.refresh')
 const priceGapElem = document.querySelector(".price-gap .price")
+const tableRows = document.querySelectorAll('tr')
 
 
 function toggleRefreshButton() {
@@ -65,6 +66,18 @@ function calculatePriceGap() {
   priceGapElem.innerHTML = gapPrice.toFixed(2)
 }
 
+// Rdirect to product page when click on table row
+function onClickTableRow (event) {
+  
+  // Get link
+  const row = event.target.parentNode
+  const link = row.getAttribute('data-link')
+
+  // Open link in new tab
+  window.open(link, '_blank')
+
+}
+
 // Add listener to checkboxes
 checkboxes.forEach(checkbox => { 
   checkbox.addEventListener('click', () => { toggleRefreshButton() })
@@ -76,6 +89,11 @@ refreshButtons.forEach(refreshButton => {
   refreshButton.addEventListener('click', () => { onClickRefreshButton() })
 })
 
-renderProductImages ()
+// Add on click to each table row
+tableRows.forEach(tableRow => {
+  tableRow.addEventListener('click', (event) => { onClickTableRow(event) })
+})
 
+
+renderProductImages ()
 calculatePriceGap()
