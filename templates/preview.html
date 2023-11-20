@@ -22,6 +22,7 @@
     <table>
       <thead>
         <tr>
+          <th></th>
           <th><span>Item</span></th>
           <th><span>Rate</span></th>
           <th><span>Revs</span></th>
@@ -34,6 +35,15 @@
         {% for product in products %}
         {% if not product.path %}
         <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}">
+          <td class="modal-row">
+            <div class="product-modal">
+              <img src="{{product.image}}" alt="product image">
+              <div class="text">
+                <p class="title item">Item: {{products.index (product) + 1}}</p>
+                <p class="title name">{{product.title}}</p>
+              </div>
+            </div>
+          </td>
           <td>{{ products.index (product) + 1}}</td>
           <td>{{product.rate_num}}</td>
           <td>{{product.reviews}}</td>
@@ -105,7 +115,7 @@
 
     <article class="product" id="product-{{products.index (product) + 1}}">
 
-      <a href="{{product.link}}" class="" target="_blank">
+      <a href="{{product.link}}" class="" target="_blank" title="{{product.title}}">
         <div class="product-image" data-image="{{product.image}}"></div>
 
         <!-- Best seller icon -->

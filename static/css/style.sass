@@ -272,6 +272,49 @@ main
                 border-collapse: collapse
                 text-align: right
 
+                tr
+                    position: relative
+
+                    &:hover
+                        cursor: pointer
+
+                    .product-modal
+                        display: none
+
+                    td.modal-row
+                        width: 0
+                        padding: 0
+                    
+
+                    &:hover
+
+                        .product-modal
+                            position: absolute
+                            display: block
+                            width: 400px
+                            z-index: 2
+                            background-color: white
+                            border-radius: 20px
+                            overflow: hidden
+                            display: flex
+                            align-items: center
+                            justify-content: center
+                            top: 20px
+                            right: 0
+                            padding: 20px
+                            box-shadow: 0px 1px 12px -3px black
+
+                            img
+                                width: 50%
+
+                            p
+                                font-size: 1.5rem
+                                color: $color_c
+                                padding-left: 10px
+
+                                &.item
+                                    font-size: 1.2rem
+
                 td
                     padding: 0 15px
 
@@ -283,17 +326,15 @@ main
 
                     .icon
                         width: 15px
-                        
+
                 tr.best-seller
                     color: $color_a
                     background-color: $color_c
                     font-weight: bold
 
-                    td 
+                    td
                         a
                             color: $color_a
-
-
 
                 th
                     padding-bottom: 35px
@@ -302,7 +343,6 @@ main
                         transform: rotate(-70deg)
                         display: block
                         text-align: center
-
 
             .footer
                 .tags
@@ -313,11 +353,11 @@ main
                     span
                         padding: 4px 15px
                         border: 1px solid $color_c
-                        
+
                         &.best-seller
                             color: $color_a
                             background-color: $color_c
-                            
+
                             .icon
                                 width: 15px
                                 margin-right: 5px
@@ -528,7 +568,6 @@ button.swal2-confirm.swal2-styled
                 tr
                     *:nth-child(3), *:nth-child(5)
                         display: none
-    
 
 @media screen and (max-width: 350px)
 

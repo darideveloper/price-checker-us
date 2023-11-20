@@ -273,6 +273,46 @@ main .preview .table table {
   border-collapse: collapse;
   text-align: right;
 }
+main .preview .table table tr {
+  position: relative;
+}
+main .preview .table table tr:hover {
+  cursor: pointer;
+}
+main .preview .table table tr .product-modal {
+  display: none;
+}
+main .preview .table table tr td.modal-row {
+  width: 0;
+  padding: 0;
+}
+main .preview .table table tr:hover .product-modal {
+  position: absolute;
+  display: block;
+  width: 400px;
+  z-index: 2;
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 20px;
+  right: 0;
+  padding: 20px;
+  box-shadow: 0px 1px 12px -3px black;
+}
+main .preview .table table tr:hover .product-modal img {
+  width: 50%;
+}
+main .preview .table table tr:hover .product-modal p {
+  font-size: 1.5rem;
+  color: #212A3E;
+  padding-left: 10px;
+}
+main .preview .table table tr:hover .product-modal p.item {
+  font-size: 1.2rem;
+}
 main .preview .table table td {
   padding: 0 15px;
 }

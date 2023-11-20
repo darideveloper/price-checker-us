@@ -401,9 +401,7 @@ def preview ():
     
     status_code = 200
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
-    
-    print (products_ads)
-    
+        
     return render_template (
         "preview.html", 
         products=products_ads,
