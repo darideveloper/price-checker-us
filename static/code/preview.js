@@ -1,5 +1,6 @@
 const checkboxes = document.querySelectorAll('input[type=checkbox]')
 const refreshButtons = document.querySelectorAll('button.refresh')
+const priceGapElem = document.querySelector(".price-gap .price")
 
 // Detech when click checkbox products
 checkboxes.forEach(checkbox => {
@@ -51,3 +52,23 @@ document.addEventListener('DOMContentLoaded', function () {
     productImage.style.backgroundImage = 'url(' + imageUrl + ')'
   })
 })
+
+// Calculate price gap and update in page
+function calculatePriceGap () {
+  
+  // Get prices
+  const visbleTableRow = document.querySelectorAll('tr:not(.hidden) .price')
+  const prices = Array.from(visbleTableRow).map(price => parseFloat(price.innerText.replace('$', '')))
+
+  // Get max, min and gap price
+  const maxPrice = Math.max(...prices)
+  const minPrice = Math.min(...prices)
+  const gapPrice = maxPrice - minPrice
+  console.log ({maxPrice, minPrice, gapPrice, prices})
+
+  // Update price
+  priceGapElem.innerHTML = gapPrice.toFixed(2)
+
+}
+
+calculatePriceGap ()

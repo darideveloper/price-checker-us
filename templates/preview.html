@@ -44,7 +44,7 @@
             {% endif %}
             {{product.store[0:3]}}
           </td>
-          <td><a href="{{product.link}}" target="_blank">$ {{product.price}}</a></td>
+          <td><a class="price" href="{{product.link}}" target="_blank">$ {{product.price}}</a></td>
         </tr>
         {% endif %}
         {% endfor %}
