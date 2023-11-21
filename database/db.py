@@ -477,4 +477,33 @@ class Database (MySQL):
                     break
             
             self.email_manager.send_email (TO_EMAILS, "Error in web scraping", print_message)
+    
+    def get_last_requests (self, max_num:int) -> list:
+        """ Get last request from database
+
+        Args:
+            max_num (int): max number of request to get
+
+        Returns:
+            list: list of dict with request data
             
+            Structure:
+            [
+                {
+                    "date": datetime,
+                    "id": int,
+                    "keyword": str
+                }
+            ]
+        """
+        
+        query = f"""
+            SELECT id, working_datetime as date, keyword
+            FROM requests
+            ORDER BY id DESC
+            LIMIT {max_num}
+        """
+        
+        results = self.run_sql (query)
+        
+        return results

@@ -429,6 +429,43 @@ main .content iframe {
   border-radius: 20px;
   box-shadow: 0px 1px 12px -3px black;
 }
+main.searches {
+  margin-bottom: 50px;
+}
+main.searches .columns {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+main.searches h1 {
+  text-align: center;
+}
+main.searches table {
+  margin: 0;
+  min-width: 400px;
+  border-collapse: collapse;
+}
+main.searches table tbody tr:nth-child(odd) {
+  background-color: rgba(33, 42, 62, 0.1);
+}
+main.searches table th {
+  font-size: 1.3rem;
+  text-align: left;
+  padding: 2px 10px;
+}
+main.searches table td {
+  padding: 4px 10px;
+}
+main.searches table td:nth-child(1) {
+  width: 10px;
+}
+main.searches table td a {
+  text-decoration: underline;
+}
+main.searches table td a span {
+  font-weight: bold;
+}
 
 footer {
   width: 100%;
@@ -508,6 +545,9 @@ button.swal2-confirm.swal2-styled {
   main .preview .products {
     grid-template-columns: repeat(2, 1fr);
   }
+  main.searches table:last-child th {
+    display: none;
+  }
 }
 @media screen and (max-width: 650px) {
   footer .links {
@@ -560,6 +600,9 @@ button.swal2-confirm.swal2-styled {
 @media screen and (max-width: 470px) {
   main .preview .table tr *:nth-child(3), main .preview .table tr *:nth-child(5) {
     display: none;
+  }
+  main.searches table {
+    min-width: 100%;
   }
 }
 @media screen and (max-width: 350px) {

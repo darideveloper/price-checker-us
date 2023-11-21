@@ -35,6 +35,7 @@ ROTATTION_LINKS_SYSTEM = int(os.getenv ("ROTATTION_LINKS_SYSTEM"))
 ROTATION_LINKS_USER = int(os.getenv ("ROTATION_LINKS_USER"))
 REFERRAL_HOST = os.getenv ("REFERRAL_HOST")
 ADS_RELATION = int(os.getenv ("ADS_RELATION"))
+RECENT_SEARCHES_NUM = int(os.getenv ("RECENT_SEARCHES_NUM"))
 
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
@@ -431,7 +432,28 @@ def robots ():
 
     # Redirect to home
     return send_file ("static/robots.txt")
-        
+
+@app.get ('/recent-searches/')
+def recent_searches ():
+    """ Return recent results """
+    
+    searches = db.get_last_requests (RECENT_SEARCHES_NUM)
+    
+    # Format links and dates
+    searches = list(map (lambda search: {
+        **search,
+        "link": f"/preview/?request-id={search['id']}",
+        "date": search["date"].strftime ("%m/%d/%Y")
+    }, searches))
+    
+    # Split results in two columns
+    split_index = int (len (searches) / 2)
+    columns = [
+        searches[:split_index],
+        searches[split_index:]
+    ]
+    
+    return render_template ("recent-searches.html", columns=columns)
 
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
