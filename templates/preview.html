@@ -44,7 +44,11 @@
               </div>
             </div>
           </td>
-          <td>{{ products.index (product) + 1}}</td>
+          <td class="item-checkbox">
+            {{ products.index (product) + 1}}
+            <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
+          type="checkbox" name="{{products.index (product)}}" checked data-product-id="product-{{products.index (product)}}">
+          </td>
           <td>{{product.rate_num}}</td>
           <td>{{product.reviews}}</td>
           <td>{{product.sales}}</td>
@@ -54,7 +58,7 @@
             {% endif %}
             {{product.store[0:3]}}
           </td>
-          <td>$ {{product.price}}</a></td>
+          <td class="price">$ {{product.price}}</a></td>
         </tr>
         {% endif %}
         {% endfor %}
@@ -133,7 +137,7 @@
 
         <!-- Show checkbox -->
         <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
-          type="checkbox" name="{{products.index (product)}}" id="product-{{products.index (product)}}" checked>
+          type="checkbox" name="{{products.index (product)}}" data-product-id="product-{{products.index (product)}}" checked>
 
         <div class="texts">
           <p class="price">

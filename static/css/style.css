@@ -264,7 +264,7 @@ main .preview .counter a:hover {
 main .preview .table {
   margin-top: 50px;
   width: 600px;
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
 }
 main .preview .table table {
@@ -281,6 +281,7 @@ main .preview .table table tr:hover {
 }
 main .preview .table table tr .product-modal {
   display: none;
+  font-weight: bold;
 }
 main .preview .table table tr td.modal-row {
   width: 0;
@@ -324,6 +325,10 @@ main .preview .table table td a {
 }
 main .preview .table table td .icon {
   width: 15px;
+}
+main .preview .table table td.item-checkbox .checkbox {
+  accent-color: white;
+  margin-left: 5px;
 }
 main .preview .table table tr.best-seller {
   color: #F1F6F9;

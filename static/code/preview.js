@@ -33,8 +33,15 @@ function onClickRefreshButton() {
   
   // Delete products
   for (const inactiveCheckbox of inactiveCheckboxes) {
-    const product = inactiveCheckbox.parentNode.parentNode
-    product.classList.add("hidden")
+    
+    // get products based in the product id
+    dataProductId = inactiveCheckbox.getAttribute('data-product-id')
+    document.querySelectorAll(`[data-product-id="${dataProductId}"]`).forEach(product => {
+      const productWrapper = product.parentNode.parentElement
+      console.log ({productWrapper})
+      productWrapper.classList.add('hidden')
+    })
+
   }
 }
 
@@ -60,7 +67,7 @@ function calculatePriceGap() {
   const maxPrice = Math.max(...prices)
   const minPrice = Math.min(...prices)
   const gapPrice = maxPrice - minPrice
-  console.log({ maxPrice, minPrice, gapPrice, prices })
+  console.log({visbleTableRow, prices, maxPrice, minPrice, gapPrice, prices })
 
   // Update price
   priceGapElem.innerHTML = gapPrice.toFixed(2)
@@ -68,6 +75,12 @@ function calculatePriceGap() {
 
 // Rdirect to product page when click on table row
 function onClickTableRow (event) {
+
+  // Ignore when click checkbox
+  if (event.target.type == 'checkbox') {
+    return
+  }
+
   
   // Get link
   const row = event.target.parentNode
@@ -84,7 +97,6 @@ checkboxes.forEach(checkbox => {
 })
 
 // Add listener to refresh button
-console.log (refreshButtons)
 refreshButtons.forEach(refreshButton => {
   refreshButton.addEventListener('click', () => { onClickRefreshButton() })
 })
