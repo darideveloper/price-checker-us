@@ -4,14 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Price Checker US {% block subpage %}{% endblock %}</title>
+
+  <!-- Meta tags -->
+  <title>Price Checker US {% block subpage %} | E-com Compare Prices Tool{% endblock %}</title>  
+  <meta name="description" content="{% block meta_description %}Unlock unbeatable savings! Effortlessly compare e-commerce prices with Price Checker. Discover the best deals, all for free{% endblock %}">
+  <meta name="keywords" content="price checker, compare prices, online shopping, best deals, product search">
+  <meta name="author" content="Price Chcker Us">
+
+  <!-- Styles -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/css/style.css') }}">
 
+  <!-- Google fornts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rospanoto+Condensed:wght@400;700&family=Yeseva+One&display=swap"
     rel="stylesheet">
 
+  <!-- Favicon -->
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
   <!-- Add google adds -->
