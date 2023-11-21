@@ -321,7 +321,7 @@ def preview ():
         }, status_code)
     
     # Get products from db
-    products_categories, keyword = db.get_products (request_id)
+    products_categories, keyword, working_datetime = db.get_products (request_id)
     
     # Add store to each product
     products_data = []
@@ -401,14 +401,18 @@ def preview ():
     
     status_code = 200
     db.save_log (f"({status_code}) Products rendered", log_origin, id_request=request_id)
-        
+    
+    # Format date like MM/DD/YYYY
+    search_date = working_datetime.strftime ("%m/%d/%Y")
+    
     return render_template (
         "preview.html", 
         products=products_ads,
         links_total_user=links_total_user,
         links_total_system=links_total_system,
         referral_host=REFERRAL_HOST,
-        keyword=keyword
+        keyword=keyword,
+        search_date=search_date
     )
     
 @app.get ('/referral/<hash>/')

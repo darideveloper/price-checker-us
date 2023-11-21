@@ -402,15 +402,16 @@ class Database (MySQL):
             
         # Get keyword from db
         query = f"""
-            Select keyword
+            Select keyword, working_datetime
             FROM requests
             WHERE 
                 id = {id_request}
         """
         request_data = self.run_sql (query)
         keyword = request_data[0]["keyword"]
+        working_datetime = request_data[0]["working_datetime"]
         
-        return products_store, keyword
+        return products_store, keyword, working_datetime
     
     def save_log (self, message:str, origin:str, store:str="", id_request:int=0, api_key:str="", log_type:str="info"):
         """ Save log in database

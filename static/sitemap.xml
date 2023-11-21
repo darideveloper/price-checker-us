@@ -25,7 +25,7 @@
 
     <url>
         <loc>https://www.price-checker.us/preview/</loc>
-        <lastmod>2023-11-17</lastmod>
+        <lastmod>2023-11-21</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.3</priority>
     </url>
@@ -38,8 +38,8 @@
     </url>
 
     <url>
-        <loc>https://www.price-checker.us/recent/</loc>
-        <lastmod>2023-11-17</lastmod>
+        <loc>https://www.price-checker.us/recent-results/</loc>
+        <lastmod>2023-11-21</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
