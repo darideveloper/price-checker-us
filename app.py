@@ -321,14 +321,7 @@ def preview ():
         }, status_code)
     
     # Get products from db
-    products_categories, keyword, working_datetime = db.get_products (request_id)
-    
-    # Add store to each product
-    products_data = []
-    for store, products in products_categories.items():
-        # Add store to each product
-        products_formatted = list(map(lambda product: {**product, "store": store}, products))
-        products_data += products_formatted
+    products, keyword, working_datetime = db.get_products (request_id)
     
     # Add referral code
     current_referral = "user"
@@ -336,7 +329,7 @@ def preview ():
     links_num_system = 0
     links_total_user = 0
     links_total_system = 0 
-    for product in products_data:
+    for product in products:
         
         # Get product data
         link = product["link"]
@@ -381,7 +374,7 @@ def preview ():
             links_num_system = 0
 
     # Sort products by price
-    product_sort = sorted (products_data, key=lambda product: product["price"])
+    product_sort = sorted (products, key=lambda product: product["price"])
     
     # Add product ads
     ads_cards = AdsCards ()

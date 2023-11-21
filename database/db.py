@@ -389,17 +389,19 @@ class Database (MySQL):
         """
         
         products = self.run_sql (query)
-        
-        # Sort products by store
-        products_store = {}
+    
+        # Get stores with id
+        stores = {}
         for store_name, store_data in Database.stores.items():
             store_id = store_data["id"]
-            
-            # Filter products of the current store
-            products_store[store_name] = list(filter(
-                lambda product: product["id_store"] == store_id, products
-            ))
-            
+            stores[store_id] = store_name
+        
+        # Replace store-id with store name
+        products = list(map(lambda product: {
+            **product,
+            "store": stores[product["id_store"]]
+        }, products))
+        
         # Get keyword from db
         query = f"""
             Select keyword, working_datetime
@@ -411,7 +413,7 @@ class Database (MySQL):
         keyword = request_data[0]["keyword"]
         working_datetime = request_data[0]["working_datetime"]
         
-        return products_store, keyword, working_datetime
+        return products, keyword, working_datetime
     
     def save_log (self, message:str, origin:str, store:str="", id_request:int=0, api_key:str="", log_type:str="info"):
         """ Save log in database
