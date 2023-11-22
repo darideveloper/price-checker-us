@@ -44,6 +44,12 @@ function buttonTwitter () {
   window.open(link, '_blank')
 }
 
+// Share page in facebook
+function buttonFacebook () {
+  const link = `https://www.facebook.com/sharer/sharer.php?u=${url}`
+  window.open(link, '_blank')
+}
+
 // Add click event to each button
 function addListenersButtons() {
 
@@ -53,7 +59,8 @@ function addListenersButtons() {
     default: buttonDefault,
     whatsapp: buttonWhatsapp,
     telegram: buttonTelegram,
-    twitter: buttonTwitter
+    twitter: buttonTwitter,
+    facebook: buttonFacebook,
   }
 
   shareButtons.forEach(shareButton => {
