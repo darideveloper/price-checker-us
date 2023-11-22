@@ -485,6 +485,9 @@ footer a:hover {
 footer p {
   margin: 0;
 }
+footer .recent {
+  font-size: 1rem;
+}
 footer .links {
   width: 550px;
   display: flex;
