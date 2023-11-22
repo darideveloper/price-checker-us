@@ -3,8 +3,8 @@ const url = window.location.href
 let currentPage = "home"
 
 const mesages = {
-  "home": `Hey, take a look at this awesome product price checker tool: ${url}`,
-  "preview": `Hey, take a look at this '${keyword}' price comparison ${url}`
+  "home": `Hey, take a look at this awesome product price checker tool`,
+  "preview": `Hey, take a look at this '${keyword}' price comparison`
 }
 
 // Opcy current url
@@ -22,17 +22,33 @@ function buttonDefault() {
   Swal.fire("Comming soon")
 }
 
-// Open share message page in whatsapp
+// Share page in whatsapp
 function buttonWhatsapp () {
-  // Open link in new tab
   const message = mesages[currentPage]
   const encodedMessage = encodeURIComponent(message)
-  const link = `whatsapp://send?text=${encodedMessage}`
+  const link = `whatsapp://send?text=${encodedMessage} ${url}`
   window.open(link, '_blank')
 }
 
+// Share page in telegram
+function buttonTelegram () {
+  const message = mesages[currentPage]
+  const link = `https://t.me/share/url?url=${url}&text=${message}`
+  window.open(link, '_blank')
+}
+
+
 // Add click event to each button
 function addListenersButtons() {
+
+  // Relations between button name and function
+  const functions = {
+    url: buttonUrl,
+    default: buttonDefault,
+    whatsapp: buttonWhatsapp,
+    telegram: buttonTelegram
+  }
+
   shareButtons.forEach(shareButton => {
     shareButton.addEventListener('click', () => {
       // Get button class
@@ -41,13 +57,6 @@ function addListenersButtons() {
       // Detect is user is in preview page
       if (url.includes("preview")) {
         currentPage = "preview"
-      }
-
-      // Object functions
-      const functions = {
-        url: buttonUrl,
-        default: buttonDefault,
-        whatsapp: buttonWhatsapp
       }
 
       // Run default function if not found
