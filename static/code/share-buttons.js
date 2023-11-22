@@ -37,6 +37,12 @@ function buttonTelegram () {
   window.open(link, '_blank')
 }
 
+// Share page in twitter
+function buttonTwitter () {
+  const message = mesages[currentPage]
+  const link = ` https://twitter.com/intent/tweet?text=${message} ${url}`
+  window.open(link, '_blank')
+}
 
 // Add click event to each button
 function addListenersButtons() {
@@ -46,7 +52,8 @@ function addListenersButtons() {
     url: buttonUrl,
     default: buttonDefault,
     whatsapp: buttonWhatsapp,
-    telegram: buttonTelegram
+    telegram: buttonTelegram,
+    twitter: buttonTwitter
   }
 
   shareButtons.forEach(shareButton => {
