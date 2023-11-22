@@ -1,10 +1,8 @@
 const shareButtons = document.querySelectorAll('button.share')
+const url = window.location.href
 
 // Opcy current url
 function buttonUrl() {
-  // Get current url
-  const url = window.location.href
-
   // Copy url to clipboard
   navigator.clipboard.writeText(url)
 
@@ -18,6 +16,15 @@ function buttonDefault() {
   Swal.fire("Comming soon")
 }
 
+// Open share message page in whatsapp
+function buttonWhatsapp () {
+  // Open link in new tab
+  const message = `Hey, take a look at this awesome product price checker tool: ${url}`
+  const encodedMessage = encodeURIComponent(message)
+  const link = `whatsapp://send?text=${encodedMessage}`
+  window.open(link, '_blank')
+}
+
 // Add click event to each button
 function addListenersButtons() {
   shareButtons.forEach(shareButton => {
@@ -28,7 +35,8 @@ function addListenersButtons() {
       // Object functions
       const functions = {
         url: buttonUrl,
-        default: buttonDefault
+        default: buttonDefault,
+        whatsapp: buttonWhatsapp
       }
 
       // Run default function if not found
