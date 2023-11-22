@@ -25,7 +25,6 @@ function toggleRefreshButton() {
 }
 
 function onClickRefreshButton() {
-  console.log ("Refresh button clicked")
 
   // Get inactive checboxes
   const activeCheckboxes = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
@@ -38,7 +37,6 @@ function onClickRefreshButton() {
     dataProductId = inactiveCheckbox.getAttribute('data-product-id')
     document.querySelectorAll(`[data-product-id="${dataProductId}"]`).forEach(product => {
       const productWrapper = product.parentNode.parentElement
-      console.log ({productWrapper})
       productWrapper.classList.add('hidden')
     })
 
@@ -67,7 +65,6 @@ function calculatePriceGap() {
   const maxPrice = Math.max(...prices)
   const minPrice = Math.min(...prices)
   const gapPrice = maxPrice - minPrice
-  console.log({visbleTableRow, prices, maxPrice, minPrice, gapPrice, prices })
 
   // Update price
   priceGapElem.innerHTML = gapPrice.toFixed(2)
