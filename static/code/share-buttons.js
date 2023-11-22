@@ -1,5 +1,11 @@
 const shareButtons = document.querySelectorAll('button.share')
 const url = window.location.href
+let currentPage = "home"
+
+const mesages = {
+  "home": `Hey, take a look at this awesome product price checker tool: ${url}`,
+  "preview": `Hey, take a look at this '${keyword}' price comparison ${url}`
+}
 
 // Opcy current url
 function buttonUrl() {
@@ -19,7 +25,7 @@ function buttonDefault() {
 // Open share message page in whatsapp
 function buttonWhatsapp () {
   // Open link in new tab
-  const message = `Hey, take a look at this awesome product price checker tool: ${url}`
+  const message = mesages[currentPage]
   const encodedMessage = encodeURIComponent(message)
   const link = `whatsapp://send?text=${encodedMessage}`
   window.open(link, '_blank')
@@ -31,6 +37,11 @@ function addListenersButtons() {
     shareButton.addEventListener('click', () => {
       // Get button class
       const dataSocial = shareButton.getAttribute('data-social')
+
+      // Detect is user is in preview page
+      if (url.includes("preview")) {
+        currentPage = "preview"
+      }
 
       // Object functions
       const functions = {
