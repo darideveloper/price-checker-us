@@ -294,9 +294,32 @@ def results ():
             "products": products
         }
     })
-    
+
 @app.get ('/preview/')
-def preview ():    
+def recent_searches ():
+    """ Return a table of the recent results """
+    
+    searches = db.get_last_requests (RECENT_SEARCHES_NUM)
+    
+    # Format links and dates
+    searches = list(map (lambda search: {
+        **search,
+        "link": f"/preview/{search['id']}",
+        "date": search["date"].strftime ("%m/%d/%Y")
+    }, searches))
+    
+    # Split results in two columns
+    split_index = int (len (searches) / 2)
+    columns = [
+        searches[:split_index],
+        searches[split_index:]
+    ]
+    
+    return render_template ("preview.html", columns=columns)
+
+
+@app.get ('/preview/<int:request_id>')
+def preview_request_id (request_id):    
     """ Render basic preview products page """
     
     # Get referral session
@@ -304,9 +327,6 @@ def preview ():
     referral_links = {}
     if referral_hash:
         referral_links = referral_api.get_by_hash (referral_hash)
-    
-    # Get url variables
-    request_id = request.args.get ("request-id", "")
     
     valid_request_id = db.get_request_status (request_id)
     
@@ -400,7 +420,7 @@ def preview ():
     search_date = working_datetime.strftime ("%m/%d/%Y")
     
     return render_template (
-        "preview.html", 
+        "preview-request-id.html", 
         products=products_ads,
         links_total_user=links_total_user,
         links_total_system=links_total_system,
@@ -433,29 +453,6 @@ def robots ():
 
     # Redirect to home
     return send_file ("static/robots.txt")
-
-@app.get ('/recent-searches/')
-def recent_searches ():
-    """ Return recent results """
-    
-    searches = db.get_last_requests (RECENT_SEARCHES_NUM)
-    
-    # Format links and dates
-    searches = list(map (lambda search: {
-        **search,
-        "link": f"/preview/?request-id={search['id']}",
-        "date": search["date"].strftime ("%m/%d/%Y")
-    }, searches))
-    
-    # Split results in two columns
-    split_index = int (len (searches) / 2)
-    columns = [
-        searches[:split_index],
-        searches[split_index:]
-    ]
-    
-    return render_template ("recent-searches.html", columns=columns)
-
 
 @app.errorhandler (404)
 def template_404 (error):

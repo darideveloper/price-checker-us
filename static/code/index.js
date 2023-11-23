@@ -137,7 +137,7 @@ async function apiWaitDoneStatus() {
  */
 function apiGetPreviewPage () {
 
-  const previewPage = `./preview/?request-id=${requestId}`
+  const previewPage = `./preview/${requestId}`
   console.log ({previewPage})
   return previewPage
 }

@@ -1,201 +1,40 @@
 {% extends "template.html" %}
 
-{% block subpage %}| Preview{% endblock %}
+{% block subpage %}| Recent searches{% endblock %}
 
-{% block mainclass %}preview{% endblock %}
+{% block mainclass %}"searches"{% endblock %}
 
 {% block meta_description %}
-Results from search {{keyword|title}} en e-commerce pages.
-{% endblock %}
-
-{% block extrahead %}
-<!-- Cannical for preview pages -->
-<link rel="canonical" href="https://www.price-checker.us/preview/?request-id={{request_id}}" />
+Last seach in price checker us
 {% endblock %}
 
 {% block main %}
-<div class="preview">
+<h1>Recent Searches</h1>
 
-  <!-- <div style="width:100%; height:100px; border: 1px solid red;">    
-    <ins class="epn-placement" data-config-id="fff5358d682a725ceeb577f4"></ins>
-  </div> -->
-
-  <h2>Results of "{{keyword|title}}" (Table Format) {{search_date}}</h2>
-
-  <section class="table">
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th><span>Item</span></th>
-          <th><span>Rate</span></th>
-          <th><span>Revs</span></th>
-          <th><span>Sales</span></th>
-          <th><span>Store</span></th>
-          <th><span>Price</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-        {% if not product.path %}
-        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}" data-link="{{product.link}}">
-          <td class="modal-row">
-            <div class="product-modal">
-              <img src="{{product.image}}" alt="product image">
-              <div class="text">
-                <p class="title item">Item: {{products.index (product) + 1}}</p>
-                <p class="title name">{{product.title}}</p>
-              </div>
-            </div>
-          </td>
-          <td class="item-checkbox">
-            {{ products.index (product) + 1}}
-            <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
-          type="checkbox" name="{{products.index (product)}}" checked data-product-id="product-{{products.index (product)}}">
-          </td>
-          <td>{{product.rate_num}}</td>
-          <td>{{product.reviews}}</td>
-          <td>{{product.sales}}</td>
-          <td>
-            {% if product.best_seller == 1 %}
-            <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
-            {% endif %}
-            {{product.store[0:3]}}
-          </td>
-          <td class="price">$ {{product.price}}</a></td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-
-      </tbody>
-    </table>
-
-    <div class="footer">
-      <p class="price-gap">
-        Maximum Price Gap: $
-        <span class="price">199.99</span>
-      </p>
-      <p class="tags">
-        <span class="best-seller">
-          <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
-          Best Seller
-        </span>
-        <span class="regular-product">Regular Product</span>
-      </p>
-
-    </div>
-
-
-  </section>
-
-  <button class="refresh top" disabled title="Uncheck items and click here to remove them from the comparison">
-    Refresh
-  </button>
-
-  <h2>Results of "{{keyword|title}}" (Images Format) {{search_date}}</h2>
-
-  <section class="products">
-    {% for product in products %}
-
-    {% if product.path %}
-
-    <article class="product ad">
-
-
-      <a href="{{product.link}}" target="_blank" title="{{product.title}}">
-
-        <!-- Ad index -->
-        <p class="index-wrapper">
-          <span class="title index">
-            Ad
-          </span>
-        </p>
-
-        <!-- media -->
-        {% if product.type == "image" %}
-        <img src="{{ url_for('static', filename='/ads/' + product.path) }}" alt="ad">
-        {% else %}
-        <video src="{{ url_for('static', filename='/ads/' + product.path) }}" autoplay loop muted></video>
-        {% endif %}
-
-      </a>
-    </article>
-
-    {% else %}
-
-    <article class="product" id="product-{{products.index (product) + 1}}">
-
-      <a href="{{product.link}}" class="" target="_blank" title="{{product.title}}">
-        <div class="product-image" data-image="{{product.image}}"></div>
-
-        <!-- Best seller icon -->
-        {% if product.best_seller == 1 %}
-        <img class="best-seller-icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}"
-          alt="best seller icon">
-        {% endif %}
-
-        <!-- Product index -->
-        <p class="index-wrapper">
-          <span class="title index">
-            {{ products.index (product) + 1}}
-          </span>
-        </p>
-
-        <!-- Show checkbox -->
-        <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
-          type="checkbox" name="{{products.index (product)}}" data-product-id="product-{{products.index (product)}}" checked>
-
-        <div class="texts">
-          <p class="price">
-            <span class="small">$</span>
-            <span>{{product.price}}</span>
-            <span class="small">USD</span>
-          </p>
-
-          <div class="data">
-            <p>Rate: <span>{{product.rate_num}}</span></p>
-            <p>Revs: <span>{{product.reviews}}</span></p>
-
-            <p>Sales: <span>{{product.sales}}</span></p>
-            <p><span>{{product.store}}</span> </p>
-          </div>
-        </div>
-      </a>
-      {% endif %}
-
-    </article>
-    {% endfor %}
-  </section>
-
-  <button class="refresh top" disabled title="Uncheck items and click here to remove them from the comparison">
-    Refresh
-  </button>
-
-  <div class="disclaimer">
-    Note: Prices and data on our site are directly sourced from e-commerce sites in real time. Using the links to
-    purchase supports us through referral fees, already included, (no extra fees), in item prices!
-  </div>
-
-  <div class="counter">
-    <p class="counter-text">
-      <span class="counter-number">{{products|length}}</span>
-      <span>products</span>
-    </p>
-    <p class="counter-text">
-      <span class="counter-number">{{links_total_user}}</span>
-      <span><a href="{{referral_host}}" target="_blank" title="Share this tool and become a 50/50% partner">Partner</a>
-        referral links</span>
-    </p>
-    <p class="counter-text">
-      <span class="counter-number">{{links_total_system}}</span>
-      <span>System referral links</span>
-    </p>
-  </div>
+<div class="columns">
+  {% for searches in columns %}
+  <table>
+    <thead>
+      <th>Date</th>
+      <th>Search</th>
+    </thead>
+    <tbody>
+      {% for search in searches %}
+      <tr>
+        <td>{{ search.date }}</td>
+        <td>
+          <a href="{{ search.link }}" target="_blank">
+            Results of
+            <span>
+              {{ search.keyword }}
+            </span>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
 </div>
 
-
-{% endblock %}
-
-{% block script %}
-<script src="{{ url_for('static', filename='/code/preview.js') }}"></script>
 {% endblock %}
