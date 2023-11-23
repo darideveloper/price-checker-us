@@ -4,13 +4,13 @@
 
 {% block mainclass %}preview{% endblock %}
 
-{% block extrahead %}
-<script async src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
-<ins class="epn-placement" data-config-id="fff6328899337a3e510972ba"></ins>
-{% endblock %}
-
 {% block meta_description %}
 Results from search {{keyword|title}} en e-commerce pages.
+{% endblock %}
+
+{% block extrahead %}
+<!-- Cannical for preview pages -->
+<link rel="canonical" href="https://www.price-checker.us/preview/?request-id={{request_id}}" />
 {% endblock %}
 
 {% block main %}

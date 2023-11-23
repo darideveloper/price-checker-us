@@ -406,7 +406,8 @@ def preview ():
         links_total_system=links_total_system,
         referral_host=REFERRAL_HOST,
         keyword=keyword,
-        search_date=search_date
+        search_date=search_date,
+        request_id=request_id
     )
     
 @app.get ('/referral/<hash>/')
