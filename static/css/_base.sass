@@ -1,0 +1,60 @@
+$color_a: #F1F6F9
+$color_b: #394867
+$color_c: #212A3E
+$color_d: #9BA4B5
+$color_e: #ffffff
+
+body
+    font-family: 'Roboto Condensed', sans-serif
+    max-width: 90%
+    margin: 0 auto
+    background-color: $color_a
+    color: $color_c
+
+.debug
+    border: 1px solid red
+
+.title, h1, h2, h3, h4, h5, h6
+    font-family: 'Yeseva One', serif
+
+a
+    color: $color_b
+    text-decoration: none
+
+.transparent
+    opacity: 0 !important
+
+.hidden
+    display: none !important
+
+.center
+    text-align: center
+
+.big-text
+    font-size: 2rem
+
+::-webkit-scrollbar
+    width: 10px
+
+::-webkit-scrollbar-track
+    background: $color-a
+
+::-webkit-scrollbar-thumb
+    background: $color-b
+    margin-top: -5px
+    border-radius: 10px
+
+    &:hover
+        background: $color-c
+
+main
+    max-width: 1400px
+    margin: 0 auto
+
+button.swal2-confirm.swal2-styled
+    background-color: $color_b
+
+
+@media screen and (max-width: 1200px)
+    body
+        max-width: 96%

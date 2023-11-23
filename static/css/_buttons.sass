@@ -1,0 +1,29 @@
+button
+    background-color: $color_c
+    color: $color_a
+    padding: 0.8rem 2rem
+    font-size: 1.5rem
+    border: none
+    border-radius: 15px
+    display: block
+    cursor: pointer
+    transition-duration: 0.2s
+
+    &.swal2-styled
+        box-shadow: none
+
+    &[disabled]
+        opacity: 0.6
+        cursor: default
+
+    &:hover:not([disabled])
+        background-color: $color_b
+        box-shadow: 0 0 3px rgba($color_c, 0.8)
+        transform: scale(1.05)
+
+    &.refresh
+        margin: 0 auto
+
+        &.top
+            margin-top: 30px
+            margin-bottom: 40px
