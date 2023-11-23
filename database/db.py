@@ -498,9 +498,10 @@ class Database (MySQL):
         """
         
         query = f"""
-            SELECT id, working_datetime as date, keyword
+            SELECT id, done_datetime as date, keyword
             FROM requests
-            ORDER BY id DESC
+            WHERE done_datetime IS NOT NULL
+            ORDER BY done_datetime DESC
             LIMIT {max_num}
         """
         
