@@ -455,5 +455,12 @@ def recent_searches ():
     
     return render_template ("recent-searches.html", columns=columns)
 
+
+@app.errorhandler (404)
+def template_404 (error):
+    """ Return 404 template """
+    
+    return (render_template ("404.html"), 404)
+
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
