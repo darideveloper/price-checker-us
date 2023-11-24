@@ -59,11 +59,27 @@ function buttonInstagram () {
     Swal.fire({
       title: "Link copied to clipboard",
       text: "We'll redirect you to our instagram page",
-      confirmButtonText: "Go to instagram",
-    }).then((result) => {
+      confirmButtonText: "Go to Instagram",
+    }).then(() => {
       // Redirect to instagram
       window.open("https://www.instagram.com/", '_blank')
     })
+}
+
+// Share page in pinterest
+function buttonPinterest () {
+  // Copy url to clipboard
+  navigator.clipboard.writeText(url)
+
+  // Show alert
+  Swal.fire({
+    title: "Link copied to clipboard",
+    text: "We'll redirect you to our pinterest page",
+    confirmButtonText: "Go to Pinterest",
+  }).then(() => {
+    // Redirect to instagram
+    window.open("https://pinterest.com/", '_blank')
+  })
 }
 
 // Add click event to each button
@@ -78,6 +94,7 @@ function addListenersButtons() {
     twitter: buttonTwitter,
     facebook: buttonFacebook,
     instagram: buttonInstagram,
+    pinterest: buttonPinterest,
   }
 
   shareButtons.forEach(shareButton => {
