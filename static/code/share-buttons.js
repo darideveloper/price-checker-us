@@ -50,6 +50,22 @@ function buttonFacebook () {
   window.open(link, '_blank')
 }
 
+// Share page in instagram
+function buttonInstagram () {
+    // Copy url to clipboard
+    navigator.clipboard.writeText(url)
+
+    // Show alert
+    Swal.fire({
+      title: "Link copied to clipboard",
+      text: "We'll redirect you to our instagram page",
+      confirmButtonText: "Go to instagram",
+    }).then((result) => {
+      // Redirect to instagram
+      window.open("https://www.instagram.com/", '_blank')
+    })
+}
+
 // Add click event to each button
 function addListenersButtons() {
 
@@ -61,6 +77,7 @@ function addListenersButtons() {
     telegram: buttonTelegram,
     twitter: buttonTwitter,
     facebook: buttonFacebook,
+    instagram: buttonInstagram,
   }
 
   shareButtons.forEach(shareButton => {
