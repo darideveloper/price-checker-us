@@ -24,6 +24,22 @@ function toggleRefreshButton() {
   }
 }
 
+// Calculate price gap and update in page
+function calculatePriceGap() {
+
+  // Get prices
+  const visbleTableRow = document.querySelectorAll('tr:not(.hidden) .price')
+  const prices = Array.from(visbleTableRow).map(price => parseFloat(price.innerText.replace('$', '')))
+
+  // Get max, min and gap price
+  const maxPrice = Math.max(...prices)
+  const minPrice = Math.min(...prices)
+  const gapPrice = maxPrice - minPrice
+
+  // Update price
+  priceGapElem.innerHTML = gapPrice.toFixed(2)
+}
+
 function onClickRefreshButton() {
 
   // Get inactive checboxes
@@ -41,6 +57,8 @@ function onClickRefreshButton() {
     })
 
   }
+
+  calculatePriceGap ()
 }
 
 function renderProductImages() {
@@ -52,22 +70,6 @@ function renderProductImages() {
       productImage.style.backgroundImage = 'url(' + imageUrl + ')'
     })
   })
-}
-
-// Calculate price gap and update in page
-function calculatePriceGap() {
-
-  // Get prices
-  const visbleTableRow = document.querySelectorAll('tr:not(.hidden) .price')
-  const prices = Array.from(visbleTableRow).map(price => parseFloat(price.innerText.replace('$', '')))
-
-  // Get max, min and gap price
-  const maxPrice = Math.max(...prices)
-  const minPrice = Math.min(...prices)
-  const gapPrice = maxPrice - minPrice
-
-  // Update price
-  priceGapElem.innerHTML = gapPrice.toFixed(2)
 }
 
 // Rdirect to product page when click on table row

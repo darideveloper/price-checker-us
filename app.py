@@ -65,8 +65,13 @@ def start_scraper(scraper_class: Scraper, keyword: str, request_id: int):
         error = str(error).replace("'", "").replace("\"", "")
 
         # Save error in db
-        error_message = f"store: {scraper.store}, keyword: {keyword}, error: {str(error)}"
-        db.save_log(error_message, log_origin, id_request=request_id, log_type="error")
+        error_message = f"store: {scraper.store}, " \
+            "keyword: {keyword}, error: {str(error)}"
+        db.save_log(
+            error_message,
+            log_origin,
+            id_request=request_id,
+            log_type="error")
         quit()
 
     # random_wait_time = random.randint (30, 60)
