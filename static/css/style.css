@@ -188,17 +188,65 @@ main.legal {
   max-width: 1000px;
 }
 
-main .preview h2 {
+main.preview {
+  margin-bottom: 50px;
+}
+main.preview .columns {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+main.preview h1 {
+  text-align: center;
+}
+main.preview table {
+  margin: 0;
+  min-width: 400px;
+  border-collapse: collapse;
+}
+main.preview table tbody tr:nth-child(odd) {
+  background-color: rgba(33, 42, 62, 0.1);
+}
+main.preview table th {
+  font-size: 1.3rem;
+  text-align: left;
+  padding: 2px 10px;
+}
+main.preview table td {
+  padding: 4px 10px;
+}
+main.preview table td:nth-child(1) {
+  width: 10px;
+}
+main.preview table td a {
+  text-decoration: underline;
+}
+main.preview table td a span {
+  font-weight: bold;
+}
+@media screen and (max-width: 850px) {
+  main.preview table:last-child th {
+    display: none;
+  }
+}
+@media screen and (max-width: 470px) {
+  main.preview table {
+    min-width: 100%;
+  }
+}
+
+main .preview-request-id h2 {
   text-align: center;
   margin-bottom: 50px;
 }
-main .preview .products {
+main .preview-request-id .products {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   margin: 0;
 }
-main .preview .products .product {
+main .preview-request-id .products .product {
   box-shadow: 0 0 5px rgba(33, 42, 62, 0.8);
   border-radius: 1rem;
   background-color: #ffffff;
@@ -207,29 +255,29 @@ main .preview .products .product {
   position: relative;
   transition-duration: 0.3s;
 }
-main .preview .products .product.ad {
+main .preview-request-id .products .product.ad {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-main .preview .products .product.ad a {
+main .preview-request-id .products .product.ad a {
   padding: 0;
   overflow: hidden;
 }
-main .preview .products .product.ad a img, main .preview .products .product.ad a video {
+main .preview-request-id .products .product.ad a img, main .preview-request-id .products .product.ad a video {
   width: 100%;
 }
-main .preview .products .product.ad .index-wrapper .index {
+main .preview-request-id .products .product.ad .index-wrapper .index {
   font-size: 1.6rem;
 }
-main .preview .products .product.ad img {
+main .preview-request-id .products .product.ad img {
   width: 100%;
 }
-main .preview .products .product:hover {
+main .preview-request-id .products .product:hover {
   box-shadow: 0 0 12px #212a3e;
   transform: translateY(-5px);
 }
-main .preview .products .product .product-image {
+main .preview-request-id .products .product .product-image {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -240,10 +288,10 @@ main .preview .products .product .product-image {
   justify-content: center;
   margin-bottom: 2rem;
 }
-main .preview .products .product .product-image img {
+main .preview-request-id .products .product .product-image img {
   width: 70%;
 }
-main .preview .products .product a {
+main .preview-request-id .products .product a {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -253,17 +301,17 @@ main .preview .products .product a {
   margin: 0 auto;
   padding: 1rem;
 }
-main .preview .products .product a .texts {
+main .preview-request-id .products .product a .texts {
   width: 100%;
 }
-main .preview .products .product a .texts p {
+main .preview-request-id .products .product a .texts p {
   margin: 0.1rem 0;
   padding: 0;
   font-size: 1.1rem;
   color: #394867;
   text-align: center;
 }
-main .preview .products .product a .texts p.price {
+main .preview-request-id .products .product a .texts p.price {
   font-size: 1.8rem;
   margin-bottom: 0.4rem;
   color: #212A3E;
@@ -271,26 +319,26 @@ main .preview .products .product a .texts p.price {
   align-content: center;
   justify-content: center;
 }
-main .preview .products .product a .texts p.price span.small {
+main .preview-request-id .products .product a .texts p.price span.small {
   font-size: 1rem;
   margin-top: 5px;
 }
-main .preview .products .product a .texts p span {
+main .preview-request-id .products .product a .texts p span {
   font-weight: bold;
   text-transform: capitalize;
 }
-main .preview .products .product a .texts .data {
+main .preview-request-id .products .product a .texts .data {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
-main .preview .products .product .best-seller-icon {
+main .preview-request-id .products .product .best-seller-icon {
   position: absolute;
   right: 0;
   top: 50%;
   transform: rotate(45deg);
   width: 80px;
 }
-main .preview .products .product .index-wrapper {
+main .preview-request-id .products .product .index-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -303,12 +351,12 @@ main .preview .products .product .index-wrapper {
   left: -10px;
   margin: 0;
 }
-main .preview .products .product .index-wrapper .index {
+main .preview-request-id .products .product .index-wrapper .index {
   display: inline-block;
   font-size: 2.2rem;
   color: #F1F6F9;
 }
-main .preview .products .product .checkbox {
+main .preview-request-id .products .product .checkbox {
   accent-color: #394867;
   width: 40px;
   height: 40px;
@@ -318,7 +366,7 @@ main .preview .products .product .checkbox {
   border-radius: 100%;
   cursor: pointer;
 }
-main .preview .disclaimer {
+main .preview-request-id .disclaimer {
   font-size: 1.1rem;
   width: 100%;
   text-align: center;
@@ -326,7 +374,7 @@ main .preview .disclaimer {
   text-align: justify;
   width: 490px;
 }
-main .preview .counter {
+main .preview-request-id .counter {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -334,43 +382,43 @@ main .preview .counter {
   max-width: 540px;
   margin: 20px auto;
 }
-main .preview .counter .counter-number {
+main .preview-request-id .counter .counter-number {
   font-weight: bold;
   font-size: 1.2rem;
 }
-main .preview .counter a {
+main .preview-request-id .counter a {
   font-weight: bold;
 }
-main .preview .counter a:hover {
+main .preview-request-id .counter a:hover {
   opacity: 0.8;
 }
-main .preview .table {
+main .preview-request-id .table {
   margin-top: 50px;
   width: 600px;
   max-width: 100%;
   margin: 0 auto;
 }
-main .preview .table table {
+main .preview-request-id .table table {
   width: 100%;
   border: none;
   border-collapse: collapse;
   text-align: right;
 }
-main .preview .table table tr {
+main .preview-request-id .table table tr {
   position: relative;
 }
-main .preview .table table tr:hover {
+main .preview-request-id .table table tr:hover {
   cursor: pointer;
 }
-main .preview .table table tr .product-modal {
+main .preview-request-id .table table tr .product-modal {
   display: none;
   font-weight: bold;
 }
-main .preview .table table tr td.modal-row {
+main .preview-request-id .table table tr td.modal-row {
   width: 0;
   padding: 0;
 }
-main .preview .table table tr:hover .product-modal {
+main .preview-request-id .table table tr:hover .product-modal {
   position: absolute;
   display: block;
   width: 400px;
@@ -386,148 +434,100 @@ main .preview .table table tr:hover .product-modal {
   padding: 20px;
   box-shadow: 0px 1px 12px -3px black;
 }
-main .preview .table table tr:hover .product-modal img {
+main .preview-request-id .table table tr:hover .product-modal img {
   width: 50%;
 }
-main .preview .table table tr:hover .product-modal p {
+main .preview-request-id .table table tr:hover .product-modal p {
   font-size: 1.5rem;
   color: #212A3E;
   padding-left: 10px;
 }
-main .preview .table table tr:hover .product-modal p.item {
+main .preview-request-id .table table tr:hover .product-modal p.item {
   font-size: 1.2rem;
 }
-main .preview .table table td {
+main .preview-request-id .table table td {
   padding: 0 15px;
 }
-main .preview .table table td .product-id {
+main .preview-request-id .table table td .product-id {
   font-weight: bold;
 }
-main .preview .table table td a {
+main .preview-request-id .table table td a {
   color: #212A3E;
 }
-main .preview .table table td .icon {
+main .preview-request-id .table table td .icon {
   width: 15px;
 }
-main .preview .table table td.item-checkbox .checkbox {
+main .preview-request-id .table table td.item-checkbox .checkbox {
   accent-color: white;
   margin-left: 5px;
 }
-main .preview .table table tr.best-seller {
+main .preview-request-id .table table tr.best-seller {
   color: #F1F6F9;
   background-color: #212A3E;
   font-weight: bold;
 }
-main .preview .table table tr.best-seller td a {
+main .preview-request-id .table table tr.best-seller td a {
   color: #F1F6F9;
 }
-main .preview .table table th {
+main .preview-request-id .table table th {
   padding-bottom: 35px;
 }
-main .preview .table table th span {
+main .preview-request-id .table table th span {
   transform: rotate(-70deg);
   display: block;
   text-align: center;
 }
-main .preview .table .footer .tags {
+main .preview-request-id .table .footer .tags {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
-main .preview .table .footer .tags span {
+main .preview-request-id .table .footer .tags span {
   padding: 4px 15px;
   border: 1px solid #212A3E;
 }
-main .preview .table .footer .tags span.best-seller {
+main .preview-request-id .table .footer .tags span.best-seller {
   color: #F1F6F9;
   background-color: #212A3E;
 }
-main .preview .table .footer .tags span.best-seller .icon {
+main .preview-request-id .table .footer .tags span.best-seller .icon {
   width: 15px;
   margin-right: 5px;
 }
-main .preview .table .footer .price-gap {
+main .preview-request-id .table .footer .price-gap {
   text-align: right;
   font-weight: bold;
 }
 @media screen and (max-width: 1150px) {
-  main .preview .products {
+  main .preview-request-id .products {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media screen and (max-width: 850px) {
-  main .preview .products {
+  main .preview-request-id .products {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media screen and (max-width: 550px) {
-  main .preview .products {
+  main .preview-request-id .products {
     grid-template-columns: repeat(1, 1fr);
     margin-right: 30px;
     margin-left: 30px;
   }
-  main .preview .disclaimer {
+  main .preview-request-id .disclaimer {
     width: 90%;
   }
-  main .preview .counter {
+  main .preview-request-id .counter {
     flex-direction: column;
     margin-bottom: 40px;
   }
-  main .preview .counter .counter-text {
+  main .preview-request-id .counter .counter-text {
     margin: 0.3rem;
   }
 }
 @media screen and (max-width: 470px) {
-  main .preview .table tr *:nth-child(3), main .preview .table tr *:nth-child(5) {
+  main .preview-request-id .table tr *:nth-child(3), main .preview-request-id .table tr *:nth-child(5) {
     display: none;
-  }
-}
-
-main.searches {
-  margin-bottom: 50px;
-}
-main.searches .columns {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-main.searches h1 {
-  text-align: center;
-}
-main.searches table {
-  margin: 0;
-  min-width: 400px;
-  border-collapse: collapse;
-}
-main.searches table tbody tr:nth-child(odd) {
-  background-color: rgba(33, 42, 62, 0.1);
-}
-main.searches table th {
-  font-size: 1.3rem;
-  text-align: left;
-  padding: 2px 10px;
-}
-main.searches table td {
-  padding: 4px 10px;
-}
-main.searches table td:nth-child(1) {
-  width: 10px;
-}
-main.searches table td a {
-  text-decoration: underline;
-}
-main.searches table td a span {
-  font-weight: bold;
-}
-@media screen and (max-width: 850px) {
-  main.searches table:last-child th {
-    display: none;
-  }
-}
-@media screen and (max-width: 470px) {
-  main.searches table {
-    min-width: 100%;
   }
 }
 
