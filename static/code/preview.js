@@ -99,27 +99,29 @@ function hiddeUrlProducts () {
   }
 }
 
+function updateHiddenProduct (checkbox) {
+  // Get data-product-id
+  const dataProductId = checkbox.getAttribute('data-product-id')
 
+  // Get prodyc id
+  const productId = dataProductId.split('-')[1]
+
+  // Save or remove product id
+  if (checkbox.checked) {
+    productsHidden = productsHidden.filter(product => product != productId)
+  } else {
+    productsHidden.push(productId)
+  }
+}
 
 // Add listener to checkboxes
 checkboxes.forEach(checkbox => { 
   checkbox.addEventListener('click', () => { 
-    
     // Activate or deactivate refresh button
     toggleRefreshButton() 
 
-    // Get data-product-id
-    const dataProductId = checkbox.getAttribute('data-product-id')
-
-    // Get prodyc id
-    const productId = dataProductId.split('-')[1]
-
-    // Save or remove product id
-    if (checkbox.checked) {
-      productsHidden = productsHidden.filter(product => product != productId)
-    } else {
-      productsHidden.push(productId)
-    }
+    // Add or remove product id from hidden products
+    updateHiddenProduct (checkbox)    
   })
 })
 
