@@ -240,6 +240,18 @@ main .preview-request-id h2 {
   text-align: center;
   margin-bottom: 50px;
 }
+main .preview-request-id .btns-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin: 50px 0;
+  flex-wrap: wrap;
+}
+main .preview-request-id .btns-wrapper .btn {
+  width: 165px;
+  margin: 0;
+}
 main .preview-request-id .products {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -528,6 +540,11 @@ main .preview-request-id .table .footer .price-gap {
 @media screen and (max-width: 470px) {
   main .preview-request-id .table tr *:nth-child(3), main .preview-request-id .table tr *:nth-child(5) {
     display: none;
+  }
+}
+@media screen and (max-width: 394px) {
+  main .preview-request-id .btns-wrapper {
+    gap: 20px;
   }
 }
 

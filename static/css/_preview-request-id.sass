@@ -6,6 +6,18 @@ main
             text-align: center
             margin-bottom: 50px
 
+        .btns-wrapper
+            display: flex
+            align-items: center
+            justify-content: center
+            gap: 50px
+            margin: 50px 0
+            flex-wrap: wrap
+
+            .btn
+                width: 165px
+                margin: 0
+
         .products
             display: grid
             grid-template-columns: repeat(4, 1fr)
@@ -302,3 +314,7 @@ main
                 tr
                     *:nth-child(3), *:nth-child(5)
                         display: none
+
+        @media screen and (max-width: 394px)
+            .btns-wrapper
+                gap: 20px
