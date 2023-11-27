@@ -3,6 +3,12 @@ const refreshButtons = document.querySelectorAll('button.refresh')
 const priceGapElem = document.querySelector(".price-gap .price")
 const tableRows = document.querySelectorAll('tr')
 
+// Url params
+const currentUrl = window.location.href
+const url = new URL(currentUrl)
+const hidden = url.searchParams.get('hidden')
+let productsHidden = hidden ? hidden.split('-') : []
+
 
 function toggleRefreshButton() {
   // Get all the checked status
@@ -42,23 +48,11 @@ function calculatePriceGap() {
 
 function onClickRefreshButton() {
 
-  // Get inactive checboxes
-  const activeCheckboxes = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
-  const inactiveCheckboxes = Array.from(checkboxes).filter(checkbox => !activeCheckboxes.includes(checkbox))
-  
-  // Delete products
-  for (const inactiveCheckbox of inactiveCheckboxes) {
-    
-    // get products based in the product id
-    dataProductId = inactiveCheckbox.getAttribute('data-product-id')
-    document.querySelectorAll(`[data-product-id="${dataProductId}"]`).forEach(product => {
-      const productWrapper = product.parentNode.parentElement
-      productWrapper.classList.add('hidden')
-    })
+  // Generate filter url adding hidden products
+  url.searchParams.set('hidden', productsHidden.join('-'))
 
-  }
-
-  calculatePriceGap ()
+  // Redirect to url
+  window.location.href = url
 }
 
 function renderProductImages() {
@@ -87,12 +81,46 @@ function onClickTableRow (event) {
 
   // Open link in new tab
   window.open(link, '_blank')
-
 }
+
+// Hide products from url params
+function hiddeUrlProducts () {
+
+  // Get inactive checboxes
+  const selector = productsHidden.map(product => `[data-product-id="product-${product}"]`).join(', ')
+  const inactiveCheckboxes = document.querySelectorAll (selector)
+
+  console.log ({selector, inactiveCheckboxes})
+  
+  // Delete products
+  for (const inactiveCheckbox of inactiveCheckboxes) {
+    const productWrapper = inactiveCheckbox.parentNode.parentElement
+    productWrapper.classList.add('hidden')
+  }
+}
+
+
 
 // Add listener to checkboxes
 checkboxes.forEach(checkbox => { 
-  checkbox.addEventListener('click', () => { toggleRefreshButton() })
+  checkbox.addEventListener('click', () => { 
+    
+    // Activate or deactivate refresh button
+    toggleRefreshButton() 
+
+    // Get data-product-id
+    const dataProductId = checkbox.getAttribute('data-product-id')
+
+    // Get prodyc id
+    const productId = dataProductId.split('-')[1]
+
+    // Save or remove product id
+    if (checkbox.checked) {
+      productsHidden = productsHidden.filter(product => product != productId)
+    } else {
+      productsHidden.push(productId)
+    }
+  })
 })
 
 // Add listener to refresh button
@@ -107,4 +135,5 @@ tableRows.forEach(tableRow => {
 
 
 renderProductImages ()
+hiddeUrlProducts()
 calculatePriceGap()
