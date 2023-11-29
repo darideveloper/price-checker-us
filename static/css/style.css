@@ -416,21 +416,21 @@ main .preview-request-id .table table {
   border-collapse: collapse;
   text-align: right;
 }
-main .preview-request-id .table table tr {
+main .preview-request-id .table table tbody tr {
   position: relative;
 }
-main .preview-request-id .table table tr:hover {
+main .preview-request-id .table table tbody tr:hover {
   cursor: pointer;
 }
-main .preview-request-id .table table tr .product-modal {
+main .preview-request-id .table table tbody tr .product-modal {
   display: none;
   font-weight: bold;
 }
-main .preview-request-id .table table tr td.modal-row {
+main .preview-request-id .table table tbody tr td.modal-row {
   width: 0;
   padding: 0;
 }
-main .preview-request-id .table table tr:hover .product-modal {
+main .preview-request-id .table table tbody tr:hover .product-modal {
   position: absolute;
   display: block;
   width: 400px;
@@ -446,15 +446,15 @@ main .preview-request-id .table table tr:hover .product-modal {
   padding: 20px;
   box-shadow: 0px 1px 12px -3px black;
 }
-main .preview-request-id .table table tr:hover .product-modal img {
+main .preview-request-id .table table tbody tr:hover .product-modal img {
   width: 50%;
 }
-main .preview-request-id .table table tr:hover .product-modal p {
+main .preview-request-id .table table tbody tr:hover .product-modal p {
   font-size: 1.5rem;
   color: #212A3E;
   padding-left: 10px;
 }
-main .preview-request-id .table table tr:hover .product-modal p.item {
+main .preview-request-id .table table tbody tr:hover .product-modal p.item {
   font-size: 1.2rem;
 }
 main .preview-request-id .table table td {

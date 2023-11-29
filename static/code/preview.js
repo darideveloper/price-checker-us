@@ -2,7 +2,7 @@ const checkboxes = document.querySelectorAll('input[type=checkbox]')
 const refreshButtons = document.querySelectorAll('button.refresh')
 const restartButtons = document.querySelectorAll('button.restart')
 const priceGapElem = document.querySelector(".price-gap .price")
-const tableRows = document.querySelectorAll('tr')
+const tableRows = document.querySelectorAll('tbody tr')
 
 // Url params
 const currentUrl = window.location.href
