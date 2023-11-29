@@ -5,8 +5,8 @@ const tableRows = document.querySelectorAll('tr')
 
 // Url params
 const currentUrl = window.location.href
-const url = new URL(currentUrl)
-const hidden = url.searchParams.get('hidden')
+const urlObject = new URL(currentUrl)
+const hidden = urlObject.searchParams.get('hidden')
 let productsHidden = hidden ? hidden.split('-') : []
 
 
@@ -49,10 +49,10 @@ function calculatePriceGap() {
 function onClickRefreshButton() {
 
   // Generate filter url adding hidden products
-  url.searchParams.set('hidden', productsHidden.join('-'))
+  urlObject.searchParams.set('hidden', productsHidden.join('-'))
 
   // Redirect to url
-  window.location.href = url
+  window.location.href = urlObject
 }
 
 function renderProductImages() {
