@@ -1,5 +1,6 @@
 const checkboxes = document.querySelectorAll('input[type=checkbox]')
 const refreshButtons = document.querySelectorAll('button.refresh')
+const restartButtons = document.querySelectorAll('button.restart')
 const priceGapElem = document.querySelector(".price-gap .price")
 const tableRows = document.querySelectorAll('tr')
 
@@ -30,6 +31,21 @@ function toggleRefreshButton() {
   }
 }
 
+function activateRestartButton() {
+
+  // Detect url params
+  const urlParams = new URLSearchParams(window.location.search)
+
+  // Validate if there is hidden param
+  if (urlParams.has('hidden')) {
+    // Activate restart button
+    restartButtons.forEach(restartButton => {
+      restartButton.removeAttribute("disabled")
+    })
+  }
+
+}
+
 // Calculate price gap and update in page
 function calculatePriceGap() {
 
@@ -47,12 +63,19 @@ function calculatePriceGap() {
 }
 
 function onClickRefreshButton() {
-
   // Generate filter url adding hidden products
   urlObject.searchParams.set('hidden', productsHidden.join('-'))
 
   // Redirect to url
   window.location.href = urlObject
+}
+
+function onClickRestartButton() {
+   // Generate url without get params
+   urlObject.search = ''
+
+   // Redirect to url
+   window.location.href = urlObject
 }
 
 function renderProductImages() {
@@ -66,14 +89,13 @@ function renderProductImages() {
   })
 }
 
-// Rdirect to product page when click on table row
+// Redirect to product page when click on table row
 function onClickTableRow (event) {
 
   // Ignore when click checkbox
   if (event.target.type == 'checkbox') {
     return
   }
-
   
   // Get link
   const row = event.target.parentNode
@@ -130,6 +152,11 @@ refreshButtons.forEach(refreshButton => {
   refreshButton.addEventListener('click', () => { onClickRefreshButton() })
 })
 
+// Add listener to restart button
+restartButtons.forEach(restartButton => {
+  restartButton.addEventListener('click', () => { onClickRestartButton() })
+})
+
 // Add on click to each table row
 tableRows.forEach(tableRow => {
   tableRow.addEventListener('click', (event) => { onClickTableRow(event) })
@@ -139,3 +166,4 @@ tableRows.forEach(tableRow => {
 renderProductImages ()
 hiddeUrlProducts()
 calculatePriceGap()
+activateRestartButton()
