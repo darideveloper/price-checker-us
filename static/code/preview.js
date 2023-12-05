@@ -99,7 +99,7 @@ async function onClickBoomButton() {
     }).then((result) => {
       // Open a page in a new tab
       if (result.isConfirmed) {
-        window.open("/post-bot", "_blank")
+        window.open("/boom-bot-info", "_blank")
       }
     });
   }

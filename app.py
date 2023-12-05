@@ -492,5 +492,12 @@ def template_404(error):
     return (render_template("404.html"), 404)
 
 
+@app.get('/boom-bot-info/')
+def boom_bot_info():
+    """ Bot documentation page """
+
+    return render_template("boom-bot-info.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
