@@ -71,11 +71,11 @@ function onClickRefreshButton() {
 }
 
 function onClickRestartButton() {
-   // Generate url without get params
-   urlObject.search = ''
+  // Generate url without get params
+  urlObject.search = ''
 
-   // Redirect to url
-   window.location.href = urlObject
+  // Redirect to url
+  window.location.href = urlObject
 }
 
 async function onClickBoomButton() {
@@ -87,10 +87,21 @@ async function onClickBoomButton() {
       },
       body: JSON.stringify(products),
     })
-    const result = await response.json();
-    console.log("Success:", result);
+    const result = await response.json()
+    console.log("Success:", result)
   } catch (error) {
-    console.error("Error:", error);
+
+    // Show alert error
+    Swal.fire({
+      title: "Post bot not found in your PC",
+      showCancelButton: true,
+      confirmButtonText: "Read more",
+    }).then((result) => {
+      // Open a page in a new tab
+      if (result.isConfirmed) {
+        window.open("/post-bot", "_blank")
+      }
+    });
   }
 }
 
@@ -106,13 +117,13 @@ function renderProductImages() {
 }
 
 // Redirect to product page when click on table row
-function onClickTableRow (event) {
+function onClickTableRow(event) {
 
   // Ignore when click checkbox
   if (event.target.type == 'checkbox') {
     return
   }
-  
+
   // Get link
   const row = event.target.parentNode
   const link = row.getAttribute('data-link')
@@ -122,15 +133,15 @@ function onClickTableRow (event) {
 }
 
 // Hide products from url params
-function hiddeUrlProducts () {
+function hiddeUrlProducts() {
 
   // Get inactive checboxes
   const selector = productsHidden.map(product => `[data-product-id="product-${product}"]`).join(', ')
   if (!selector) {
     return null
   }
-  const inactiveCheckboxes = document.querySelectorAll (selector)
-  
+  const inactiveCheckboxes = document.querySelectorAll(selector)
+
   // Delete products
   for (const inactiveCheckbox of inactiveCheckboxes) {
     const productWrapper = inactiveCheckbox.parentNode.parentElement
@@ -139,7 +150,7 @@ function hiddeUrlProducts () {
 
   // Delete products from products array
   let productIndexes = productsHidden.map(product => parseInt(product) - 1)
-  productIndexes.sort(function(a, b) {
+  productIndexes.sort(function (a, b) {
     return b - a
   })
   for (let productIndex of productIndexes) {
@@ -147,7 +158,7 @@ function hiddeUrlProducts () {
   }
 }
 
-function updateHiddenProduct (checkbox) {
+function updateHiddenProduct(checkbox) {
   // Get data-product-id
   const dataProductId = checkbox.getAttribute('data-product-id')
 
@@ -163,13 +174,13 @@ function updateHiddenProduct (checkbox) {
 }
 
 // Add listener to checkboxes
-checkboxes.forEach(checkbox => { 
-  checkbox.addEventListener('click', () => { 
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('click', () => {
     // Activate or deactivate refresh button
-    toggleRefreshButton() 
+    toggleRefreshButton()
 
     // Add or remove product id from hidden products
-    updateHiddenProduct (checkbox)    
+    updateHiddenProduct(checkbox)
   })
 })
 
@@ -194,7 +205,7 @@ tableRows.forEach(tableRow => {
 })
 
 
-renderProductImages ()
+renderProductImages()
 hiddeUrlProducts()
 calculatePriceGap()
 activateRestartButton()
