@@ -87,13 +87,18 @@ async function onClickBoomButton() {
       },
       body: JSON.stringify(products),
     })
-    const result = await response.json()
-    console.log("Success:", result)
+    response.json()
+    
+    Swal.fire({
+      title: "Boom Post Bot started",
+      confirmButtonText: "Ok",
+    })
+
   } catch (error) {
 
     // Show alert error
     Swal.fire({
-      title: "Post bot not found in your PC",
+      title: "Boom Post Bot not found in your PC",
       showCancelButton: true,
       confirmButtonText: "Read more",
     }).then((result) => {
@@ -101,7 +106,7 @@ async function onClickBoomButton() {
       if (result.isConfirmed) {
         window.open("/boom-bot-info", "_blank")
       }
-    });
+    })
   }
 }
 
