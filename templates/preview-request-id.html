@@ -94,7 +94,7 @@ Results from search {{keyword|title}} en e-commerce pages.
       Restart
     </button>
 
-    <button class="btn restart" title="TODO">
+    <button class="btn boom" title="To share in bulk, (consider refining your comparison) keep your social networks open, and boom! (Function only accessible on a PC)">
       Boom
     </button>
   </div>
@@ -182,6 +182,10 @@ Results from search {{keyword|title}} en e-commerce pages.
     <button class="btn restart" disabled title="Click here to restart the search">
       Restart
     </button>
+
+    <button class="btn boom" title="To share in bulk, (consider refining your comparison) keep your social networks open, and boom! (Function only accessible on a PC)">
+      Boom
+    </button>
   </div>
 
   <div class="disclaimer">
@@ -210,5 +214,13 @@ Results from search {{keyword|title}} en e-commerce pages.
 {% endblock %}
 
 {% block script %}
+<script>
+  // Save products in js
+  let products = {{products|tojson}}
+  products = products.slice(1,products.length)
+
+  const postBotHost = "{{post_bot_host}}"
+  console.log ({postBotHost})
+</script>
 <script src="{{ url_for('static', filename='/code/preview.js') }}"></script>
 {% endblock %}

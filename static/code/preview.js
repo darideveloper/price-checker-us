@@ -1,6 +1,7 @@
 const checkboxes = document.querySelectorAll('input[type=checkbox]')
 const refreshButtons = document.querySelectorAll('button.refresh')
 const restartButtons = document.querySelectorAll('button.restart')
+const boomButtons = document.querySelectorAll('button.boom')
 const priceGapElem = document.querySelector(".price-gap .price")
 const tableRows = document.querySelectorAll('tbody tr')
 
@@ -43,7 +44,6 @@ function activateRestartButton() {
       restartButton.removeAttribute("disabled")
     })
   }
-
 }
 
 // Calculate price gap and update in page
@@ -78,6 +78,22 @@ function onClickRestartButton() {
    window.location.href = urlObject
 }
 
+async function onClickBoomButton() {
+  try {
+    const response = await fetch(`http://${postBotHost}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(products),
+    })
+    const result = await response.json();
+    console.log("Success:", result);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
 function renderProductImages() {
   // Place products images
   document.addEventListener('DOMContentLoaded', function () {
@@ -110,14 +126,24 @@ function hiddeUrlProducts () {
 
   // Get inactive checboxes
   const selector = productsHidden.map(product => `[data-product-id="product-${product}"]`).join(', ')
+  if (!selector) {
+    return null
+  }
   const inactiveCheckboxes = document.querySelectorAll (selector)
-
-  console.log ({selector, inactiveCheckboxes})
   
   // Delete products
   for (const inactiveCheckbox of inactiveCheckboxes) {
     const productWrapper = inactiveCheckbox.parentNode.parentElement
     productWrapper.classList.add('hidden')
+  }
+
+  // Delete products from products array
+  let productIndexes = productsHidden.map(product => parseInt(product) - 1)
+  productIndexes.sort(function(a, b) {
+    return b - a
+  })
+  for (let productIndex of productIndexes) {
+    products.splice(productIndex, 1)
   }
 }
 
@@ -155,6 +181,11 @@ refreshButtons.forEach(refreshButton => {
 // Add listener to restart button
 restartButtons.forEach(restartButton => {
   restartButton.addEventListener('click', () => { onClickRestartButton() })
+})
+
+// Add listener to restart button
+boomButtons.forEach(boomButton => {
+  boomButton.addEventListener('click', () => { onClickBoomButton() })
 })
 
 // Add on click to each table row

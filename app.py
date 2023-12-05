@@ -36,6 +36,7 @@ ROTATION_LINKS_USER = int(os.getenv("ROTATION_LINKS_USER"))
 REFERRAL_HOST = os.getenv("REFERRAL_HOST")
 ADS_RELATION = int(os.getenv("ADS_RELATION"))
 RECENT_SEARCHES_NUM = int(os.getenv("RECENT_SEARCHES_NUM"))
+POST_BOT_HOST = os.getenv("POST_BOT_HOST")
 
 # Connect with database
 db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
@@ -452,7 +453,8 @@ def preview_request_id(request_id):
         referral_host=REFERRAL_HOST,
         keyword=keyword,
         search_date=search_date,
-        request_id=request_id
+        request_id=request_id,
+        post_bot_host=POST_BOT_HOST
     )
 
 
