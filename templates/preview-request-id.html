@@ -218,11 +218,15 @@ Results from search {{keyword|title}} en e-commerce pages.
   // Save products in js
   let products = {{products|tojson}}
   products = products.slice(1,products.length)
+
+  const url = window.location.href
   
-  // Add keyword to each product
+  // Add keyword and url to each product
   products.forEach(product => {
     product.keyword = keyword
+    product.url = url
   })
+
 
   const postBotHost = "{{post_bot_host}}"
   console.log ({postBotHost})
