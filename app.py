@@ -309,7 +309,7 @@ def results():
     db.save_log(f"({status_code}) Products found",
                 log_origin, id_request=request_id)
 
-    # TODO: Add keyword to response
+    # Add keyword to response
     return ({
         "status": "success",
         "message": "Products found",

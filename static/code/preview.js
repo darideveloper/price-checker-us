@@ -79,7 +79,13 @@ function onClickRestartButton() {
 }
 
 async function onClickBoomButton() {
+  
+  // Filter only products (ignore ads)
+  products = products.filter(product => product.title)
+  console.log({products})
+
   try {
+    // Send data to post bot
     const response = await fetch(`http://${postBotHost}`, {
       method: "POST",
       headers: {
