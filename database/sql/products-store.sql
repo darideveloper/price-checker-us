@@ -39,8 +39,8 @@ CREATE TABLE `apikeys` (
 --
 
 INSERT INTO `apikeys` (`id`, `name`, `api_key`, `is_active`) VALUES
-(1, 'test', 'sampleapikey1', 1),
-(1, 'test', 'sampleapikey2', 1);
+(1, 'test', 'sampleapikey', 1),
+(1, 'test', 'sampleapikey', 1);
 
 -- --------------------------------------------------------
 

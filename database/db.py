@@ -5,21 +5,21 @@ from database.mysql import MySQL
 from email_manager.sender import EmailManager
 from dotenv import load_dotenv
 
-load_dotenv ()
-EMAIL_USER = os.getenv ("EMAIL_USER")
-EMAIL_PASSWORD = os.getenv ("EMAIL_PASSWORD")
-TO_EMAILS = os.getenv ("TO_EMAILS").split (",")
+load_dotenv()
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+TO_EMAILS = os.getenv("TO_EMAILS").split(",")
+
 
 class Database (MySQL):
-    
+
     status = {}
     api_keys = {}
     stores = {}
     log_types = {}
     log_origins = {}
-    
-    
-    def __init__ (self, server:str, database:str, username:str, password:str):
+
+    def __init__(self, server: str, database: str, username: str, password: str):
         """ Connect with mysql db
 
         Args:
@@ -28,33 +28,33 @@ class Database (MySQL):
             username (str): database username
             password (str): database password
         """
-        
+
         # Connext to database
         super().__init__(server, database, username, password)
-        
+
         # Loading initial data
         if not Database.status:
-            Database.status = self.__get_status__ ()
-        
+            Database.status = self.__get_status__()
+
         if not Database.api_keys:
-            Database.api_keys = self.__get_api_keys__ ()
-            
+            Database.api_keys = self.__get_api_keys__()
+
         if not Database.stores:
-            Database.stores = self.__get_stores__ ()
-    
+            Database.stores = self.__get_stores__()
+
         if not Database.log_types:
-            Database.log_types = self.__get_log_types__ ()
-            
+            Database.log_types = self.__get_log_types__()
+
         if not Database.log_origins:
-            Database.log_origins = self.__get_log_origins__ ()
-        
+            Database.log_origins = self.__get_log_origins__()
+
         # Log status
         self.log_origin = "database"
-        
+
         # Connect to email
-        self.email_manager = EmailManager (EMAIL_USER, EMAIL_PASSWORD)
-    
-    def __get_status__ (self) -> dict:
+        self.email_manager = EmailManager(EMAIL_USER, EMAIL_PASSWORD)
+
+    def __get_status__(self) -> dict:
         """ Retuen status from database as dictionary
 
         Returns:
@@ -65,17 +65,17 @@ class Database (MySQL):
                 "done": 3
             }
         """
-        
+
         query = "SELECT * FROM status"
-        data = self.run_sql (query)
-        
+        data = self.run_sql(query)
+
         status = {}
         for row in data:
             status[row["name"]] = row["id"]
-            
+
         return status
-    
-    def __get_api_keys__ (self) -> dict:
+
+    def __get_api_keys__(self) -> dict:
         """ Retuen api keys from database as dictionary
 
         Returns:
@@ -91,28 +91,28 @@ class Database (MySQL):
                 }
             }
         """
-        
+
         query = "SELECT * FROM apikeys"
-        data = self.run_sql (query)
-        
+        data = self.run_sql(query)
+
         status = {}
         for row in data:
-            
+
             # Validate if api key is active
             if row["is_active"]:
                 status[row["api_key"]] = {
                     "name": row["name"],
                     "id": row["id"]
-                } 
-            
+                }
+
         return status
-    
-    def __get_stores__ (self) -> dict:
+
+    def __get_stores__(self) -> dict:
         """ Query current stores in database 
-        
+
         Returns:
             dict: stores (name and id)
-            
+
             {
                 "amazon": {
                     "id": 1,
@@ -129,43 +129,43 @@ class Database (MySQL):
                 ...
             }
         """
-                
-        # Query all stores 
+
+        # Query all stores
         query = "select * from stores"
         results = self.run_sql(query)
-        
+
         data = {}
         for row in results:
             data[row["name"]] = {
                 "id": row["id"],
                 "referral_link": row["referral_link"]
             }
-        
+
         return data
-    
-    def __get_log_types__ (self) -> dict:
+
+    def __get_log_types__(self) -> dict:
         """ Query current log types in database
 
         Returns:
             dict: log types (name and id)
-            
+
             {
                 "info": 1,
                 "error": 2,
             }
         """
-                
-        # Query all stores 
+
+        # Query all stores
         query = "select * from log_types"
         results = self.run_sql(query)
-        
+
         data = {}
         for row in results:
             data[row["name"]] = row["id"]
-        
+
         return data
-    
-    def __get_log_origins__ (self) -> dict:
+
+    def __get_log_origins__(self) -> dict:
         """ Query current log origins in database
 
         Returns:
@@ -176,39 +176,39 @@ class Database (MySQL):
                 "scraper": 3
             }
         """
-                
-        # Query all stores 
+
+        # Query all stores
         query = "select * from log_origins"
         results = self.run_sql(query)
-        
+
         data = {}
         for row in results:
             data[row["name"]] = row["id"]
-        
+
         return data
     
-    def save_products (self, products_data:list):
+    def save_products(self, products_data: list):
         """ Save products in database
 
         Args:
             products_data (list): list of dict with products data
             hash (str): referral code from cookie (if exist)
         """
-        
+
         for product in products_data:
-            
+
             # Get product data
             image = product["image"]
             title = product["title"]
             rate_num = product["rate_num"]
             reviews = product["reviews"]
             price = product["price"]
-            best_seller = 1 if product["best_seller"] else 0          
+            best_seller = 1 if product["best_seller"] else 0
             sales = product["sales"]
             link = product["link"]
             id_store = product["id_store"]
             id_request = product["id_request"]
-                        
+
             # Generate sql query
             query = f"""
                 INSERT INTO products (
@@ -234,31 +234,31 @@ class Database (MySQL):
                     {id_store},
                     {id_request}
                 ); 
-            """.replace ("\n", "")
-                            
+            """.replace("\n", "")
+
             # Save data
             self.run_sql(query)
-            
-    def delete_products (self):
+
+    def delete_products(self):
         """ Delete all rows from products table """
-        
-        self.save_log ("Deleting all products from database", self.log_origin)
-        
+
+        self.save_log("Deleting all products from database", self.log_origin)
+
         query = "delete from products"
         self.run_sql(query)
-        
-    def validate_token (self, token:str):
+
+    def validate_token(self, token: str):
         """ Validate if token exist in database and is active
 
         Args:
             token (str): api access token
         """
-        
+
         token_cencured = token[:5] + "..."
-        self.save_log (f"Validating token {token_cencured}", self.log_origin)
-        
-        token = self.get_clean_text (token)
-        
+        self.save_log(f"Validating token {token_cencured}", self.log_origin)
+
+        token = self.get_clean_text(token)
+
         query = f"""
             SELECT id 
             FROM apikeys 
@@ -267,43 +267,43 @@ class Database (MySQL):
                 AND
                 is_active = 1
         """
-        
-        api_key_found = self.run_sql (query)
-        
+
+        api_key_found = self.run_sql(query)
+
         if api_key_found:
             return True
         else:
             return False
-                
-    def create_new_request (self, api_key:str, keyword:str) -> int:
+
+    def create_new_request(self, api_key: str, keyword: str) -> int:
         """  Save a new request in database with status "to do" 
-        
+
         Args:
             api_key (str): api access token
             keyword (str): keyword to search
-            
+
         Returns:
             int: id of new request
         """
-        
-        self.save_log ("Creating new request in database", self.log_origin)
-        
+
+        self.save_log("Creating new request in database", self.log_origin)
+
         # Get status for new requests
         status_todo_id = Database.status["to do"]
-        
+
         # Get api key id
         api_key_id = Database.api_keys[api_key]["id"]
-        
+
         # get and fomat current datetime
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
+
         # Save new request
         query = f"""
             INSERT INTO requests (status, todo_datetime, api_key, keyword) 
             VALUES ({status_todo_id}, '{current_datetime}', {api_key_id}, '{keyword}')
         """
-        self.run_sql (query)
-        
+        self.run_sql(query)
+
         # Query id of new request
         query = f"""
             SELECT id 
@@ -315,24 +315,25 @@ class Database (MySQL):
                 AND
                 todo_datetime = '{current_datetime}'
         """
-        id = self.run_sql (query)[0]["id"]
+        id = self.run_sql(query)[0]["id"]
         return id
-    
-    def update_request_status (self, request_id:int, status_name:str):
+
+    def update_request_status(self, request_id: int, status_name: str):
         """ Update request status in db
-        
+
         Args:
             request_id (int): request id
             status_name (str): status name
         """
-        
-        self.save_log (f"Updating request {request_id} status to {status_name}", self.log_origin)
-        
+
+        self.save_log(
+            f"Updating request {request_id} status to {status_name}", self.log_origin)
+
         status_num = Database.status[status_name]
-        
+
         # get current datetime
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
+
         query = f"""
             UPDATE requests
             SET 
@@ -340,37 +341,37 @@ class Database (MySQL):
                 {status_name}_datetime = '{now}'
             WHERE id = {request_id}
         """
-        self.run_sql (query)
-    
-    def get_request_status (self, request_id:int) -> str:
+        self.run_sql(query)
+
+    def get_request_status(self, request_id: int) -> str:
         """ Get request status in db
-        
+
         Args:
             request_id (int): request id
-            
+
         Returns:
             str: status name
         """
-        
+
         query = f""" 
             SELECT status
             FROM requests
             WHERE id = {request_id}
         """
-        
-        status_results = self.run_sql (query)
-        
+
+        status_results = self.run_sql(query)
+
         if not status_results:
             return ""
-        
+
         status_num = status_results[0]["status"]
-        for status_name, status_id in Database.status.items ():
+        for status_name, status_id in Database.status.items():
             if status_id == status_num:
                 return status_name
-            
+
         return ""
-    
-    def get_products (self, id_request:int) -> list:
+
+    def get_products(self, id_request: int) -> list:
         """ Get products from a request and all stores
 
         Args:
@@ -379,7 +380,7 @@ class Database (MySQL):
         Returns:
             list: list of dict with products data
         """
-        
+
         # Get products from db
         query = f"""
             SELECT * 
@@ -387,35 +388,39 @@ class Database (MySQL):
             WHERE 
                 id_request = {id_request}
         """
-        
-        products = self.run_sql (query)
-    
+
+        products = self.run_sql(query)
+
         # Get stores with id
         stores = {}
         for store_name, store_data in Database.stores.items():
             store_id = store_data["id"]
             stores[store_id] = store_name
-        
+
         # Replace store-id with store name
         products = list(map(lambda product: {
             **product,
             "store": stores[product["id_store"]]
         }, products))
-        
+
         # Get keyword from db
         query = f"""
             Select keyword, working_datetime
             FROM requests
-            WHERE 
+            WHERE
                 id = {id_request}
         """
-        request_data = self.run_sql (query)
-        keyword = request_data[0]["keyword"]
-        working_datetime = request_data[0]["working_datetime"]
-        
+        request_data = self.run_sql(query)
+        if request_data:
+            keyword = request_data[0]["keyword"]
+            working_datetime = request_data[0]["working_datetime"]
+        else:
+            keyword = ""
+            working_datetime = None
+
         return products, keyword, working_datetime
-    
-    def save_log (self, message:str, origin:str, store:str="", id_request:int=0, api_key:str="", log_type:str="info"):
+
+    def save_log(self, message: str, origin: str, store: str = "", id_request: int = 0, api_key: str = "", log_type: str = "info"):
         """ Save log in database
 
         Args:
@@ -425,17 +430,17 @@ class Database (MySQL):
             api_key (str): api key from api
             log_type (str): type of log (info or error)
         """
-        
+
         # Get and validate ids
         id_store = Database.stores[store]["id"] if store else "NULL"
         id_api_key = Database.api_keys[api_key]["id"] if api_key else "NULL"
         id_log_type = Database.log_types[log_type] if log_type else "NULL"
         id_log_origin = Database.log_origins[origin] if origin else "NULL"
-        
+
         # Validate id request
         if not id_request:
             id_request = "NULL"
-        
+
         # Save log in database
         query = f"""
         INSERT INTO `logs` 
@@ -443,10 +448,10 @@ class Database (MySQL):
         VALUES 
             ({id_log_type}, {id_log_origin}, {id_store}, {id_request}, {id_api_key}, '{message}')
         """
-        
-        self.run_sql (query)
-        
-        # Print logs 
+
+        self.run_sql(query)
+
+        # Print logs
         extra_data = False
         print_message = f"{log_type}: {message} ("
         if store and store != "NULL":
@@ -458,27 +463,28 @@ class Database (MySQL):
         if api_key and api_key != "NULL":
             print_message += f"api_key: {api_key[:5]+'...'}, "
             extra_data = True
-        
+
         print_message = print_message[:-2]
         if extra_data:
             print_message += ")"
-        
-        print (print_message)
-        
+
+        print(print_message)
+
         # Send error email
         if log_type == "error":
-            
+
             # Wait for email to be sent
             while True:
-                
+
                 if self.email_manager.sending_email:
-                    sleep (1)
+                    sleep(1)
                 else:
                     break
-            
-            self.email_manager.send_email (TO_EMAILS, "Error in web scraping", print_message)
-    
-    def get_last_requests (self, max_num:int) -> list:
+
+            self.email_manager.send_email(
+                TO_EMAILS, "Error in web scraping", print_message)
+
+    def get_last_requests(self, max_num: int) -> list:
         """ Get last request from database
 
         Args:
@@ -486,7 +492,7 @@ class Database (MySQL):
 
         Returns:
             list: list of dict with request data
-            
+
             Structure:
             [
                 {
@@ -496,7 +502,7 @@ class Database (MySQL):
                 }
             ]
         """
-        
+
         query = f"""
             SELECT id, done_datetime as date, keyword
             FROM requests
@@ -504,7 +510,7 @@ class Database (MySQL):
             ORDER BY done_datetime DESC
             LIMIT {max_num}
         """
-        
-        results = self.run_sql (query)
-        
+
+        results = self.run_sql(query)
+
         return results

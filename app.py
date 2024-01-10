@@ -499,5 +499,46 @@ def boom_bot_info():
     return render_template("boom-bot-info.html")
 
 
+@app.post('/filter/')
+def filter_products():
+    """ Filter results and create new request """
+    
+    # Get filtered products json data
+    json_data = request.get_json()
+    request_id = json_data.get("request-id", 0)
+    products_ids = json_data.get("products-ids", [])
+    api_key = json_data.get("api-key", "")
+    
+    # Query original products
+    products, keyword, _ = db.get_products(request_id)
+    
+    # Filter products by id
+    products = list(filter(lambda product: product["id"] not in products_ids, products))
+    
+    # Create new request
+    new_request_id = db.create_new_request(api_key, keyword)
+    
+    # Update request id in each product
+    products = list(map(lambda product: {
+        **product,
+        "id_request": new_request_id
+    }, products))
+    
+    # Save products
+    db.save_products(products)
+    
+    # Update request status to done
+    db.update_request_status(new_request_id, "working")
+    db.update_request_status(new_request_id, "done")
+    
+    return ({
+        "status": "success",
+        "message": "Products filtered",
+        "data": {
+            "request-id": new_request_id
+        }
+    }, 200)
+
+
 if __name__ == "__main__":
-    app.run(debug=True, port=PORT)
+    app.run(port=PORT)
