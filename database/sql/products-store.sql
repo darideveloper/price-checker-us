@@ -39,7 +39,8 @@ CREATE TABLE `apikeys` (
 --
 
 INSERT INTO `apikeys` (`id`, `name`, `api_key`, `is_active`) VALUES
-(1, 'test', 'Sp6pM3VzDN5wIm6bqQJ8', 1);
+(1, 'test', 'sampleapikey1', 1),
+(1, 'test', 'sampleapikey2', 1);
 
 -- --------------------------------------------------------
 
@@ -161,8 +162,8 @@ INSERT INTO `status` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `stores` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `referral_link` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
