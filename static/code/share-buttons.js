@@ -1,5 +1,5 @@
 const shareButtons = document.querySelectorAll('button.share')
-const url = window.location.href
+const pageUrl = window.location.href
 let currentPage = "home"
 
 const mesages = {
@@ -7,10 +7,10 @@ const mesages = {
   "preview": `Hey, take a look at this '${keyword}' price comparison`
 }
 
-// Opcy current url
+// Opcy current pageUrl
 function buttonUrl() {
   // Copy url to clipboard
-  navigator.clipboard.writeText(url)
+  navigator.clipboard.writeText(pageUrl)
 
   // Show alert
   Swal.fire("Page copied to clipboard")
@@ -26,34 +26,34 @@ function buttonDefault() {
 function buttonWhatsapp () {
   const message = mesages[currentPage]
   const encodedMessage = encodeURIComponent(message)
-  const link = `whatsapp://send?text=${encodedMessage} ${url}`
+  const link = `whatsapp://send?text=${encodedMessage} ${pageUrl}`
   window.open(link, '_blank')
 }
 
 // Share page in telegram
 function buttonTelegram () {
   const message = mesages[currentPage]
-  const link = `https://t.me/share/url?url=${url}&text=${message}`
+  const link = `https://t.me/share/url?url=${pageUrl}&text=${message}`
   window.open(link, '_blank')
 }
 
 // Share page in twitter
 function buttonTwitter () {
   const message = mesages[currentPage]
-  const link = ` https://twitter.com/intent/tweet?text=${message} ${url}`
+  const link = ` https://twitter.com/intent/tweet?text=${message} ${pageUrl}`
   window.open(link, '_blank')
 }
 
 // Share page in facebook
 function buttonFacebook () {
-  const link = `https://www.facebook.com/sharer/sharer.php?u=${url}`
+  const link = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`
   window.open(link, '_blank')
 }
 
 // Share page in instagram
 function buttonInstagram () {
-    // Copy url to clipboard
-    navigator.clipboard.writeText(url)
+    // Copy pageUrl to clipboard
+    navigator.clipboard.writeText(pageUrl)
 
     // Show alert
     Swal.fire({
@@ -68,8 +68,8 @@ function buttonInstagram () {
 
 // Share page in pinterest
 function buttonPinterest () {
-  // Copy url to clipboard
-  navigator.clipboard.writeText(url)
+  // Copy pageUrl to clipboard
+  navigator.clipboard.writeText(pageUrl)
 
   // Show alert
   Swal.fire({
@@ -103,7 +103,7 @@ function addListenersButtons() {
       const dataSocial = shareButton.getAttribute('data-social')
 
       // Detect is user is in preview page
-      if (url.includes("preview")) {
+      if (pageUrl.includes("preview")) {
         currentPage = "preview"
       }
 

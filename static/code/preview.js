@@ -1,6 +1,5 @@
 const checkboxes = document.querySelectorAll('input[type=checkbox]')
 const refreshButtons = document.querySelectorAll('button.refresh')
-const restartButtons = document.querySelectorAll('button.restart')
 const boomButtons = document.querySelectorAll('button.boom')
 const priceGapElem = document.querySelector(".price-gap .price")
 const tableRows = document.querySelectorAll('tbody tr')
@@ -32,20 +31,6 @@ function toggleRefreshButton() {
   }
 }
 
-function activateRestartButton() {
-
-  // Detect url params
-  const urlParams = new URLSearchParams(window.location.search)
-
-  // Validate if there is hidden param
-  if (urlParams.has('hidden')) {
-    // Activate restart button
-    restartButtons.forEach(restartButton => {
-      restartButton.removeAttribute("disabled")
-    })
-  }
-}
-
 // Calculate price gap and update in page
 function calculatePriceGap() {
 
@@ -65,14 +50,6 @@ function calculatePriceGap() {
 function onClickRefreshButton() {
   // Generate filter url adding hidden products
   urlObject.searchParams.set('hidden', productsHidden.join('-'))
-
-  // Redirect to url
-  window.location.href = urlObject
-}
-
-function onClickRestartButton() {
-  // Generate url without get params
-  urlObject.search = ''
 
   // Redirect to url
   window.location.href = urlObject
@@ -200,12 +177,7 @@ refreshButtons.forEach(refreshButton => {
   refreshButton.addEventListener('click', () => { onClickRefreshButton() })
 })
 
-// Add listener to restart button
-restartButtons.forEach(restartButton => {
-  restartButton.addEventListener('click', () => { onClickRestartButton() })
-})
-
-// Add listener to restart button
+// Add listener to boom button
 boomButtons.forEach(boomButton => {
   boomButton.addEventListener('click', () => { onClickBoomButton() })
 })
@@ -219,4 +191,3 @@ tableRows.forEach(tableRow => {
 renderProductImages()
 hiddeUrlProducts()
 calculatePriceGap()
-activateRestartButton()
