@@ -7,7 +7,7 @@ const mesages = {
   "preview": `Hey, take a look at this '${keyword}' price comparison`
 }
 
-// Opcy current pageUrl
+// Copy current pageUrl
 function buttonUrl() {
   // Copy url to clipboard
   navigator.clipboard.writeText(pageUrl)
@@ -16,7 +16,7 @@ function buttonUrl() {
   Swal.fire("Page copied to clipboard")
 }
 
-// DEfgault function: comming soon alert
+// Default function: comming soon alert
 function buttonDefault() {
   // Show alert
   Swal.fire("Comming soon")

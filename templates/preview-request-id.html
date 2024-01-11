@@ -38,7 +38,7 @@ Results from search {{keyword|title}} en e-commerce pages.
       <tbody>
         {% for product in products %}
         {% if not product.path %}
-        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}" data-link="{{product.link}}">
+        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}" data-link="{{product.link}}" data-id="{{product.id}}">
           <td class="modal-row">
             <div class="product-modal">
               <img src="{{product.image}}" alt="product image">
@@ -51,7 +51,7 @@ Results from search {{keyword|title}} en e-commerce pages.
           <td class="item-checkbox">
             {{ products.index (product) + 1}}
             <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
-          type="checkbox" name="{{products.index (product)}}" checked data-product-id="product-{{products.index (product)}}">
+          type="checkbox" name="{{products.index (product)}}" checked data-product-id="{{product.id}}"">
           </td>
           <td>{{product.rate_num}}</td>
           <td>{{product.reviews}}</td>
@@ -126,7 +126,7 @@ Results from search {{keyword|title}} en e-commerce pages.
 
     {% else %}
 
-    <article class="product" id="product-{{products.index (product) + 1}}">
+    <article class="product" id="product-{{products.index (product) + 1}}" data-id="{{product.id}}">
 
       <a href="{{product.link}}" class="" target="_blank" title="{{product.title}}">
         <div class="product-image" data-image="{{product.image}}"></div>
@@ -146,7 +146,7 @@ Results from search {{keyword|title}} en e-commerce pages.
 
         <!-- Show checkbox -->
         <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
-          type="checkbox" name="{{products.index (product)}}" data-product-id="product-{{products.index (product)}}" checked>
+          type="checkbox" name="{{products.index (product)}}" data-product-id="{{product.id}}" checked>
 
         <div class="texts">
           <p class="price">
@@ -219,9 +219,9 @@ Results from search {{keyword|title}} en e-commerce pages.
     product.url = url
   })
 
+  const apiKey = '{{api_key}}'
 
   const postBotHost = "{{post_bot_host}}"
-  console.log ({postBotHost})
 </script>
 <script src="{{ url_for('static', filename='/code/preview.js') }}"></script>
 {% endblock %}

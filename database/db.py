@@ -187,6 +187,24 @@ class Database (MySQL):
 
         return data
     
+    def get_api_key(self, name: str) -> str:
+        """ Get api key using name
+
+        Args:
+            name (str): name of api key
+
+        Returns:
+            str: api key value
+        """
+        
+        api_key_found = ""
+        for api_key, data in self.api_keys.items():
+            if data["name"] == "web":
+                api_key_found = api_key
+                break
+        
+        return api_key_found
+    
     def save_products(self, products_data: list):
         """ Save products in database
 

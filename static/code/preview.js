@@ -6,9 +6,15 @@ const tableRows = document.querySelectorAll('tbody tr')
 
 // Url params
 const currentUrl = window.location.href
+const host = window.location.host
 const urlObject = new URL(currentUrl)
-const hidden = urlObject.searchParams.get('hidden')
-let productsHidden = hidden ? hidden.split('-') : []
+let productsHidden = []
+console.log({host})
+console.log(`${host}/filter/`)
+
+
+// Get request id fom url
+const requestId = currentUrl.split('/').pop()
 
 
 function toggleRefreshButton() {
@@ -48,11 +54,36 @@ function calculatePriceGap() {
 }
 
 function onClickRefreshButton() {
-  // Generate filter url adding hidden products
-  urlObject.searchParams.set('hidden', productsHidden.join('-'))
+  // Generate new page with products filtered
 
-  // Redirect to url
-  window.location.href = urlObject
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "request-id": requestId,
+    "products-ids": productsHidden,
+    "api-key": apiKey,
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  fetch(`../../filter/`, requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      // Get new request from json data
+      const jsonData = JSON.parse(result)
+      const newRequestId = jsonData.data['request-id']
+      const new_page = `./${newRequestId}`
+      
+      // Redirect to new page
+      window.location.href = new_page
+    })
+    .catch(error => console.log('error', error));
 }
 
 async function onClickBoomButton() {
@@ -120,44 +151,15 @@ function onClickTableRow(event) {
   window.open(link, '_blank')
 }
 
-// Hide products from url params
-function hiddeUrlProducts() {
-
-  // Get inactive checboxes
-  const selector = productsHidden.map(product => `[data-product-id="product-${product}"]`).join(', ')
-  if (!selector) {
-    return null
-  }
-  const inactiveCheckboxes = document.querySelectorAll(selector)
-
-  // Delete products
-  for (const inactiveCheckbox of inactiveCheckboxes) {
-    const productWrapper = inactiveCheckbox.parentNode.parentElement
-    productWrapper.classList.add('hidden')
-  }
-
-  // Delete products from products array
-  let productIndexes = productsHidden.map(product => parseInt(product) - 1)
-  productIndexes.sort(function (a, b) {
-    return b - a
-  })
-  for (let productIndex of productIndexes) {
-    products.splice(productIndex, 1)
-  }
-}
-
 function updateHiddenProduct(checkbox) {
   // Get data-product-id
   const dataProductId = checkbox.getAttribute('data-product-id')
 
-  // Get prodyc id
-  const productId = dataProductId.split('-')[1]
-
   // Save or remove product id
   if (checkbox.checked) {
-    productsHidden = productsHidden.filter(product => product != productId)
+    productsHidden = productsHidden.filter(product => product != dataProductId)
   } else {
-    productsHidden.push(productId)
+    productsHidden.push(parseInt(dataProductId))
   }
 }
 
@@ -189,5 +191,4 @@ tableRows.forEach(tableRow => {
 
 
 renderProductImages()
-hiddeUrlProducts()
 calculatePriceGap()

@@ -201,11 +201,7 @@ def index():
     """ Home page """
 
     # Get api key for web
-    api_key_web = ""
-    for api_key, data in db.api_keys.items():
-        if data["name"] == "web":
-            api_key_web = api_key
-            break
+    api_key_web = db.get_api_key("web")
 
     return render_template("index.html", api_key=api_key_web)
 
@@ -346,6 +342,8 @@ def recent_searches():
 def preview_request_id(request_id):
     """ Render basic preview products page """
 
+    api_key_web = db.get_api_key("web")
+
     # Get referral session
     referral_hash = session.get("hash", "")
     referral_links = {}
@@ -454,7 +452,8 @@ def preview_request_id(request_id):
         keyword=keyword,
         search_date=search_date,
         request_id=request_id,
-        post_bot_host=POST_BOT_HOST
+        post_bot_host=POST_BOT_HOST,
+        api_key=api_key_web,
     )
 
 
@@ -500,6 +499,7 @@ def boom_bot_info():
 
 
 @app.post('/filter/')
+@wrapper_validate_api_key
 def filter_products():
     """ Filter results and create new request """
     
