@@ -301,6 +301,8 @@ def results():
     # Get products from db
     products, _, _ = db.get_products(request_id)
 
+    # Add keyword to each product
+
     status_code = 200
     db.save_log(f"({status_code}) Products found",
                 log_origin, id_request=request_id)

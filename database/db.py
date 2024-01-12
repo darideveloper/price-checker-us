@@ -9,6 +9,7 @@ load_dotenv()
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 TO_EMAILS = os.getenv("TO_EMAILS").split(",")
+HOST = os.getenv("HOST")
 
 
 class Database (MySQL):
@@ -398,7 +399,7 @@ class Database (MySQL):
         Returns:
             list: list of dict with products data
         """
-
+        
         # Get products from db
         query = f"""
             SELECT * 
@@ -435,10 +436,18 @@ class Database (MySQL):
         else:
             keyword = ""
             working_datetime = None
+            
+        # Add keyword and url to each product
+        products = list(map(lambda product: {
+            **product,
+            "keyword": keyword,
+            "url": f"{HOST}/preview/{id_request}",
+        }, products))
 
         return products, keyword, working_datetime
 
-    def save_log(self, message: str, origin: str, store: str = "", id_request: int = 0, api_key: str = "", log_type: str = "info"):
+    def save_log(self, message: str, origin: str, store: str = "", id_request: int = 0,
+                 api_key: str = "", log_type: str = "info"):
         """ Save log in database
 
         Args:
