@@ -299,7 +299,7 @@ def results():
     request_id = json_data.get("request-id", "")
 
     # Get products from db
-    products, keyword = db.get_products(request_id)
+    products, _, _ = db.get_products(request_id)
 
     status_code = 200
     db.save_log(f"({status_code}) Products found",
