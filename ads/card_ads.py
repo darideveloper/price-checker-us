@@ -11,7 +11,7 @@ class AdsCards ():
             {
                 "type": "video",
                 "path": "ebay-up-to-70-off-apple-watches-239x347px.mp4",
-                "link": "https://www.ebay.com/e/_electronics/ebay-refurbished-apple-watches?mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5339011126&toolid=20014&customid=&mkevt=1"
+                "link": "https://www.ebay.com/e/_electronics/limited-time-savings-on-smart-watches?mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5339011126&toolid=20014&customid=&mkevt=1"
             },
             {
                 "type": "video",
@@ -32,11 +32,6 @@ class AdsCards ():
                 "type": "video",
                 "path": "up-to-69-off-amazon-gift-card-239x347px.mp4",
                 "link": "https://go.nordvpn.net/aff_c?offer_id=15&aff_id=96425&url_id=902"
-            },
-            {
-                "type": "image",
-                "path": "ebay-up-to-70-off-apple-watches-239x347px.png",
-                "link": "https://www.ebay.com/e/_electronics/ebay-refurbished-apple-watches?mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5339011126&toolid=20014&customid=&mkevt=1"
             },
             {
                 "type": "image",
