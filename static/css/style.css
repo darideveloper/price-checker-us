@@ -516,16 +516,51 @@ main .preview-request-id .table .footer .price-gap {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 650px) {
   main .preview-request-id .products {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  main .preview-request-id .products .product .product-image {
+    height: 100px;
+  }
+  main .preview-request-id .products .product a {
+    width: calc(100% - 0.6rem);
+    padding: 0.3rem;
+  }
+  main .preview-request-id .products .product a .texts p {
+    font-size: 0.9rem;
+  }
+  main .preview-request-id .products .product a .texts p.price {
+    font-size: 1.3rem;
+  }
+  main .preview-request-id .products .product a .texts p.price span.small {
+    font-size: 0.6rem;
+    margin-top: 4px;
+  }
+  main .preview-request-id .products .product .index-wrapper {
+    width: 30px;
+    height: 30px;
+    left: -5px;
+    top: -5px;
+  }
+  main .preview-request-id .products .product .index-wrapper .index {
+    font-size: 1.2rem;
+  }
+  main .preview-request-id .products .product .checkbox {
+    width: 25px;
+    height: 25px;
+    right: -5px;
+    top: -5px;
   }
 }
 @media screen and (max-width: 550px) {
-  main .preview-request-id .products {
-    grid-template-columns: repeat(1, 1fr);
-    margin-right: 30px;
-    margin-left: 30px;
+  main .preview-request-id .products .product a {
+    width: calc(100% - 0.2rem);
+    padding: 0.1rem;
+  }
+  main .preview-request-id .products .product .product-image {
+    height: 150px;
+    margin-top: 15px;
   }
   main .preview-request-id .disclaimer {
     width: 90%;
@@ -541,6 +576,18 @@ main .preview-request-id .table .footer .price-gap {
 @media screen and (max-width: 470px) {
   main .preview-request-id .table tr *:nth-child(3), main .preview-request-id .table tr *:nth-child(5) {
     display: none;
+  }
+  main .preview-request-id .products {
+    gap: 10px;
+  }
+  main .preview-request-id .products .product a {
+    height: 97%;
+  }
+  main .preview-request-id .products .product a .texts .data {
+    grid-template-columns: 1fr;
+  }
+  main .preview-request-id .products .product .product-image {
+    height: 100px;
   }
 }
 @media screen and (max-width: 394px) {
