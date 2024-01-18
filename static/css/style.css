@@ -516,6 +516,14 @@ main .preview-request-id .table .footer .price-gap {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+@media screen and (max-width: 850px) {
+  main .preview-request-id .products .product.ad a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+  }
+}
 @media screen and (max-width: 650px) {
   main .preview-request-id .products {
     gap: 20px;
