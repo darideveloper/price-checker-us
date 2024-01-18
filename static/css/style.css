@@ -552,6 +552,10 @@ main .preview-request-id .table .footer .price-gap {
     right: -5px;
     top: -5px;
   }
+  main .preview-request-id .products .product .best-seller-icon {
+    width: 40px;
+    top: 20%;
+  }
 }
 @media screen and (max-width: 550px) {
   main .preview-request-id .products .product a {
