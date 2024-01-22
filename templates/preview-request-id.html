@@ -22,81 +22,6 @@ Results from search {{keyword|title}} en e-commerce pages.
 
   <h2>Results of "{{keyword|title}}" (Table Format) {{search_date}}</h2>
 
-  <section class="table">
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th><span>Item</span></th>
-          <th><span>Rate</span></th>
-          <th><span>Revs</span></th>
-          <th><span>Sales</span></th>
-          <th><span>Store</span></th>
-          <th><span>Price</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-        {% if not product.path %}
-        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}" data-link="{{product.link}}" data-id="{{product.id}}">
-          <td class="modal-row">
-            <div class="product-modal">
-              <img src="{{product.image}}" alt="product image">
-              <div class="text">
-                <p class="title item">Item: {{products.index (product) + 1}}</p>
-                <p class="title name">{{product.title}}</p>
-              </div>
-            </div>
-          </td>
-          <td class="item-checkbox">
-            {{ products.index (product) + 1}}
-            <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
-          type="checkbox" name="{{products.index (product)}}" checked data-product-id="{{product.id}}"">
-          </td>
-          <td>{{product.rate_num}}</td>
-          <td>{{product.reviews}}</td>
-          <td>{{product.sales}}</td>
-          <td>
-            {% if product.best_seller == 1 %}
-            <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
-            {% endif %}
-            {{product.store[0:3]}}
-          </td>
-          <td class="price">$ {{product.price}}</a></td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-
-      </tbody>
-    </table>
-
-    <div class="footer">
-      <p class="price-gap">
-        Maximum Price Gap: $
-        <span class="price">199.99</span>
-      </p>
-      <p class="tags">
-        <span class="best-seller">
-          <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
-          Best Seller
-        </span>
-        <span class="regular-product">Regular Product</span>
-      </p>
-    </div>
-  </section>
-
-  <div class="btns-wrapper">
-    <button class="btn refresh" disabled title="Uncheck items and click here to remove them from the comparison">
-      Refresh
-    </button>
-  
-    <button class="btn boom" title="To share in bulk, (consider refining your comparison) keep your social networks open, and boom! (Function only accessible on a PC)">
-      Boom
-    </button>
-  </div>
-
-  <h2>Results of "{{keyword|title}}" (Images Format) {{search_date}}</h2>
-
   <section class="products">
     {% for product in products %}
 
@@ -170,6 +95,8 @@ Results from search {{keyword|title}} en e-commerce pages.
     {% endfor %}
   </section>
 
+  <h2>Results of "{{keyword|title}}" (Images Format) {{search_date}}</h2>
+
   <div class="btns-wrapper">
     <button class="btn refresh" disabled title="Uncheck items and click here to remove them from the comparison">
       Refresh
@@ -179,6 +106,80 @@ Results from search {{keyword|title}} en e-commerce pages.
       Boom
     </button>
   </div>
+
+  <section class="table">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th><span>Item</span></th>
+          <th><span>Rate</span></th>
+          <th><span>Revs</span></th>
+          <th><span>Sales</span></th>
+          <th><span>Store</span></th>
+          <th><span>Price</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        {% if not product.path %}
+        <tr class="{% if product.best_seller == 1 %}best-seller{% endif %}" data-link="{{product.link}}" data-id="{{product.id}}">
+          <td class="modal-row">
+            <div class="product-modal">
+              <img src="{{product.image}}" alt="product image">
+              <div class="text">
+                <p class="title item">Item: {{products.index (product) + 1}}</p>
+                <p class="title name">{{product.title}}</p>
+              </div>
+            </div>
+          </td>
+          <td class="item-checkbox">
+            {{ products.index (product) + 1}}
+            <input title="Uncheck and click the refresh button to remove from the comparison" class="checkbox"
+          type="checkbox" name="{{products.index (product)}}" checked data-product-id="{{product.id}}"">
+          </td>
+          <td>{{product.rate_num}}</td>
+          <td>{{product.reviews}}</td>
+          <td>{{product.sales}}</td>
+          <td>
+            {% if product.best_seller == 1 %}
+            <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
+            {% endif %}
+            {{product.store[0:3]}}
+          </td>
+          <td class="price">$ {{product.price}}</a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <p class="price-gap">
+        Maximum Price Gap: $
+        <span class="price">199.99</span>
+      </p>
+      <p class="tags">
+        <span class="best-seller">
+          <img class="icon" src="{{ url_for('static', filename='/imgs/best-seller.webp') }}" alt="best seller icon">
+          Best Seller
+        </span>
+        <span class="regular-product">Regular Product</span>
+      </p>
+    </div>
+  </section>
+
+  <div class="btns-wrapper">
+    <button class="btn refresh" disabled title="Uncheck items and click here to remove them from the comparison">
+      Refresh
+    </button>
+  
+    <button class="btn boom" title="To share in bulk, (consider refining your comparison) keep your social networks open, and boom! (Function only accessible on a PC)">
+      Boom
+    </button>
+  </div>
+
 
   <div class="disclaimer">
     Note: Prices and data on our site are directly sourced from e-commerce sites in real time. Using the links to
