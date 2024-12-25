@@ -21,6 +21,7 @@ from flask import (
 )
 
 app = Flask(__name__)
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 # Load env variables
 load_dotenv()
