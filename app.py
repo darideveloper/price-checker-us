@@ -203,6 +203,7 @@ def index():
 
     # Get api key for web
     api_key_web = db.get_api_key("web")
+    print(">>>>> api key", api_key_web)
 
     return render_template("index.html", api_key=api_key_web)
 
