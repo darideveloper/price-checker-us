@@ -29,6 +29,7 @@ DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
+DB_PORT = int(os.getenv("DB_PORT"))
 USE_THREADING = os.getenv("USE_THREADING") == "True"
 PORT = int(os.environ.get('PORT', 5000))
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -40,7 +41,7 @@ RECENT_SEARCHES_NUM = int(os.getenv("RECENT_SEARCHES_NUM"))
 POST_BOT_HOST = os.getenv("POST_BOT_HOST")
 
 # Connect with database
-db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT)
 
 log_origin = "api"
 
