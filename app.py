@@ -19,9 +19,12 @@ from flask import (
     url_for,
     send_file
 )
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 
 app = Flask(__name__)
 app.config['PREFERRED_URL_SCHEME'] = 'https'
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)
 
 # Load env variables
 load_dotenv()
