@@ -72,7 +72,7 @@ def start_scraper(scraper_class: Scraper, keyword: str, request_id: int):
 
         # Save error in db
         error_message = f"store: {scraper.store}, " \
-            "keyword: {keyword}, error: {str(error)}"
+            f"keyword: {keyword}, error: {str(error)}"
         db.save_log(
             error_message,
             log_origin,
